@@ -1,0 +1,26 @@
+{
+  "name": "next-movie-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "axios": "^0.21.0",
+    "cookie": "^0.4.1",
+    "js-cookie": "^2.2.1",
+    "next": "10.0.3",
+    "postcss": "^8.2.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-icons": "^4.1.0",
+    "react-infinite-scroll-component": "^5.1.0",
+    "react-transition-group": "^4.4.1",
+    "tailwindcss": "^2.0.2",
+    "use-debounce": "^5.1.0"
+  },
+  "devDependencies": {}
+}
