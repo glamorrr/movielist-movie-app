@@ -10,7 +10,7 @@ const MovieCastCard = ({ person, imagesTMDbAPIConfiguration }) => {
   return (
     <div className="flex bg-white rounded overflow-hidden shadow-sm">
       <div
-        style={{ width: '60px', height: '90px' }}
+        style={{ width: '60px', height: '90px', minWidth: '60px' }}
         className="relative flex justify-center items-center bg-blue-100"
       >
         <Image
@@ -26,7 +26,7 @@ const MovieCastCard = ({ person, imagesTMDbAPIConfiguration }) => {
       </div>
 
       <div className="relative p-3 flex flex-col justify-between">
-        <h3 className="font-poppins font-medium text-gray-700">{name}</h3>
+        <h3 className="font-poppins font-medium text-gray-700 leading-5">{name}</h3>
 
         <p
           style={{
