@@ -4,8 +4,8 @@ export const MOVIES_TOP_RATED_ENDPOINT = '/movie/top_rated';
 export const MOVIES_UPCOMING_ENDPOINT = '/movie/upcoming';
 
 /**
- * '/search/movie/week' or
- * '/search/movie/day'
+ * '/trending/movie/week' or
+ * '/trending/movie/day'
  */
 export const MOVIES_TRENDING_ENDPOINT = '/trending/movie';
 

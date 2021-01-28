@@ -2,29 +2,22 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
-import BadgeNumber from './BadgeNumber';
-import MovieCard from './MovieCard';
-import BadgeGenre from './BadgeGenre';
-import Icon from './Icon';
-import convertUnitNumberToPercentage from '../utils/convertUnitNumberToPercentage';
-import parseToDashedString from '../utils/parseToDashedString';
+import BadgeNumber from '@/components/BadgeNumber';
+import MovieCard from '@/components/MovieCard';
+import BadgeGenre from '@/components/BadgeGenre';
+import Icon from '@/components/Icon';
+import convertUnitNumberToPercentage from '@/utils/convertUnitNumberToPercentage';
+import parseToDashedString from '@/utils/parseToDashedString';
 
-/**
- * Used in /browse.
- */
 const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfiguration }) => {
   const router = useRouter();
-
   const { title, id, poster_path, release_date, vote_average, vote_count, genre_ids } = movie;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
-
-  // Duration in miliseconds.
   const animationDuration = 300;
 
   const handleClick = (e) => {
     e.preventDefault();
     const dashedMovieTitle = parseToDashedString(title);
-
     router.push(`/movie/${id}-${dashedMovieTitle}`).then(() => window.scrollTo(0, 0));
   };
 
@@ -36,7 +29,6 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
           <BadgeNumber order={orderOfMovie} />
         </MovieCard>
       </div>
-
       {/* View on Desktop	*/}
       <CSSTransition classNames="movieLongCard" timeout={animationDuration} appear={true} in={true}>
         <article className="hidden mt-6 lg:flex relative justify-center items-center text-gray-500 transition-colors ">
@@ -44,7 +36,6 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
             <span className="font-light text-base">#</span>
             {orderOfMovie}
           </div>
-
           <div className="flex w-full ml-4 p-2 bg-white shadow-lg rounded-sm">
             <div className="relative flex bg-blue-100 rounded-sm shadow-sm overflow-hidden">
               <Image
@@ -58,7 +49,6 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
                 height={278 / 4}
               />
             </div>
-
             <div className="ml-4 py-2 w-full grid grid-cols-4">
               <div className="col-span-2 pr-4">
                 <h2
@@ -67,32 +57,26 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
                 >
                   {title}
                 </h2>
-
                 <div className="flex mt-1">
                   {genre_ids.length !== 0 &&
                     genre_ids.map((id) => <BadgeGenre genre={genres[id]} key={id} />)}
                 </div>
               </div>
-
               <div className="flex col-span-1">
                 <Icon size="1.3rem" className="text-green-500">
                   <MdSentimentSatisfied />
                 </Icon>
-
                 <div className="ml-2">
                   <p className="font-poppins font-medium">
                     {convertUnitNumberToPercentage(vote_average)}
                   </p>
-
                   <p className="mt-1 font-poppins font-medium text-gray-400 text-sm tracking-wider leading-3 truncate">
                     {vote_count} users
                   </p>
                 </div>
               </div>
-
               <div className="col-span-1">
                 <p className="font-poppins font-medium tracking-wide">Released</p>
-
                 <p className="mt-1 font-poppins font-medium text-gray-400 text-sm tracking-wider leading-3 truncate">
                   {new Date(release_date).getFullYear()}
                 </p>

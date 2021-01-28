@@ -1,29 +1,21 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
-import parsedToDashedString from '../utils/parseToDashedString';
+import parsedToDashedString from '@/utils/parseToDashedString';
 
-/**
- * Used in /browse, /movies/popular, /movies/trending/now,
- * /movies/trending/week, /movies/upcoming, and /movies/top-100.
- */
 const MovieCard = ({
   movie,
   orderOfMovie,
   imagesTMDbAPIConfiguration: { base_url, poster_sizes },
   children,
 }) => {
-  const { title, id, poster_path } = movie;
-
   const router = useRouter();
-
-  // Duration in miliseconds.
+  const { title, id, poster_path } = movie;
   const animationDuration = 300;
 
   const handleClick = (e) => {
     e.preventDefault();
     const dashedMovieTitle = parsedToDashedString(title);
-
     router.push(`/movie/${id}-${dashedMovieTitle}`).then(() => window.scrollTo(0, 0));
   };
 
@@ -39,7 +31,6 @@ const MovieCard = ({
           onClick={handleClick}
         >
           {children}
-
           {/* Some responsive image haxxx */}
           <div style={{ maxWidth: '185px' }} className="relative">
             <div
@@ -58,7 +49,6 @@ const MovieCard = ({
               />
             </div>
           </div>
-
           <h2
             style={{
               display: '-webkit-box',

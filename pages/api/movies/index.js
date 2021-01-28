@@ -1,18 +1,18 @@
-import axiosTMDb from '../../../src/utils/axiosTMDb';
+import axiosTMDb from '@/utils/axiosTMDb';
 import {
   MOVIES_POPULAR_ENDPOINT,
   MOVIES_SEARCH_ENDPOINT,
   MOVIES_TRENDING_ENDPOINT,
   MOVIES_UPCOMING_ENDPOINT,
   MOVIES_TOP_RATED_ENDPOINT,
-} from '../../../src/utils/TMDbEndpoint';
+} from '@/utils/TMDbEndpoint';
 import {
   GET_MOVIES_POPULAR,
   GET_MOVIES_SEARCH,
   GET_MOVIES_TOP_RATED,
   GET_MOVIES_TRENDING,
   GET_MOVIES_UPCOMING,
-} from '../../../src/utils/TMDbType';
+} from '@/utils/TMDbType';
 
 export default async (req, res) => {
   const { page = 1, query, time_span, type } = req.query;
@@ -55,7 +55,6 @@ export default async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     console.error(err);
-
     res.status(500).json({
       msg: 'Oops! Something went wrong.',
     });

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useDebounce } from 'use-debounce';
-import LayoutWrapper from '../../src/components/LayoutWrapper';
-import Footer from '../../src/components/Footer';
-import MoviesGridSection from '../../src/components/MoviesGridSection';
-import MoviesDynamicSection from '../../src/components/MoviesDynamicSection';
-import MobileNavbar from '../../src/components/MobileNavbar';
-import SearchMoviesForm from '../../src/components/SearchMoviesForm';
-import MoviesGrid from '../../src/components/MoviesGrid';
-import SquareLoader from '../../src/components/SquareLoader';
-import axiosTMDb from '../../src/utils/axiosTMDb';
-import { GET_MOVIES_SEARCH } from '../../src/utils/TMDbType';
+import LayoutWrapper from '@/components/LayoutWrapper';
+import Footer from '@/components/Footer';
+import MoviesGridSection from '@/components/MoviesGridSection';
+import MoviesDynamicSection from '@/components/MoviesDynamicSection';
+import MobileNavbar from '@/components/MobileNavbar';
+import SearchMoviesForm from '@/components/SearchMoviesForm';
+import MoviesGrid from '@/components/MoviesGrid';
+import SquareLoader from '@/components/SquareLoader';
+import axiosTMDb from '@/utils/axiosTMDb';
+import { GET_MOVIES_SEARCH } from '@/utils/TMDbType';
 import {
   MOVIES_POPULAR_ENDPOINT,
   MOVIES_TOP_RATED_ENDPOINT,
@@ -18,9 +18,9 @@ import {
   MOVIES_UPCOMING_ENDPOINT,
   TMDb_API_CONFIGURATION_ENDPOINT,
   MOVIES_GENRE_LIST_ENDPOINT,
-} from '../../src/utils/TMDbEndpoint';
+} from '@/utils/TMDbEndpoint';
 
-export default function Browse({
+export default function index({
   popularMovies,
   trendingMovies,
   upcomingMovies,
@@ -36,7 +36,6 @@ export default function Browse({
           <title>Browse Movies &middot; MovieList</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         <main>
           <p>{error.message}</p>
         </main>
@@ -63,15 +62,12 @@ export default function Browse({
         <title>Browse Movies &middot; MovieList</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <LayoutWrapper>
         <MobileNavbar />
-
         <main>
           <h1 className="pt-6 font-poppins font-semibold text-4xl text-gray-600 tracking-wide">
             Browse Movies
           </h1>
-
           <SearchMoviesForm
             searchValue={searchValue}
             setSearchValue={setSearchValue}
@@ -82,19 +78,16 @@ export default function Browse({
             setIsTyping={setIsTyping}
             setMoviesSearchResult={setMoviesSearchResult}
           />
-
           {shouldShowLoader && <SquareLoader additionalClassName="mt-28 mb-16 w-10 h-10" />}
-
           {isSearchNoResults && (
             <h2 className="mt-24 mb-32 mx-auto font-poppins font-medium text-2xl text-center text-gray-500 tracking wide">
               No Results
             </h2>
           )}
-
           {shouldShowSearchResults && (
             <>
-              <div className="mt-12" />
               <MoviesGrid
+                mt="mt-12"
                 movies={moviesSearchResult}
                 setMovies={setMoviesSearchResult}
                 shouldInfiniteScroll={true}
@@ -110,7 +103,6 @@ export default function Browse({
               />
             </>
           )}
-
           {shouldShowExploreMovies && (
             <>
               <MoviesGridSection
@@ -119,21 +111,18 @@ export default function Browse({
                 movies={trendingMovies}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
-
               <MoviesGridSection
                 headingTitle="What's Popular"
                 linkToPage="/movies/popular"
                 movies={popularMovies}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
-
               <MoviesGridSection
                 headingTitle="Upcoming"
                 linkToPage="/movies/upcoming"
                 movies={upcomingMovies}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
-
               <MoviesDynamicSection
                 headingTitle="Top 100 Movies"
                 linkToPage="/movies/top-100"
@@ -144,7 +133,6 @@ export default function Browse({
             </>
           )}
         </main>
-
         <Footer />
       </LayoutWrapper>
     </>

@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { MdClose, MdSearch } from 'react-icons/md';
-import Icon from './Icon';
-import { GET_MOVIES_SEARCH } from '../utils/TMDbType';
+import Icon from '@/components/Icon';
+import { GET_MOVIES_SEARCH } from '@/utils/TMDbType';
 
-/**
- * Used in /browse.
- */
 const SearchMoviesForm = ({
   searchValue,
   setSearchValue,
@@ -110,7 +107,6 @@ const SearchMoviesForm = ({
         <Icon size="1.75rem" className="text-blue-300">
           <MdSearch />
         </Icon>
-
         <div className="w-full mx-3">
           <input
             className="w-full text-base lg:text-sm bg-white text-gray-500 font-medium tracking-wider focus:outline-none"
@@ -125,7 +121,6 @@ const SearchMoviesForm = ({
             spellCheck="false"
           />
         </div>
-
         <button
           className={(!isSearchInputFilled && 'cursor-default') + ' focus:outline-none'}
           onClick={handleButtonClick}
@@ -144,7 +139,6 @@ const SearchMoviesForm = ({
           </Icon>
         </button>
       </form>
-
       <div
         className={
           (isSearchInputFilled ? 'scale-100' : 'scale-0') +

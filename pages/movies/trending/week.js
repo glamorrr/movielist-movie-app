@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import MoviesGrid from '../../../src/components/MoviesGrid';
-import LayoutWrapper from '../../../src/components/LayoutWrapper';
-import MobileNavbar from '../../../src/components/MobileNavbar';
-import Footer from '../../../src/components/Footer';
-import SelectDropdownTrendingMovies from '../../../src/components/SelectDropdownTrendingMovies';
-import axiosTMDb from '../../../src/utils/axiosTMDb';
-import { GET_MOVIES_TRENDING } from '../../../src/utils/TMDbType';
-import {
-  MOVIES_TRENDING_ENDPOINT,
-  TMDb_API_CONFIGURATION_ENDPOINT,
-} from '../../../src/utils/TMDbEndpoint';
+import MoviesGrid from '@/components/MoviesGrid';
+import LayoutWrapper from '@/components/LayoutWrapper';
+import MobileNavbar from '@/components/MobileNavbar';
+import Footer from '@/components/Footer';
+import SelectDropdownTrendingMovies from '@/components/SelectDropdownTrendingMovies';
+import axiosTMDb from '@/utils/axiosTMDb';
+import { GET_MOVIES_TRENDING } from '@/utils/TMDbType';
+import { MOVIES_TRENDING_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
 
 /**
  * This file is not too diffrent with
@@ -24,7 +21,6 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, error
           <title>Trending Movies &middot; Week</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         <main>
           <p>{error.message}</p>
         </main>
@@ -41,24 +37,21 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, error
         <title>Trending Movies &middot; Week</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <LayoutWrapper>
         <MobileNavbar />
-
         <main>
-          <div className="pt-6" />
-          <h1 className="inline font-poppins font-semibold text-3xl text-gray-600 tracking-wide">
-            Trending
-          </h1>
-
-          <SelectDropdownTrendingMovies
-            buttonText="Week"
-            dropdownText="Now"
-            linkToPage="/movies/trending/now"
-          />
-
-          <div className="mt-6" />
+          <div className="pt-6">
+            <h1 className="inline font-poppins font-semibold text-3xl text-gray-600 tracking-wide">
+              Trending
+            </h1>
+            <SelectDropdownTrendingMovies
+              buttonText="Week"
+              dropdownText="Now"
+              linkToPage="/movies/trending/now"
+            />
+          </div>
           <MoviesGrid
+            mt="mt-6"
             movies={movies}
             setMovies={setMovies}
             shouldInfiniteScroll={true}
@@ -72,7 +65,6 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, error
             }}
             imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
           />
-
           <Footer />
         </main>
       </LayoutWrapper>

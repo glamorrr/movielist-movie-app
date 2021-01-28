@@ -1,11 +1,8 @@
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
-import LayoutWrapper from './LayoutWrapper';
-import MovieCastCard from './MovieCastCard';
+import LayoutWrapper from '@/components/LayoutWrapper';
+import MovieCastCard from '@/components/MovieCastCard';
 
-/**
- * Used in /movie/[slug].
- */
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const {
     title,
@@ -14,8 +11,6 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
     credits: { cast },
   } = movie;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
-
-  // Duration in miliseconds.
   const animationDuration = 300;
 
   return (
@@ -44,38 +39,31 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 </div>
               </div>
             </CSSTransition>
-
             {/* Desktop view > 768px (md) */}
             <div className="hidden md:block mt-6 ml-7">
               <h1 className="font-poppins font-medium text-2xl text-gray-700">{title}</h1>
-
               <p className="mt-3">{overview}</p>
             </div>
           </div>
-
           {/* Mobile view < 768px (md) */}
           <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl text-gray-700">
             {title}
           </h1>
         </LayoutWrapper>
       </div>
-
       <LayoutWrapper>
         <div className="md:hidden shadow-sm">
           <h2 className="mt-6 font-poppins text-lg text-gray-700 font-medium tracking-wide">
             Description
           </h2>
-
           <div className="mt-3 p-4 text-gray-700 bg-white rounded">
             <p>{overview}</p>
           </div>
         </div>
-
         <div>
           <h2 className="mt-6 font-poppins text-lg text-gray-700 font-medium tracking-wide">
             Cast
           </h2>
-
           <div className="mt-3 grid gap-x-8 gap-y-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {cast.map((person) => (
               <MovieCastCard

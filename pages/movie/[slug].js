@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-import MovieBackdrop from '../../src/components/MovieBackdrop';
-import MovieDetails from '../../src/components/MovieDetails';
-import MobileNavbar from '../../src/components/MobileNavbar';
-import Footer from '../../src/components/Footer';
-import LayoutWrapper from '../../src/components/LayoutWrapper';
-import axiosTMDb from '../../src/utils/axiosTMDb';
-import { MOVIE_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '../../src/utils/TMDbEndpoint';
+import MovieBackdrop from '@/components/MovieBackdrop';
+import MovieDetails from '@/components/MovieDetails';
+import MobileNavbar from '@/components/MobileNavbar';
+import Footer from '@/components/Footer';
+import LayoutWrapper from '@/components/LayoutWrapper';
+import axiosTMDb from '@/utils/axiosTMDb';
+import { MOVIE_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   if (error) {
@@ -16,7 +16,6 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
           <title>Oops! Something went wrong &middot; MovieList</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         <main>
           <p>{error.message}</p>
         </main>
@@ -39,18 +38,14 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <MobileNavbar />
-
         <MovieBackdrop
           backdropPath={backdrop_path}
           imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
         />
-
         <MovieDetails movie={movie} imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration} />
       </main>
-
       <LayoutWrapper>
         <Footer />
       </LayoutWrapper>

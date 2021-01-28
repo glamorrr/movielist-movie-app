@@ -1,14 +1,10 @@
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 
-/**
- * Used in /movie/[slug].
- */
 const MovieBackdrop = ({
   backdropPath,
   imagesTMDbAPIConfiguration: { base_url, backdrop_sizes },
 }) => {
-  // Duration in miliseconds.
   const animationDuration = 300;
 
   return (

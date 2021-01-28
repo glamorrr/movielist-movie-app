@@ -1,10 +1,17 @@
-import setBackgroundColorBadgeNumber from '../helper/setBackgroundColorBadgeNumber';
-import setTextColorBadgeNumber from '../helper/setTextColorBadgeNumber';
-
-/**
- * Used in /browse and /movies/top-100.
- */
 const BadgeNumber = ({ order }) => {
+  const setTextColorBadgeNumber = (order) => {
+    if (order === 1 || order === 3) return 'text-yellow-900';
+    if (order === 2) return 'text-gray-800';
+    return 'text-gray-700';
+  };
+
+  const setBackgroundColorBadgeNumber = (order) => {
+    if (order === 1) return 'bg-yellow-300';
+    if (order === 2) return 'bg-gray-200';
+    if (order === 3) return 'bg-yellow-500';
+    return 'bg-blue-200';
+  };
+
   return (
     <span
       className={

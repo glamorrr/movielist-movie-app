@@ -1,8 +1,5 @@
 import Image from 'next/image';
 
-/**
- * Used in /movie/[slug].
- */
 const MovieCastCard = ({ person, imagesTMDbAPIConfiguration }) => {
   const { name, character, profile_path } = person;
   const { base_url, profile_sizes } = imagesTMDbAPIConfiguration;
@@ -24,10 +21,8 @@ const MovieCastCard = ({ person, imagesTMDbAPIConfiguration }) => {
           objectFit="cover"
         />
       </div>
-
       <div className="relative p-3 flex flex-col justify-between">
         <h3 className="font-poppins font-medium text-gray-700 leading-5">{name}</h3>
-
         <p
           style={{
             display: '-webkit-box',

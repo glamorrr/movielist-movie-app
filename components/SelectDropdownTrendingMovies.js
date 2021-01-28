@@ -1,11 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { MdExpandMore } from 'react-icons/md';
-import Icon from './Icon';
+import Icon from '@/components/Icon';
 
-/**
- * Used in /movies/trending/now and /movies/trending/week.
- */
 const SelectDropdownTrendingMovies = ({ buttonText, dropdownText, linkToPage }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const refButton = useRef(null);
@@ -50,7 +47,6 @@ const SelectDropdownTrendingMovies = ({ buttonText, dropdownText, linkToPage }) 
           <MdExpandMore />
         </Icon>
       </button>
-
       <span
         ref={refDropdown}
         style={{ WebkitTapHighlightColor: 'transparent' }}
