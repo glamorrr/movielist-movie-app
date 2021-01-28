@@ -43,7 +43,7 @@ export default function Upcoming({ upcomingMovies, imagesTMDbAPIConfiguration, e
         <main>
           <div className="pt-6" />
           <h1 className="inline font-poppins font-semibold text-3xl text-gray-600 tracking-wide">
-            What's Upcoming
+            Upcoming Movies
           </h1>
 
           <div className="mt-6" />
