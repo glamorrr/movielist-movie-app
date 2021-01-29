@@ -14,7 +14,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   } = movie;
   const director = crew.find((person) => person.job === 'Director')?.name;
   const trailer = videos.results.find((video) => video.type === 'Trailer')?.key
-    ? `http://www.youtube.com/embed/${
+    ? `https://www.youtube.com/embed/${
         videos.results.find((video) => video.type === 'Trailer').key
       }?rel=0`
     : null;
