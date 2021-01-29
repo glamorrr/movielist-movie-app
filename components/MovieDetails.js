@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import MovieCastCard from '@/components/MovieCastCard';
+import PersonCard from '@/components/PersonCard';
 import MovieInformation from '@/components/MovieInformation';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
@@ -9,8 +9,15 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
     title,
     overview,
     poster_path,
-    credits: { cast },
+    videos,
+    credits: { cast, crew },
   } = movie;
+  const director = crew.find((person) => person.job === 'Director')?.name;
+  const trailer = videos.results.find((video) => video.type === 'Trailer')?.key
+    ? `http://www.youtube.com/embed/${
+        videos.results.find((video) => video.type === 'Trailer').key
+      }?rel=0`
+    : null;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
 
@@ -52,7 +59,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
       </div>
       <LayoutWrapper>
         <div className="md:mt-4 md:flex items-start">
-          <MovieInformation movie={movie} />
+          <MovieInformation movie={{ ...movie, director }} />
           <div className="mt-6 md:hidden shadow-sm">
             <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
             <div className="mt-3 p-4 bg-white rounded">
@@ -60,16 +67,44 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </div>
           </div>
           <div className="mt-6 flex-grow">
-            <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
-            <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
-              {cast.map((person) => (
-                <MovieCastCard
-                  key={person.id}
-                  person={person}
-                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                />
-              ))}
+            <div>
+              <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
+              <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                {cast.slice(0, 6).map((person) => (
+                  <PersonCard
+                    key={person.credit_id}
+                    name={person.name}
+                    role={person.character}
+                    profilePath={person.profile_path}
+                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                  />
+                ))}
+              </div>
             </div>
+            <div className="mt-8">
+              <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
+              <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                {crew.slice(0, 4).map((person) => (
+                  <PersonCard
+                    key={person.credit_id}
+                    name={person.name}
+                    role={person.job}
+                    profilePath={person.profile_path}
+                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                  />
+                ))}
+              </div>
+            </div>
+            {trailer && (
+              <div className="mt-8">
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
+                <div className="mt-3 max-w-2xl">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <iframe src={trailer} frameBorder="0" allowFullScreen />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </LayoutWrapper>

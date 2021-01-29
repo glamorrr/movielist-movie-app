@@ -78,7 +78,7 @@ export async function getServerSideProps({ query }) {
          * just comma separate the values.
          *
          */
-        append_to_response: 'credits',
+        append_to_response: 'credits,videos,keywords',
         // TODO?: get movie reviews, recommedations movies, videos (trailers)
       },
     };
