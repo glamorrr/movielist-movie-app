@@ -37,7 +37,10 @@ const MovieInformation = ({ movie }) => {
   return (
     <>
       {/* Mobile */}
-      <div className="md:hidden mt-8 p-5 flex font-poppins bg-white rounded shadow-sm overflow-x-scroll whitespace-nowrap">
+      <div
+        style={{ WebkitOverflowScrolling: 'touch' }}
+        className="md:hidden mt-8 p-5 flex font-poppins bg-white rounded shadow-sm overflow-x-scroll whitespace-nowrap"
+      >
         {informations.map((info) => {
           if (!info.data) return;
           return (

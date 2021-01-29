@@ -38,7 +38,8 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
     <>
       <Head>
         <title>
-          {title} ({new Date(release_date).getFullYear()}) &middot; MovieList
+          {title} {release_date ? `(${new Date(release_date).getFullYear()})` : ''} &middot;
+          MovieList
         </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
