@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import MovieCastCard from '@/components/MovieCastCard';
+import MovieInformation from '@/components/MovieInformation';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const {
@@ -15,7 +16,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
 
   return (
     <>
-      <div className="bg-white md:pb-16">
+      <div className="md:pb-16 bg-white text-gray-700">
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
             <CSSTransition
@@ -41,37 +42,34 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </CSSTransition>
             {/* Desktop view > 768px (md) */}
             <div className="hidden md:block mt-6 ml-7">
-              <h1 className="font-poppins font-medium text-2xl text-gray-700">{title}</h1>
+              <h1 className="font-poppins font-medium text-2xl">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
           </div>
           {/* Mobile view < 768px (md) */}
-          <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl text-gray-700">
-            {title}
-          </h1>
+          <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl">{title}</h1>
         </LayoutWrapper>
       </div>
       <LayoutWrapper>
-        <div className="md:hidden shadow-sm">
-          <h2 className="mt-6 font-poppins text-lg text-gray-700 font-medium tracking-wide">
-            Description
-          </h2>
-          <div className="mt-3 p-4 text-gray-700 bg-white rounded">
-            <p>{overview}</p>
+        <div className="md:mt-4 md:flex items-start">
+          <MovieInformation movie={movie} />
+          <div className="mt-6 md:hidden shadow-sm">
+            <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
+            <div className="mt-3 p-4 bg-white rounded">
+              <p>{overview}</p>
+            </div>
           </div>
-        </div>
-        <div>
-          <h2 className="mt-6 font-poppins text-lg text-gray-700 font-medium tracking-wide">
-            Cast
-          </h2>
-          <div className="mt-3 grid gap-x-8 gap-y-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {cast.map((person) => (
-              <MovieCastCard
-                key={person.id}
-                person={person}
-                imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-              />
-            ))}
+          <div className="mt-6 flex-grow">
+            <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
+            <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+              {cast.map((person) => (
+                <MovieCastCard
+                  key={person.id}
+                  person={person}
+                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </LayoutWrapper>

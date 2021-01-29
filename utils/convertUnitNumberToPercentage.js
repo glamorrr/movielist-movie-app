@@ -4,6 +4,7 @@
  * @return {string} - example: '87%'.
  */
 const convertUnitNumberToPercentage = (unit) => {
+  if (!unit) return '';
   const number = Math.round(unit * 10);
   return `${number}%`;
 };
