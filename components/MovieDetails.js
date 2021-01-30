@@ -60,50 +60,55 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
       <LayoutWrapper>
         <div className="md:mt-4 md:flex items-start">
           <MovieInformation movie={{ ...movie, director }} />
-          <div className="mt-6 md:hidden shadow-sm">
+          <section className="mt-6 md:hidden shadow-sm">
             <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
             <div className="mt-3 p-4 bg-white rounded">
               <p>{overview}</p>
             </div>
-          </div>
+          </section>
+          {/* TODO: fix if no cast or crew */}
           <div className="mt-6 flex-grow">
-            <div>
-              <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
-              <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
-                {cast.slice(0, 6).map((person) => (
-                  <PersonCard
-                    key={person.credit_id}
-                    name={person.name}
-                    role={person.character}
-                    profilePath={person.profile_path}
-                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="mt-8">
-              <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
-              <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
-                {crew.slice(0, 4).map((person) => (
-                  <PersonCard
-                    key={person.credit_id}
-                    name={person.name}
-                    role={person.job}
-                    profilePath={person.profile_path}
-                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                  />
-                ))}
-              </div>
-            </div>
+            {cast.length > 0 && (
+              <section>
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
+                <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                  {cast.slice(0, 6).map((person) => (
+                    <PersonCard
+                      key={person.credit_id}
+                      name={person.name}
+                      role={person.character}
+                      profilePath={person.profile_path}
+                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+            {cast.length > 0 && (
+              <section className="mt-8">
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
+                <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                  {crew.slice(0, 4).map((person) => (
+                    <PersonCard
+                      key={person.credit_id}
+                      name={person.name}
+                      role={person.job}
+                      profilePath={person.profile_path}
+                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
             {trailer && (
-              <div className="mt-8">
+              <section className="mt-8">
                 <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
                 <div className="mt-3 max-w-2xl">
                   <div className="aspect-w-16 aspect-h-9">
                     <iframe src={trailer} frameBorder="0" allowFullScreen />
                   </div>
                 </div>
-              </div>
+              </section>
             )}
           </div>
         </div>

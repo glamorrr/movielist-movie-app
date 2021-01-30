@@ -37,7 +37,7 @@ const MovieInformation = ({ movie }) => {
   return (
     <>
       {/* Mobile */}
-      <div
+      <section
         style={{ WebkitOverflowScrolling: 'touch' }}
         className="md:hidden mt-8 p-5 flex font-poppins bg-white rounded shadow-sm overflow-x-scroll whitespace-nowrap"
       >
@@ -52,16 +52,16 @@ const MovieInformation = ({ movie }) => {
             </div>
           );
         })}
-      </div>
+      </section>
       {/* Desktop */}
       <div className="hidden flex-shrink-0 md:block mt-6 mr-8 lg:mr-10 w-56 font-poppins">
-        <div className="p-5 bg-white rounded shadow-sm">
+        <section className="p-5 bg-white rounded shadow-sm">
           {informations.map((info, i) => {
             if (!info.data) return;
             const isFirstItem = i === 0;
             return (
               <div key={info.title} className={isFirstItem ? undefined : 'mt-4'}>
-                <h2 className="text-xs text-gray-400">{info.title}</h2>
+                <h3 className="text-xs text-gray-400">{info.title}</h3>
                 {Array.isArray(info.data) ? (
                   info.data.map((item) => (
                     <li key={item} className="list-none text-sm text-gray-700">
@@ -74,9 +74,9 @@ const MovieInformation = ({ movie }) => {
               </div>
             );
           })}
-        </div>
+        </section>
         {keywords.length > 0 && (
-          <div className="mt-6">
+          <section className="mt-6">
             <h2 className="font-medium">Keywords</h2>
             {keywords.map((keyword, i) => {
               const isFirstItem = i === 0;
@@ -89,7 +89,7 @@ const MovieInformation = ({ movie }) => {
                 </div>
               );
             })}
-          </div>
+          </section>
         )}
       </div>
     </>
