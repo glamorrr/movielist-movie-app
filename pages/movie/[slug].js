@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import commaNumber from 'comma-number';
+import marked from 'marked';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MovieDetails from '@/components/MovieDetails';
 import MobileNavbar from '@/components/MobileNavbar';
@@ -11,6 +12,7 @@ import { MOVIE_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEnd
 import formatRuntime from '@/utils/formatRuntime';
 import formatReleaseDate from '@/utils/formatReleaseDate';
 import convertUnitNumberToPercentage from '@/utils/convertUnitNumberToPercentage';
+import DOMPurify from '@/utils/DOMPurify';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   if (error) {
@@ -31,7 +33,7 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
 
   // for development purpose
   useEffect(() => {
-    console.log({ movie });
+    console.log({ movie, imagesTMDbAPIConfiguration });
   }, []);
 
   return (
@@ -79,7 +81,7 @@ export async function getServerSideProps({ query }) {
          * just comma separate the values.
          *
          */
-        append_to_response: 'credits,videos,keywords',
+        append_to_response: 'credits,videos,keywords,recommendations,reviews',
         // TODO?: get movie reviews, recommedations movies, videos (trailers)
       },
     };
@@ -96,6 +98,16 @@ export async function getServerSideProps({ query }) {
         budget: response[0].data.budget ? `$${commaNumber(response[0].data.budget)}` : '',
         revenue: response[0].data.revenue ? `$${commaNumber(response[0].data.revenue)}` : '',
         vote_average: convertUnitNumberToPercentage(response[0].data.vote_average || 0),
+        reviews: {
+          ...response[0].data.reviews,
+          results:
+            response[0].data.reviews.results.length > 0
+              ? response[0].data.reviews.results.map((review) => ({
+                  ...review,
+                  content: DOMPurify.sanitize(`${marked(review.content).substr(0, 100)}...`),
+                }))
+              : [],
+        },
       },
       imagesTMDbAPIConfiguration: response[1].data.images,
     };
@@ -108,7 +120,6 @@ export async function getServerSideProps({ query }) {
     };
   } catch (err) {
     console.error(err);
-
     return {
       props: {
         error: {

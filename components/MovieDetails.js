@@ -3,6 +3,8 @@ import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
 import MovieInformation from '@/components/MovieInformation';
+import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
+import MovieReviewCard from '@/components/MovieReviewCard';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const {
@@ -10,6 +12,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
     overview,
     poster_path,
     videos,
+    recommendations,
+    reviews,
     credits: { cast, crew },
   } = movie;
   const director = crew.find((person) => person.job === 'Director')?.name;
@@ -18,7 +22,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         videos.results.find((video) => video.type === 'Trailer').key
       }?rel=0`
     : null;
-  const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
+  const { base_url, poster_sizes, profile_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
 
   return (
@@ -66,7 +70,6 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <p>{overview}</p>
             </div>
           </section>
-          {/* TODO: fix if no cast or crew */}
           <div className="mt-6 flex-grow">
             {cast.length > 0 && (
               <section>
@@ -107,6 +110,38 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   <div className="aspect-w-16 aspect-h-9">
                     <iframe src={trailer} frameBorder="0" allowFullScreen />
                   </div>
+                </div>
+              </section>
+            )}
+            {recommendations.results.length > 0 && (
+              <section className="mt-8">
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Recommendations</h2>
+                <div
+                  style={{ WebkitOverflowScrolling: 'touch' }}
+                  className="mt-3 pb-2 md:max-w-md lg:max-w-2xl xl:max-w-3xl flex space-x-6 overflow-x-scroll"
+                >
+                  {recommendations.results.map((movie) => (
+                    <RecommendationMovieCard
+                      key={movie.id}
+                      movie={movie}
+                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+            {reviews.results.length > 0 && (
+              <section className="mt-8">
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Reviews</h2>
+                <div className="mt-3 space-y-6">
+                  {reviews.results.map((review) => (
+                    <MovieReviewCard
+                      key={review.id}
+                      avatarPath={review.author_details.avatar_path}
+                      content={review.content}
+                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                    />
+                  ))}
                 </div>
               </section>
             )}

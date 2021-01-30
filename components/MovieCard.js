@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
-import parsedToDashedString from '@/utils/parseToDashedString';
+import parseToDashedString from '@/utils/parseToDashedString';
 
 const MovieCard = ({
   movie,
@@ -15,7 +15,7 @@ const MovieCard = ({
 
   const handleClick = (e) => {
     e.preventDefault();
-    const dashedMovieTitle = parsedToDashedString(title);
+    const dashedMovieTitle = parseToDashedString(title);
     router.push(`/movie/${id}-${dashedMovieTitle}`).then(() => window.scrollTo(0, 0));
   };
 
@@ -31,12 +31,8 @@ const MovieCard = ({
           onClick={handleClick}
         >
           {children}
-          {/* Some responsive image haxxx */}
-          <div style={{ maxWidth: '185px' }} className="relative">
-            <div
-              style={{ width: '100%', paddingTop: '150%' }}
-              className="bg-blue-100 relative flex justify-center items-center rounded-md lg:rounded shadow-lg lg:shadow-xl overflow-hidden"
-            >
+          <div style={{ maxWidth: '185px' }}>
+            <div className="aspect-w-2 aspect-h-3 bg-blue-100 rounded-md lg:rounded shadow-lg lg:shadow-xl overflow-hidden">
               <Image
                 src={
                   poster_path
@@ -49,14 +45,7 @@ const MovieCard = ({
               />
             </div>
           </div>
-          <h2
-            style={{
-              display: '-webkit-box',
-              WebkitLineClamp: '2',
-              WebkitBoxOrient: 'vertical',
-            }}
-            className="mt-2 md:mt-3 font-poppins text-sm sm:text-base font-medium md:font-semibold overflow-ellipsis overflow-hidden whitespace-pre-wrap leading-5"
-          >
+          <h2 className="mt-2 md:mt-3 font-poppins text-sm sm:text-base font-medium md:font-semibold line-clamp-2 leading-5">
             {title}
           </h2>
         </article>
