@@ -64,7 +64,7 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
                   <a>{review.media_title}</a>
                 </Link>
               </h1>
-              <p className="mt-2 text-gray-300">a review by {review.author}</p>
+              <p className="mt-2 text-gray-300 italic">a review by {review.author}</p>
             </div>
             <article
               className="prose mt-8 md:mt-12 mx-auto p-8 w-full bg-white rounded shadow-md overflow-hidden"
