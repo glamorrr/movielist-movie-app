@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
@@ -5,8 +6,10 @@ import PersonCard from '@/components/PersonCard';
 import MovieInformation from '@/components/MovieInformation';
 import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
 import MovieReviewCard from '@/components/MovieReviewCard';
+import MovieDetailsTab from '@/components/MovieDetailsTab';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
+  const [selectedTab, setSelectedTab] = useState('Overview');
   const {
     title,
     overview,
@@ -22,12 +25,14 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         videos.results.find((video) => video.type === 'Trailer').key
       }?rel=0`
     : null;
+  const isCast = cast.length > 0;
+  const isCrew = crew.length > 0;
   const { base_url, poster_sizes, profile_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
 
   return (
     <>
-      <div className="md:pb-16 bg-white text-gray-700">
+      <div className="bg-white text-gray-700">
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
             <CSSTransition
@@ -56,98 +61,156 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <h1 className="font-poppins font-medium text-2xl">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
+            <ul className="hidden ml-7 mt-6 md:col-start-2 md:flex space-x-10 font-poppins">
+              {['Overview', 'Cast', 'Crew'].map((tab) => {
+                if (tab === 'Cast' && !isCast) return;
+                if (tab === 'Crew' && !isCrew) return;
+                return (
+                  <MovieDetailsTab
+                    tab={tab}
+                    isSelected={selectedTab === tab}
+                    handleClick={() => setSelectedTab(tab)}
+                  />
+                );
+              })}
+            </ul>
           </div>
           {/* Mobile view < 768px (md) */}
           <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl">{title}</h1>
+          <ul className="md:hidden pb-4 flex space-x-6 font-poppins">
+            {['Overview', 'Cast', 'Crew'].map((tab) => {
+              if (tab === 'Cast' && !isCast) return;
+              if (tab === 'Crew' && !isCrew) return;
+              return (
+                <MovieDetailsTab
+                  tab={tab}
+                  isSelected={selectedTab === tab}
+                  handleClick={() => setSelectedTab(tab)}
+                />
+              );
+            })}
+          </ul>
         </LayoutWrapper>
       </div>
       <LayoutWrapper>
         <div className="md:mt-4 md:flex items-start">
           <MovieInformation movie={{ ...movie, director }} />
-          <section className="mt-6 md:hidden shadow-sm">
-            <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
-            <div className="mt-3 p-4 bg-white rounded">
-              <p>{overview}</p>
+          {selectedTab === 'Overview' && (
+            <>
+              <section className="mt-6 md:hidden shadow-sm">
+                <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
+                <div className="mt-3 p-4 bg-white rounded">
+                  <p>{overview}</p>
+                </div>
+              </section>
+              <div className="mt-6 flex-grow">
+                {isCast && (
+                  <section>
+                    <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
+                    <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                      {cast.slice(0, 6).map((person) => (
+                        <PersonCard
+                          key={person.credit_id}
+                          name={person.name}
+                          role={person.character}
+                          profilePath={person.profile_path}
+                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+                {isCrew && (
+                  <section className="mt-8">
+                    <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
+                    <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                      {crew.slice(0, 4).map((person) => (
+                        <PersonCard
+                          key={person.credit_id}
+                          name={person.name}
+                          role={person.job}
+                          profilePath={person.profile_path}
+                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+                {trailer && (
+                  <section className="mt-8">
+                    <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
+                    <div className="mt-3 max-w-2xl">
+                      <div className="aspect-w-16 aspect-h-9">
+                        <iframe src={trailer} frameBorder="0" allowFullScreen />
+                      </div>
+                    </div>
+                  </section>
+                )}
+                {recommendations.results.length > 0 && (
+                  <section className="mt-8">
+                    <h2 className="font-poppins text-lg font-medium tracking-wide">
+                      Recommendations
+                    </h2>
+                    <div
+                      style={{ WebkitOverflowScrolling: 'touch' }}
+                      className="mt-3 pb-2 md:max-w-md lg:max-w-2xl xl:max-w-3xl flex space-x-6 overflow-x-scroll"
+                    >
+                      {recommendations.results.map((movie) => (
+                        <RecommendationMovieCard
+                          key={movie.id}
+                          movie={movie}
+                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+                {reviews.results.length > 0 && (
+                  <section className="mt-8">
+                    <h2 className="font-poppins text-lg font-medium tracking-wide">Reviews</h2>
+                    <div className="mt-3 space-y-6">
+                      {reviews.results.map((review) => (
+                        <MovieReviewCard
+                          key={review.id}
+                          id={review.id}
+                          author={review.author}
+                          avatarPath={review.author_details.avatar_path}
+                          content={review.content}
+                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </div>
+            </>
+          )}
+          {selectedTab === 'Cast' && (
+            <div className="flex-grow mt-6 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+              {cast.map((person) => (
+                <PersonCard
+                  key={person.credit_id}
+                  name={person.name}
+                  role={person.character}
+                  profilePath={person.profile_path}
+                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                />
+              ))}
             </div>
-          </section>
-          <div className="mt-6 flex-grow">
-            {cast.length > 0 && (
-              <section>
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
-                <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
-                  {cast.slice(0, 6).map((person) => (
-                    <PersonCard
-                      key={person.credit_id}
-                      name={person.name}
-                      role={person.character}
-                      profilePath={person.profile_path}
-                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-            {cast.length > 0 && (
-              <section className="mt-8">
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
-                <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
-                  {crew.slice(0, 4).map((person) => (
-                    <PersonCard
-                      key={person.credit_id}
-                      name={person.name}
-                      role={person.job}
-                      profilePath={person.profile_path}
-                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-            {trailer && (
-              <section className="mt-8">
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
-                <div className="mt-3 max-w-2xl">
-                  <div className="aspect-w-16 aspect-h-9">
-                    <iframe src={trailer} frameBorder="0" allowFullScreen />
-                  </div>
-                </div>
-              </section>
-            )}
-            {recommendations.results.length > 0 && (
-              <section className="mt-8">
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Recommendations</h2>
-                <div
-                  style={{ WebkitOverflowScrolling: 'touch' }}
-                  className="mt-3 pb-2 md:max-w-md lg:max-w-2xl xl:max-w-3xl flex space-x-6 overflow-x-scroll"
-                >
-                  {recommendations.results.map((movie) => (
-                    <RecommendationMovieCard
-                      key={movie.id}
-                      movie={movie}
-                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-            {reviews.results.length > 0 && (
-              <section className="mt-8">
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Reviews</h2>
-                <div className="mt-3 space-y-6">
-                  {reviews.results.map((review) => (
-                    <MovieReviewCard
-                      key={review.id}
-                      id={review.id}
-                      author={review.author}
-                      avatarPath={review.author_details.avatar_path}
-                      content={review.content}
-                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
+          )}
+          {selectedTab === 'Crew' && (
+            <div className="flex-grow mt-6 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+              {crew.map((person) => (
+                <PersonCard
+                  key={person.credit_id}
+                  name={person.name}
+                  role={person.job}
+                  profilePath={person.profile_path}
+                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </LayoutWrapper>
 
