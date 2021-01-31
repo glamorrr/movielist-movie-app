@@ -137,6 +137,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   {reviews.results.map((review) => (
                     <MovieReviewCard
                       key={review.id}
+                      author={review.author}
                       avatarPath={review.author_details.avatar_path}
                       content={review.content}
                       imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}

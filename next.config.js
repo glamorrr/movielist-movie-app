@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ['image.tmdb.org'],
+    domains: ['image.tmdb.org', 'secure.gravatar.com'],
   },
   async redirects() {
     return [
