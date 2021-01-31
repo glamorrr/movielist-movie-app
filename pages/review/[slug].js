@@ -41,7 +41,9 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
   return (
     <>
       <Head>
-        <title>MovieList</title>
+        <title>
+          {review.author}'s review of {review.media_title} &middot; MovieList
+        </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
@@ -65,7 +67,7 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
               <p className="mt-2 text-gray-300">a review by {review.author}</p>
             </div>
             <article
-              className="prose mt-8 md:mt-12 mx-auto p-8 w-full bg-white rounded shadow-md"
+              className="prose mt-8 md:mt-12 mx-auto p-8 w-full bg-white rounded shadow-md overflow-hidden"
               dangerouslySetInnerHTML={{ __html: review.content }}
             />
           </LayoutWrapper>
