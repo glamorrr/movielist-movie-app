@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 
 const MovieBackdrop = ({
+  type,
   backdropPath,
   imagesTMDbAPIConfiguration: { base_url, backdrop_sizes },
 }) => {
@@ -10,7 +11,11 @@ const MovieBackdrop = ({
   return (
     <>
       <CSSTransition classNames="movieBackdrop" timeout={animationDuration} appear={true} in={true}>
-        <div className="relative h-52 md:h-96 bg-blue-100">
+        <div
+          className={
+            (type === 'banner' ? 'absolute w-full' : 'relative') + ' h-52 md:h-96 bg-blue-100'
+          }
+        >
           {backdropPath ? (
             <Image
               src={`${base_url}${backdrop_sizes[3]}${backdropPath}`}
@@ -32,6 +37,8 @@ const MovieBackdrop = ({
         }
 
         .backdrop--shadow {
+          box-shadow: ${type === 'banner' ? 'inset 0 0 250px #2f3133' : 'none'};
+          background-color: ${type === 'banner' ? 'rgba(31, 37, 45, 0.65)' : 'initial'};
           background-image: ${backdropPath
             ? 'linear-gradient(180deg, rgba(6, 13, 34, 0) 40%, rgba(6, 13, 34, .6))'
             : 'linear-gradient(180deg, rgba(6, 13, 34, 0) 0%, rgba(6, 13, 34, .25))'};

@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-const MovieReviewCard = ({ author, avatarPath, content, imagesTMDbAPIConfiguration }) => {
+const MovieReviewCard = ({ id, author, avatarPath, content, imagesTMDbAPIConfiguration }) => {
+  const router = useRouter();
   const { base_url, profile_sizes } = imagesTMDbAPIConfiguration;
   const gravatarURLRegex = /secure.gravatar.com/gi;
   let profilePicture;
@@ -28,10 +30,18 @@ const MovieReviewCard = ({ author, avatarPath, content, imagesTMDbAPIConfigurati
           />
         </div>
       </div>
-      <article
-        className="prose p-5 w-full bg-white rounded shadow-sm"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <div className="max-w-2xl w-full flex flex-col ">
+        <article
+          className="prose p-5 bg-white rounded shadow-sm"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+        <button
+          onClick={() => router.push(`/review/${id}`).then(() => window.scrollTo(0, 0))}
+          className="-mt-4 px-3 py-2 self-end font-medium text-white hover:text-gray-100 bg-blue-400 hover:bg-blue-500 shadow-md focus:ring-4 ring-blue-200 focus:outline-none transition-colors"
+        >
+          Read More
+        </button>
+      </div>
     </div>
   );
 };

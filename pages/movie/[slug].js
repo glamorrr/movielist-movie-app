@@ -102,10 +102,17 @@ export async function getServerSideProps({ query }) {
           ...response[0].data.reviews,
           results:
             response[0].data.reviews.results.length > 0
-              ? response[0].data.reviews.results.map((review) => ({
-                  ...review,
-                  content: DOMPurify.sanitize(`${marked(review.content).substr(0, 100)}...`),
-                }))
+              ? response[0].data.reviews.results.map((review) => {
+                  const reviewContent = marked(review.content);
+                  return {
+                    ...review,
+                    content: DOMPurify.sanitize(
+                      reviewContent.length > 100
+                        ? `${marked(review.content).substr(0, 100)}...`
+                        : reviewContent
+                    ),
+                  };
+                })
               : [],
         },
       },
