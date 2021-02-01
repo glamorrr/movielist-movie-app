@@ -5,6 +5,7 @@ import {
   MOVIES_TRENDING_ENDPOINT,
   MOVIES_UPCOMING_ENDPOINT,
   MOVIES_TOP_RATED_ENDPOINT,
+  MOVIE_ENDPOINT,
 } from '@/utils/TMDbEndpoint';
 import {
   GET_MOVIES_POPULAR,
@@ -12,10 +13,11 @@ import {
   GET_MOVIES_TOP_RATED,
   GET_MOVIES_TRENDING,
   GET_MOVIES_UPCOMING,
+  GET_MOVIE_RECOMMENDATIONS,
 } from '@/utils/TMDbType';
 
 export default async (req, res) => {
-  const { page = 1, query, time_span, type } = req.query;
+  const { page = 1, movie_id, query, time_span, type } = req.query;
 
   try {
     let response;
@@ -46,6 +48,11 @@ export default async (req, res) => {
         break;
       case GET_MOVIES_TOP_RATED:
         response = await axiosTMDb.get(MOVIES_TOP_RATED_ENDPOINT, {
+          params: { page },
+        });
+        break;
+      case GET_MOVIE_RECOMMENDATIONS:
+        response = await axiosTMDb.get(`${MOVIE_ENDPOINT}/${movie_id}/recommendations`, {
           params: { page },
         });
         break;

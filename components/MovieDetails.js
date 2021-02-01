@@ -7,9 +7,10 @@ import MovieInformation from '@/components/MovieInformation';
 import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
 import MovieReviewCard from '@/components/MovieReviewCard';
 import MovieDetailsTab from '@/components/MovieDetailsTab';
+import MoviesInfiniteScroll from '@/components/MoviesInfiniteScroll';
+import { GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
-  const [selectedTab, setSelectedTab] = useState('Overview');
   const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
   const {
     title,
@@ -31,6 +32,10 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const isRecommendations = recommendations.results.length > 0;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
+
+  const [recommendationMovies, setRecommendationMovies] = useState(recommendations.results);
+  const [currentPagination, setCurrentPagination] = useState(1);
+  const [selectedTab, setSelectedTab] = useState('Overview');
 
   return (
     <>
@@ -219,15 +224,28 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </div>
           )}
           {selectedTab === 'Recommendations' && (
-            <div className="flex-grow mt-6 grid justify-items-center gap-4 sm:gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
-              {recommendations.results.map((movie) => (
-                <RecommendationMovieCard
-                  key={movie.id}
-                  movie={movie}
-                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                />
-              ))}
-            </div>
+            <MoviesInfiniteScroll
+              movies={recommendationMovies}
+              setMovies={setRecommendationMovies}
+              setCurrentPagination={setCurrentPagination}
+              infiniteScrollConfiguration={{
+                type: GET_MOVIE_RECOMMENDATIONS,
+                url: '/api/movies',
+                movieId: movie.id,
+                pagination: currentPagination,
+                totalPagination: recommendations.total_pages,
+              }}
+            >
+              <div className="flex-grow mt-6 grid justify-items-center gap-4 sm:gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+                {recommendationMovies.map((recommendationMovie) => (
+                  <RecommendationMovieCard
+                    key={recommendationMovie.id}
+                    movie={recommendationMovie}
+                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                  />
+                ))}
+              </div>
+            </MoviesInfiniteScroll>
           )}
         </div>
       </LayoutWrapper>
