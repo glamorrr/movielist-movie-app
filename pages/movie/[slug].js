@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import commaNumber from 'comma-number';
 import marked from 'marked';
@@ -15,6 +16,9 @@ import convertUnitNumberToPercentage from '@/utils/convertUnitNumberToPercentage
 import DOMPurify from '@/utils/DOMPurify';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
+  const { isFallback } = useRouter();
+  if (isFallback) return <p>fetching....</p>;
+
   if (error) {
     return (
       <>
@@ -60,8 +64,12 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
-  const { slug } = query;
+export async function getStaticPaths() {
+  return { paths: [], fallback: true };
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params;
 
   /**
    * TMDb movie id.
@@ -123,6 +131,7 @@ export async function getServerSideProps({ query }) {
       props: {
         movie: data.movie,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
+        revalidate: 1 * 60,
       },
     };
   } catch (err) {
@@ -132,6 +141,7 @@ export async function getServerSideProps({ query }) {
         error: {
           message: 'Oops! Something went wrong.',
         },
+        notFound: true,
       },
     };
   }
