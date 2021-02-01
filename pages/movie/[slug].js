@@ -5,6 +5,7 @@ import commaNumber from 'comma-number';
 import marked from 'marked';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MovieDetails from '@/components/MovieDetails';
+import MovieFallback from '@/components/MovieFallback';
 import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
 import LayoutWrapper from '@/components/LayoutWrapper';
@@ -17,7 +18,8 @@ import DOMPurify from '@/utils/DOMPurify';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
-  if (isFallback) return <p>fetching....</p>;
+
+  if (isFallback) return <MovieFallback />;
 
   if (error) {
     return (
@@ -132,8 +134,8 @@ export async function getStaticProps({ params }) {
         key: data.movie.id,
         movie: data.movie,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
-        revalidate: 1 * 60,
       },
+      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);
@@ -142,7 +144,6 @@ export async function getStaticProps({ params }) {
         error: {
           message: 'Oops! Something went wrong.',
         },
-        notFound: true,
       },
     };
   }
