@@ -10,6 +10,7 @@ import MovieDetailsTab from '@/components/MovieDetailsTab';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const [selectedTab, setSelectedTab] = useState('Overview');
+  const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
   const {
     title,
     overview,
@@ -27,7 +28,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
     : null;
   const isCast = cast.length > 0;
   const isCrew = crew.length > 0;
-  const { base_url, poster_sizes, profile_sizes } = imagesTMDbAPIConfiguration;
+  const isRecommendations = recommendations.results.length > 0;
+  const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
 
   return (
@@ -61,10 +63,11 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <h1 className="font-poppins font-medium text-2xl">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
-            <ul className="hidden ml-7 mt-6 md:col-start-2 md:flex space-x-10 font-poppins">
-              {['Overview', 'Cast', 'Crew'].map((tab) => {
+            <ul className="hidden ml-7 mt-6 md:col-start-2 md:flex space-x-8 font-poppins">
+              {Tabs.map((tab) => {
                 if (tab === 'Cast' && !isCast) return;
                 if (tab === 'Crew' && !isCrew) return;
+                if (tab === 'Recommendations' && !isRecommendations) return;
                 return (
                   <MovieDetailsTab
                     tab={tab}
@@ -77,10 +80,14 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
           </div>
           {/* Mobile view < 768px (md) */}
           <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl">{title}</h1>
-          <ul className="md:hidden pb-4 flex space-x-6 font-poppins">
-            {['Overview', 'Cast', 'Crew'].map((tab) => {
+          <ul
+            style={{ WebkitOverflowScrolling: 'touch' }}
+            className="md:hidden pb-4 flex space-x-6 font-poppins overflow-x-scroll"
+          >
+            {Tabs.map((tab) => {
               if (tab === 'Cast' && !isCast) return;
               if (tab === 'Crew' && !isCrew) return;
+              if (tab === 'Recommendations' && !isRecommendations) return;
               return (
                 <MovieDetailsTab
                   tab={tab}
@@ -146,7 +153,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     </div>
                   </section>
                 )}
-                {recommendations.results.length > 0 && (
+                {isRecommendations && (
                   <section className="mt-8">
                     <h2 className="font-poppins text-lg font-medium tracking-wide">
                       Recommendations
@@ -206,6 +213,17 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   name={person.name}
                   role={person.job}
                   profilePath={person.profile_path}
+                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                />
+              ))}
+            </div>
+          )}
+          {selectedTab === 'Recommendations' && (
+            <div className="flex-grow mt-6 grid justify-items-center gap-4 sm:gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+              {recommendations.results.map((movie) => (
+                <RecommendationMovieCard
+                  key={movie.id}
+                  movie={movie}
                   imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                 />
               ))}
