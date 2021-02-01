@@ -129,6 +129,7 @@ export async function getStaticProps({ params }) {
 
     return {
       props: {
+        key: data.movie.id,
         movie: data.movie,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
         revalidate: 1 * 60,
