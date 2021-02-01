@@ -75,6 +75,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 if (tab === 'Recommendations' && !isRecommendations) return;
                 return (
                   <MovieDetailsTab
+                    key={tab}
                     tab={tab}
                     isSelected={selectedTab === tab}
                     handleClick={() => setSelectedTab(tab)}
@@ -95,6 +96,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               if (tab === 'Recommendations' && !isRecommendations) return;
               return (
                 <MovieDetailsTab
+                  key={tab}
                   tab={tab}
                   isSelected={selectedTab === tab}
                   handleClick={() => setSelectedTab(tab)}
