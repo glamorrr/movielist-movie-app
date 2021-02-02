@@ -50,6 +50,7 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
           MovieList
         </title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content={movie.overview} />
       </Head>
       <main>
         <MobileNavbar />

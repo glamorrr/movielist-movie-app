@@ -155,7 +155,12 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
                     <div className="mt-3 max-w-2xl">
                       <div className="aspect-w-16 aspect-h-9">
-                        <iframe src={trailer} frameBorder="0" allowFullScreen />
+                        <iframe
+                          title={`${title} trailer`}
+                          src={trailer}
+                          frameBorder="0"
+                          allowFullScreen
+                        />
                       </div>
                     </div>
                   </section>

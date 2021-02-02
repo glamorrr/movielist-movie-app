@@ -19,6 +19,7 @@ const MovieBackdrop = ({
           {backdropPath ? (
             <Image
               src={`${base_url}${backdrop_sizes[3]}${backdropPath}`}
+              alt="movie backdrop"
               layout="fill"
               objectFit="cover"
               className="relative object-top"

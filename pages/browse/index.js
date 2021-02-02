@@ -61,6 +61,7 @@ export default function index({
       <Head>
         <title>Browse Movies &middot; MovieList</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Search and discover movies." />
       </Head>
       <LayoutWrapper>
         <MobileNavbar />

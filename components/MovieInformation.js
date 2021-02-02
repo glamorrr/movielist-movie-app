@@ -61,13 +61,16 @@ const MovieInformation = ({ movie }) => {
             const isFirstItem = i === 0;
             return (
               <div key={info.title} className={isFirstItem ? undefined : 'mt-4'}>
-                <h3 className="text-xs text-gray-400">{info.title}</h3>
+                <h2 className="text-xs text-gray-400">{info.title}</h2>
+
                 {Array.isArray(info.data) ? (
-                  info.data.map((item) => (
-                    <li key={item} className="list-none text-sm text-gray-700">
-                      {item}
-                    </li>
-                  ))
+                  <ul>
+                    {info.data.map((item) => (
+                      <li key={item} className="list-none text-sm text-gray-700">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 ) : (
                   <p className="text-sm text-gray-700">{info.data}</p>
                 )}

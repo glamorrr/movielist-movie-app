@@ -51,6 +51,10 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
           {review.author}'s review of {review.media_title} &middot; MovieList
         </title>
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content={`${review.author}'s review of ${review.media_title} movie.`}
+        />
       </Head>
       <main>
         <MobileNavbar />
