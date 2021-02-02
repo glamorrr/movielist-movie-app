@@ -77,7 +77,6 @@ export async function getStaticProps({ params }) {
    * TMDb movie id.
    * from : 726739-cats-dogs-3-paws-unite
    * to   : 726739
-   * @type {number}
    */
   const movieId = slug.split('-')[0];
 
