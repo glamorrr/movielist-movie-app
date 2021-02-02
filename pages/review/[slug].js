@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import marked from 'marked';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MobileNavbar from '@/components/MobileNavbar';
+import ReviewFallback from '@/components/ReviewFallback';
 import Footer from '@/components/Footer';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import axiosTMDb from '@/utils/axiosTMDb';
@@ -17,6 +19,10 @@ import DOMPurify from '@/utils/DOMPurify';
 import parseToDashedString from '@/utils/parseToDashedString';
 
 export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
+  const { isFallback } = useRouter();
+
+  if (isFallback) return <ReviewFallback />;
+
   if (error) {
     return (
       <>
@@ -80,8 +86,12 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
   );
 }
 
-export async function getServerSideProps({ query }) {
-  const { slug } = query;
+export async function getStaticPaths() {
+  return { paths: [], fallback: true };
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params;
   const reviewId = slug;
 
   try {
@@ -109,6 +119,7 @@ export async function getServerSideProps({ query }) {
         review: data.review,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
+      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);
