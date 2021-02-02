@@ -69,9 +69,9 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
               {review.updated_at}
             </p>
             <div className="mt-8 md:mt-24 font-poppins text-center text-gray-50">
-              <h1 className="font-medium text-4xl tracking-wide hover:text-blue-400 transition-colors">
+              <h1 className="font-medium text-4xl tracking-wide">
                 <Link href={`/movie/${review.media_id}-${parseToDashedString(review.media_title)}`}>
-                  <a>{review.media_title}</a>
+                  <a className="hover:text-blue-400 transition-colors">{review.media_title}</a>
                 </Link>
               </h1>
               <p className="mt-2 text-gray-300 italic">a review by {review.author}</p>
