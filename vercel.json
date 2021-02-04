@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/fonts/*.woff2",
+      "source": "/fonts/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
