@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
@@ -14,11 +16,13 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
   const {
     title,
+    imdb_id,
     overview,
     poster_path,
     videos,
     recommendations,
     reviews,
+    images: { posters, backdrops },
     credits: { cast, crew },
   } = movie;
   const director = crew.find((person) => person.job === 'Director')?.name;
@@ -29,17 +33,20 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
     : null;
   const isCast = cast.length > 0;
   const isCrew = crew.length > 0;
+  const isPosters = posters.length > 0;
+  const isBackdrops = backdrops.length > 0;
   const isRecommendations = recommendations.results.length > 0;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
 
+  const router = useRouter();
   const [recommendationMovies, setRecommendationMovies] = useState(recommendations.results);
   const [currentPagination, setCurrentPagination] = useState(1);
   const [selectedTab, setSelectedTab] = useState('Overview');
 
   return (
     <>
-      <div className="bg-white text-gray-700">
+      <div className="text-gray-700 bg-white">
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
             <CSSTransition
@@ -48,8 +55,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               appear={true}
               in={true}
             >
-              <div className="relative justify-center md:w-56 h-12 md:h-52">
-                <div className="absolute z-20 -top-28 w-28 md:w-56 h-40 md:h-80 bg-blue-100 rounded shadow-lg md:shadow-xl overflow-hidden">
+              <div className="relative justify-center h-12 md:w-56 md:h-52">
+                <div className="absolute z-20 h-40 overflow-hidden bg-blue-100 rounded shadow-lg -top-28 w-28 md:w-56 md:h-80 md:shadow-xl">
                   <Image
                     src={
                       poster_path
@@ -64,11 +71,11 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               </div>
             </CSSTransition>
             {/* Desktop view > 768px (md) */}
-            <div className="hidden md:block mt-6 ml-7">
-              <h1 className="font-poppins font-medium text-2xl">{title}</h1>
+            <div className="hidden mt-6 md:block ml-7">
+              <h1 className="text-2xl font-medium font-poppins">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
-            <ul className="hidden ml-7 mt-6 md:col-start-2 md:flex space-x-8 font-poppins">
+            <ul className="hidden mt-6 space-x-8 ml-7 md:col-start-2 md:flex font-poppins">
               {Tabs.map((tab) => {
                 if (tab === 'Cast' && !isCast) return;
                 if (tab === 'Crew' && !isCrew) return;
@@ -85,10 +92,10 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </ul>
           </div>
           {/* Mobile view < 768px (md) */}
-          <h1 className="md:hidden mt-4 pb-6 font-poppins font-medium text-2xl">{title}</h1>
+          <h1 className="pb-6 mt-4 text-2xl font-medium md:hidden font-poppins">{title}</h1>
           <ul
             style={{ WebkitOverflowScrolling: 'touch' }}
-            className="md:hidden pb-4 flex space-x-6 font-poppins overflow-x-scroll"
+            className="flex pb-4 space-x-6 overflow-x-scroll md:hidden font-poppins"
           >
             {Tabs.map((tab) => {
               if (tab === 'Cast' && !isCast) return;
@@ -107,21 +114,49 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         </LayoutWrapper>
       </div>
       <LayoutWrapper>
-        <div className="md:mt-4 md:flex items-start">
-          <MovieInformation movie={{ ...movie, director }} />
+        <div className="items-start md:mt-4 md:flex">
+          <div className="flex flex-col md:block">
+            {(isPosters || isBackdrops) && (
+              <Link href={`${router.asPath}/images`}>
+                <a className="order-2 block position">
+                  <button
+                    type="button"
+                    className="w-full py-1 mt-6 font-medium text-center text-white transition-colors bg-purple-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-purple-600 hover:text-gray-100 font-poppins"
+                  >
+                    See Images
+                  </button>
+                </a>
+              </Link>
+            )}
+            {imdb_id && (
+              <a
+                href={`https://www.imdb.com/title/${imdb_id}`}
+                target="_blank"
+                className="order-3 block"
+              >
+                <button
+                  type="button"
+                  className="w-full py-1 mt-4 font-medium text-center text-white transition-colors bg-yellow-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-yellow-600 hover:text-gray-100 font-poppins"
+                >
+                  IMDB
+                </button>
+              </a>
+            )}
+            <MovieInformation movie={{ ...movie, director }} />
+          </div>
           {selectedTab === 'Overview' && (
             <>
-              <section className="mt-6 md:hidden shadow-sm">
-                <h2 className="font-poppins text-lg font-medium tracking-wide">Description</h2>
-                <div className="mt-3 p-4 bg-white rounded">
+              <section className="mt-6 shadow-sm md:hidden">
+                <h2 className="text-lg font-medium tracking-wide font-poppins">Description</h2>
+                <div className="p-4 mt-3 bg-white rounded">
                   <p>{overview}</p>
                 </div>
               </section>
-              <div className="mt-6 flex-grow">
+              <div className="flex-grow mt-6">
                 {isCast && (
                   <section>
-                    <h2 className="font-poppins text-lg font-medium tracking-wide">Cast</h2>
-                    <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                    <h2 className="text-lg font-medium tracking-wide font-poppins">Cast</h2>
+                    <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                       {cast.slice(0, 6).map((person) => (
                         <PersonCard
                           key={person.credit_id}
@@ -136,8 +171,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 )}
                 {isCrew && (
                   <section className="mt-8">
-                    <h2 className="font-poppins text-lg font-medium tracking-wide">Crew</h2>
-                    <div className="mt-3 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+                    <h2 className="text-lg font-medium tracking-wide font-poppins">Crew</h2>
+                    <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                       {crew.slice(0, 4).map((person) => (
                         <PersonCard
                           key={person.credit_id}
@@ -152,8 +187,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 )}
                 {trailer && (
                   <section className="mt-8">
-                    <h2 className="font-poppins text-lg font-medium tracking-wide">Trailer</h2>
-                    <div className="mt-3 max-w-2xl">
+                    <h2 className="text-lg font-medium tracking-wide font-poppins">Trailer</h2>
+                    <div className="max-w-2xl mt-3">
                       <div className="aspect-w-16 aspect-h-9">
                         <iframe
                           title={`${title} trailer`}
@@ -167,12 +202,12 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 )}
                 {isRecommendations && (
                   <section className="mt-8">
-                    <h2 className="font-poppins text-lg font-medium tracking-wide">
+                    <h2 className="text-lg font-medium tracking-wide font-poppins">
                       Recommendations
                     </h2>
                     <div
                       style={{ WebkitOverflowScrolling: 'touch' }}
-                      className="mt-3 pb-2 md:max-w-md lg:max-w-2xl xl:max-w-3xl flex space-x-6 overflow-x-scroll"
+                      className="flex pb-2 mt-3 space-x-6 overflow-x-scroll md:max-w-md lg:max-w-2xl xl:max-w-3xl"
                     >
                       {recommendations.results.map((movie) => (
                         <RecommendationMovieCard
@@ -186,7 +221,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 )}
                 {reviews.results.length > 0 && (
                   <section className="mt-8">
-                    <h2 className="font-poppins text-lg font-medium tracking-wide">Reviews</h2>
+                    <h2 className="text-lg font-medium tracking-wide font-poppins">Reviews</h2>
                     <div className="mt-3 space-y-6">
                       {reviews.results.map((review) => (
                         <MovieReviewCard
@@ -205,7 +240,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </>
           )}
           {selectedTab === 'Cast' && (
-            <div className="flex-grow mt-6 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+            <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
               {cast.map((person) => (
                 <PersonCard
                   key={person.credit_id}
@@ -218,7 +253,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             </div>
           )}
           {selectedTab === 'Crew' && (
-            <div className="flex-grow mt-6 grid gap-6 lg:gap-x-8 grid-cols-1 md:grid-cols-2">
+            <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
               {crew.map((person) => (
                 <PersonCard
                   key={person.credit_id}
@@ -243,7 +278,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                 totalPagination: recommendations.total_pages,
               }}
             >
-              <div className="flex-grow mt-6 grid justify-items-center gap-4 sm:gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5">
+              <div className="grid flex-grow grid-cols-3 gap-4 mt-6 justify-items-center sm:gap-6 sm:grid-cols-4 lg:grid-cols-5">
                 {recommendationMovies.map((recommendationMovie) => (
                   <RecommendationMovieCard
                     key={recommendationMovie.id}
