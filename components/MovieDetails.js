@@ -138,7 +138,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   type="button"
                   className="w-full py-1 mt-4 font-medium text-center text-white transition-colors bg-yellow-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-yellow-600 hover:text-gray-100 font-poppins"
                 >
-                  IMDB
+                  IMDb
                 </button>
               </a>
             )}
