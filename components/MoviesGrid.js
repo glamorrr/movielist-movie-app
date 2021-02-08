@@ -27,7 +27,7 @@ const MoviesGrid = ({
           setCurrentPagination={setCurrentPagination}
           infiniteScrollConfiguration={infiniteScrollConfiguration}
         >
-          <div className="mt-1 mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5 lg:gap-10">
+          <div className="grid grid-cols-3 mx-auto mt-1 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5 lg:gap-10">
             {movies.map((movie, i) => (
               <MovieCard
                 key={movie.id}
@@ -52,7 +52,7 @@ const MoviesGrid = ({
    */
   return (
     <div className={mt}>
-      <div className="mt-5 mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5 lg:gap-10">
+      <div className="grid grid-cols-3 mx-auto mt-5 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5 lg:gap-10">
         {movies.map((movie, i) => (
           <MovieCard
             key={movie.id}

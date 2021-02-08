@@ -16,10 +16,10 @@ const RecommendationMovieCard = ({ movie, imagesTMDbAPIConfiguration }) => {
   return (
     <article
       style={{ maxWidth: '150px' }}
-      className="flex-shrink-0 w-full text-gray-500 hover:text-blue-400 cursor-pointer transition-colors"
+      className="flex-shrink-0 w-full text-gray-500 transition-colors cursor-pointer hover:text-blue-400"
       onClick={handleClick}
     >
-      <div className="aspect-w-2 aspect-h-3 bg-blue-100 shadow-lg">
+      <div className="bg-blue-100 shadow-lg aspect-w-2 aspect-h-3">
         <Image
           src={
             poster_path
@@ -31,7 +31,7 @@ const RecommendationMovieCard = ({ movie, imagesTMDbAPIConfiguration }) => {
           objectFit="cover"
         />
       </div>
-      <h3 className="mt-2 md:mt-3 font-poppins text-sm lg:text-base font-medium line-clamp-2 leading-5">
+      <h3 className="mt-2 text-sm font-medium leading-5 md:mt-3 font-poppins lg:text-base line-clamp-2">
         {title}
       </h3>
     </article>

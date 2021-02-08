@@ -4,8 +4,8 @@
  */
 const SquareLoader = ({ additionalClassName }) => {
   return (
-    <div className="flex justify-center items-center">
-      <div className={additionalClassName + ' animate-ping bg-blue-200'}></div>
+    <div className="flex items-center justify-center">
+      <div className={additionalClassName + ' bg-blue-200 animate-ping'}></div>
     </div>
   );
 };

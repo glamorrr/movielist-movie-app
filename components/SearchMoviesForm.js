@@ -101,7 +101,7 @@ const SearchMoviesForm = ({
   return (
     <div className="md:flex md:items-end">
       <form
-        className="mt-6 px-4 lg:px-3 py-3 lg:py-2 max-w-xs flex justify-center items-center bg-white rounded-md shadow-lg"
+        className="flex items-center justify-center max-w-xs px-4 py-3 mt-6 bg-white rounded-md shadow-lg lg:px-3 lg:py-2"
         onSubmit={handleSubmit}
       >
         <Icon size="1.75rem" className="text-blue-300">
@@ -109,7 +109,7 @@ const SearchMoviesForm = ({
         </Icon>
         <div className="w-full mx-3">
           <input
-            className="w-full text-base lg:text-sm bg-white text-gray-500 font-medium tracking-wider focus:outline-none"
+            className="w-full text-base font-medium tracking-wider text-gray-500 bg-white lg:text-sm focus:outline-none"
             value={searchValue}
             onChange={handleInputChange}
             type="text"
@@ -142,7 +142,7 @@ const SearchMoviesForm = ({
       <div
         className={
           (isSearchInputFilled ? 'scale-100' : 'scale-0') +
-          ' hidden md:block mt-4 ml-6 px-3 py-1 w-max text-sm text-white font-medium tracking-wider bg-blue-400 rounded-2xl transform transition-transform shadow-sm'
+          ' hidden md:block mt-4 ml-6 px-3 py-1 w-max text-sm font-medium text-white tracking-wider bg-blue-400 rounded-2xl transform transition-transform shadow-sm'
         }
       >
         Search: {searchValue}

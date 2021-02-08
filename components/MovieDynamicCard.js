@@ -31,13 +31,13 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
       </div>
       {/* View on Desktop	*/}
       <CSSTransition classNames="movieLongCard" timeout={animationDuration} appear={true} in={true}>
-        <article className="hidden mt-6 lg:flex relative justify-center items-center text-gray-500 transition-colors ">
-          <div className="flex w-20 justify-center items-center font-poppins font-semibold text-2xl text-blue-300">
-            <span className="font-light text-base">#</span>
+        <article className="relative items-center justify-center hidden mt-6 text-gray-500 transition-colors lg:flex ">
+          <div className="flex items-center justify-center w-20 text-2xl font-semibold text-blue-300 font-poppins">
+            <span className="text-base font-light">#</span>
             {orderOfMovie}
           </div>
-          <div className="flex w-full ml-4 p-2 bg-white shadow-lg rounded-sm">
-            <div className="relative flex bg-blue-100 rounded-sm shadow-sm overflow-hidden">
+          <div className="flex w-full p-2 ml-4 bg-white rounded-sm shadow-lg">
+            <div className="relative flex overflow-hidden bg-blue-100 rounded-sm shadow-sm">
               <Image
                 src={
                   poster_path
@@ -49,10 +49,10 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
                 height={278 / 4}
               />
             </div>
-            <div className="ml-4 py-2 w-full grid grid-cols-4">
+            <div className="grid w-full grid-cols-4 py-2 ml-4">
               <div className="col-span-2 pr-4">
                 <h2
-                  className="font-poppins font-semibold hover:text-blue-400 tracking-wide	truncate cursor-pointer transition-colors"
+                  className="font-semibold tracking-wide truncate transition-colors cursor-pointer font-poppins hover:text-blue-400"
                   onClick={handleClick}
                 >
                   {title}
@@ -67,17 +67,17 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
                   <MdSentimentSatisfied />
                 </Icon>
                 <div className="ml-2">
-                  <p className="font-poppins font-medium">
+                  <p className="font-medium font-poppins">
                     {convertUnitNumberToPercentage(vote_average)}
                   </p>
-                  <p className="mt-1 font-poppins font-medium text-gray-400 text-sm tracking-wider leading-3 truncate">
+                  <p className="mt-1 text-sm font-medium leading-3 tracking-wider text-gray-400 truncate font-poppins">
                     {vote_count} users
                   </p>
                 </div>
               </div>
               <div className="col-span-1">
-                <p className="font-poppins font-medium tracking-wide">Released</p>
-                <p className="mt-1 font-poppins font-medium text-gray-400 text-sm tracking-wider leading-3 truncate">
+                <p className="font-medium tracking-wide font-poppins">Released</p>
+                <p className="mt-1 text-sm font-medium leading-3 tracking-wider text-gray-400 truncate font-poppins">
                   {new Date(release_date).getFullYear()}
                 </p>
               </div>

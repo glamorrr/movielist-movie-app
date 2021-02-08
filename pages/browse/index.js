@@ -66,7 +66,7 @@ export default function index({
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <h1 className="pt-6 font-poppins font-semibold text-4xl text-gray-600 tracking-wide">
+          <h1 className="pt-6 text-4xl font-semibold tracking-wide text-gray-600 font-poppins">
             Browse Movies
           </h1>
           <SearchMoviesForm
@@ -81,7 +81,7 @@ export default function index({
           />
           {shouldShowLoader && <SquareLoader additionalClassName="mt-28 mb-16 w-10 h-10" />}
           {isSearchNoResults && (
-            <h2 className="mt-24 mb-32 mx-auto font-poppins font-medium text-2xl text-center text-gray-500 tracking wide">
+            <h2 className="mx-auto mt-24 mb-32 text-2xl font-medium text-center text-gray-500 font-poppins tracking wide">
               No Results
             </h2>
           )}

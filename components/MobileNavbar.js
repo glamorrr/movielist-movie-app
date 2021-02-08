@@ -15,7 +15,7 @@ const MobileNavbar = () => {
       <div
         className={
           (isOpen ? 'hidden' : 'fixed') +
-          ' z-50 bottom-7 right-4 p-2 bg-white rounded-lg shadow-lg cursor-pointer'
+          ' z-50 p-2 bg-white rounded-lg shadow-lg cursor-pointer bottom-7 right-4'
         }
         onClick={() => setIsOpen(true)}
       >
@@ -25,7 +25,7 @@ const MobileNavbar = () => {
       </div>
       {/* Menus */}
       <CSSTransition unmountOnExit classNames="menu" timeout={animationDuration} in={isOpen}>
-        <nav className="fixed z-40 bottom-7 py-4 px-6 right-4 grid grid-cols-2 gap-4 justify-items-center items-center text-blue-400 bg-white rounded-lg shadow-lg transition-all">
+        <nav className="fixed z-40 grid items-center grid-cols-2 gap-4 px-6 py-4 text-blue-400 transition-all bg-white rounded-lg shadow-lg bottom-7 right-4 justify-items-center">
           <div
             className="cursor-pointer"
             onClick={() => router.push('/browse').then(() => window.scrollTo(0, 0))}
@@ -33,7 +33,7 @@ const MobileNavbar = () => {
             <Icon size="2rem" className="mx-auto">
               <MdExplore />
             </Icon>
-            <p className="mt-1 font-poppins font-semibold text-xs tracking-wider">browse</p>
+            <p className="mt-1 text-xs font-semibold tracking-wider font-poppins">browse</p>
           </div>
           <div onClick={() => setIsOpen(false)}>
             <Icon size="1.75rem" className="cursor-pointer">

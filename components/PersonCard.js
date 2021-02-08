@@ -4,10 +4,10 @@ const PersonCard = ({ name, role, profilePath, imagesTMDbAPIConfiguration }) => 
   const { base_url, profile_sizes } = imagesTMDbAPIConfiguration;
 
   return (
-    <div className="flex bg-white rounded overflow-hidden shadow-sm">
+    <div className="flex overflow-hidden bg-white rounded shadow-sm">
       <div
         style={{ width: '60px', height: '90px', minWidth: '60px' }}
-        className="relative flex justify-center items-center bg-blue-100"
+        className="relative flex items-center justify-center bg-blue-100"
       >
         <Image
           src={
@@ -20,15 +20,15 @@ const PersonCard = ({ name, role, profilePath, imagesTMDbAPIConfiguration }) => 
           objectFit="cover"
         />
       </div>
-      <div className="relative p-3 flex flex-col justify-between">
-        <h3 className="font-poppins font-medium text-gray-700 leading-5">{name}</h3>
+      <div className="relative flex flex-col justify-between p-3">
+        <h3 className="font-medium leading-5 text-gray-700 font-poppins">{name}</h3>
         <p
           style={{
             display: '-webkit-box',
             WebkitLineClamp: '1',
             WebkitBoxOrient: 'vertical',
           }}
-          className="font-poppins text-sm text-gray-500 overflow-hidden"
+          className="overflow-hidden text-sm text-gray-500 font-poppins"
         >
           {role}
         </p>

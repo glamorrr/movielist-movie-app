@@ -15,12 +15,11 @@ const BadgeNumber = ({ order }) => {
   return (
     <span
       className={
-        'absolute flex justify-center items-center top-0 left-0 w-9 h-9 font-poppins font-semibold text-sm ' +
         `${setTextColorBadgeNumber(order)} ${setBackgroundColorBadgeNumber(order)}` +
-        ' z-10 -translate-x-1/4 -translate-y-1/4 transform rounded-full shadow-md'
+        ' absolute top-0 left-0 z-10 flex items-center justify-center text-sm font-semibold transform rounded-full shadow-md w-9 h-9 font-poppins -translate-x-1/4 -translate-y-1/4'
       }
     >
-      <span className="font-light text-xs">#</span>
+      <span className="text-xs font-light">#</span>
       {order}
     </span>
   );

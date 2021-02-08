@@ -14,17 +14,17 @@ const MoviesDynamicSection = ({
 }) => {
   return (
     <section className="mt-10">
-      <header className="flex justify-between items-baseline">
-        <h1 className="font-poppins font-semibold uppercase text-lg text-gray-600 tracking-wide md:tracking-wider">
+      <header className="flex items-baseline justify-between">
+        <h1 className="text-lg font-semibold tracking-wide text-gray-600 uppercase font-poppins md:tracking-wider">
           {headingTitle}
         </h1>
         <Link href={linkToPage}>
-          <a className="font-poppins font-semibold text-xs text-gray-400 hover:text-gray-500 tracking-wider lg:tracking-widest transition-colors">
+          <a className="text-xs font-semibold tracking-wider text-gray-400 transition-colors font-poppins hover:text-gray-500 lg:tracking-widest">
             View All
           </a>
         </Link>
       </header>
-      <div className="lg:block mt-5 mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5">
+      <div className="grid grid-cols-3 mx-auto mt-5 lg:block sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5">
         {movies.map((movie, i) => (
           <MovieDynamicCard
             key={movie.id}

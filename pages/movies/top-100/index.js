@@ -36,7 +36,7 @@ export default function TopRated({ topRatedMovies, imagesTMDbAPIConfiguration, e
         <MobileNavbar />
         <main>
           <div className="pt-6">
-            <h1 className="inline font-poppins font-semibold text-3xl text-gray-600 tracking-wide">
+            <h1 className="inline text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
               Top 100 Movies
             </h1>
           </div>

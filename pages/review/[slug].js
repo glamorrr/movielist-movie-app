@@ -65,19 +65,19 @@ export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
         />
         <div className="relative z-10">
           <LayoutWrapper>
-            <p className="pt-5 font-poppins text-right text-sm text-gray-400">
+            <p className="pt-5 text-sm text-right text-gray-400 font-poppins">
               {review.updated_at}
             </p>
-            <div className="mt-8 md:mt-24 font-poppins text-center text-gray-50">
-              <h1 className="font-medium text-4xl tracking-wide">
+            <div className="mt-8 text-center md:mt-24 font-poppins text-gray-50">
+              <h1 className="text-4xl font-medium tracking-wide">
                 <Link href={`/movie/${review.media_id}-${parseToDashedString(review.media_title)}`}>
-                  <a className="hover:text-blue-400 transition-colors">{review.media_title}</a>
+                  <a className="transition-colors hover:text-blue-400">{review.media_title}</a>
                 </Link>
               </h1>
-              <p className="mt-2 text-gray-300 italic">a review by {review.author}</p>
+              <p className="mt-2 italic text-gray-300">a review by {review.author}</p>
             </div>
             <article
-              className="prose mt-8 md:mt-12 mx-auto p-8 w-full bg-white rounded shadow-md overflow-hidden"
+              className="w-full p-8 mx-auto mt-8 overflow-hidden prose bg-white rounded shadow-md md:mt-12"
               dangerouslySetInnerHTML={{ __html: review.content }}
             />
           </LayoutWrapper>

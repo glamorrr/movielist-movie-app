@@ -12,7 +12,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <div className="min-h-screen bg-gray-100 font-raleway text-gray-900">
+    <div className="min-h-screen text-gray-900 bg-gray-100 font-raleway">
       <Component {...pageProps} />
     </div>
   );

@@ -32,7 +32,7 @@ const MovieCard = ({
         >
           {children}
           <div style={{ maxWidth: '185px' }}>
-            <div className="aspect-w-2 aspect-h-3 bg-blue-100 rounded-md lg:rounded shadow-lg lg:shadow-xl overflow-hidden">
+            <div className="overflow-hidden bg-blue-100 rounded-md shadow-lg aspect-w-2 aspect-h-3 lg:rounded lg:shadow-xl">
               <Image
                 src={
                   poster_path
@@ -45,7 +45,7 @@ const MovieCard = ({
               />
             </div>
           </div>
-          <h2 className="mt-2 md:mt-3 font-poppins text-sm sm:text-base font-medium md:font-semibold line-clamp-2 leading-5">
+          <h2 className="mt-2 text-sm font-medium leading-5 md:mt-3 font-poppins sm:text-base md:font-semibold line-clamp-2">
             {title}
           </h2>
         </article>

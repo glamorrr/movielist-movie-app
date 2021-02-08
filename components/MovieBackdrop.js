@@ -25,10 +25,10 @@ const MovieBackdrop = ({
               className="relative object-top"
             />
           ) : (
-            <div className="backdrop--none w-full h-full" />
+            <div className="w-full h-full backdrop--none" />
           )}
 
-          <div className="backdrop--shadow absolute z-10 inset-0" />
+          <div className="absolute inset-0 z-10 backdrop--shadow" />
         </div>
       </CSSTransition>
 

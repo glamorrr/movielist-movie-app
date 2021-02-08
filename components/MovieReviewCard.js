@@ -16,9 +16,9 @@ const MovieReviewCard = ({ id, author, avatarPath, content, imagesTMDbAPIConfigu
   }
 
   return (
-    <div className="flex space-x-4 items-start">
+    <div className="flex items-start space-x-4">
       <div className="w-12 shadow-lg">
-        <div className="aspect-w-1 aspect-h-1 bg-blue-100">
+        <div className="bg-blue-100 aspect-w-1 aspect-h-1">
           <Image
             src={
               profilePicture ||
@@ -30,14 +30,14 @@ const MovieReviewCard = ({ id, author, avatarPath, content, imagesTMDbAPIConfigu
           />
         </div>
       </div>
-      <div className="max-w-2xl w-full flex flex-col ">
+      <div className="flex flex-col w-full max-w-2xl ">
         <article
-          className="prose p-5 bg-white rounded shadow-sm"
+          className="p-5 prose bg-white rounded shadow-sm"
           dangerouslySetInnerHTML={{ __html: content }}
         />
         <button
           onClick={() => router.push(`/review/${id}`).then(() => window.scrollTo(0, 0))}
-          className="-mt-4 px-3 py-2 self-end font-medium text-white hover:text-gray-100 bg-blue-400 hover:bg-blue-500 shadow-md focus:ring-4 ring-blue-200 focus:outline-none transition-colors"
+          className="self-end px-3 py-2 -mt-4 font-medium text-white transition-colors bg-blue-400 shadow-md hover:text-gray-100 hover:bg-blue-500 focus:ring-4 ring-blue-200 focus:outline-none"
         >
           Read More
         </button>

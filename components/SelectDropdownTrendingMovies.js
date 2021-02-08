@@ -37,7 +37,7 @@ const SelectDropdownTrendingMovies = ({ buttonText, dropdownText, linkToPage }) 
       <button
         ref={refButton}
         style={{ WebkitTapHighlightColor: 'transparent' }}
-        className="px-3 py-2 font-poppins font-semibold text-2xl text-gray-600 tracking-wide bg-gray-200 rounded-md cursor-pointer focus:outline-none"
+        className="px-3 py-2 text-2xl font-semibold tracking-wide text-gray-600 bg-gray-200 rounded-md cursor-pointer font-poppins focus:outline-none"
         aria-expanded={isDropdownOpen}
         aria-controls="dropdown"
         aria-label="toggle movies trending time selector"
@@ -52,7 +52,7 @@ const SelectDropdownTrendingMovies = ({ buttonText, dropdownText, linkToPage }) 
         style={{ WebkitTapHighlightColor: 'transparent' }}
         className={
           (isDropdownOpen ? 'scale-y-100' : 'scale-y-0') +
-          ' absolute z-10 left-0 top-11 px-4 py-2 font-poppins font-medium text-2xl text-gray-600 bg-white rounded-md transform transition-transform origin-top'
+          ' absolute z-10 top-11 left-0 px-4 py-2 font-poppins font-medium text-2xl text-gray-600 bg-white rounded-md transform transition-transform origin-top'
         }
         id="dropdown"
         aria-label="select the movies trending time"

@@ -35,7 +35,7 @@ export default function Popular({ popularMovies, imagesTMDbAPIConfiguration, err
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <h1 className="pt-6 font-poppins font-semibold text-3xl text-gray-600 tracking-wide">
+          <h1 className="pt-6 text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
             What's Popular
           </h1>
           <MoviesGrid

@@ -39,7 +39,7 @@ const MovieInformation = ({ movie }) => {
       {/* Mobile */}
       <section
         style={{ WebkitOverflowScrolling: 'touch' }}
-        className="md:hidden mt-8 p-5 flex font-poppins bg-white rounded shadow-sm overflow-x-scroll whitespace-nowrap"
+        className="flex p-5 mt-8 overflow-x-scroll bg-white rounded shadow-sm md:hidden font-poppins whitespace-nowrap"
       >
         {informations.map((info) => {
           if (!info.data) return;
@@ -54,7 +54,7 @@ const MovieInformation = ({ movie }) => {
         })}
       </section>
       {/* Desktop */}
-      <div className="hidden flex-shrink-0 md:block mt-6 mr-8 lg:mr-10 w-56 font-poppins">
+      <div className="flex-shrink-0 hidden w-56 mt-6 mr-8 md:block lg:mr-10 font-poppins">
         <section className="p-5 bg-white rounded shadow-sm">
           {informations.map((info, i) => {
             if (!info.data) return;
@@ -66,7 +66,7 @@ const MovieInformation = ({ movie }) => {
                 {Array.isArray(info.data) ? (
                   <ul>
                     {info.data.map((item) => (
-                      <li key={item} className="list-none text-sm text-gray-700">
+                      <li key={item} className="text-sm text-gray-700 list-none">
                         {item}
                       </li>
                     ))}

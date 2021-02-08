@@ -9,26 +9,26 @@ const MovieFallback = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="backdrop--shadow h-52 md:h-96 animate-pulse bg-blue-200" />
-        <div className="pb-12 md:pb-0 bg-white">
+        <div className="bg-blue-200 backdrop--shadow h-52 md:h-96 animate-pulse" />
+        <div className="pb-12 bg-white md:pb-0">
           <LayoutWrapper>
             <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
-              <div className="relative -top-28 -mb-12 w-28 md:w-56 h-40 md:h-80 justify-center bg-blue-100 rounded shadow-lg md:shadow-xl animate-pulse" />
-              <div className="hidden md:block mt-7 ml-8">
-                <div className="w-52 h-10 bg-blue-100 animate-pulse" />
-                <div className="mt-6 w-full h-3 bg-blue-100 animate-pulse rounded" />
-                <div className="mt-3 w-full h-3 bg-blue-100 animate-pulse rounded" />
-                <div className="mt-3 w-2/3 h-3 bg-blue-100 animate-pulse rounded" />
+              <div className="relative justify-center h-40 -mb-12 bg-blue-100 rounded shadow-lg -top-28 w-28 md:w-56 md:h-80 md:shadow-xl animate-pulse" />
+              <div className="hidden ml-8 md:block mt-7">
+                <div className="h-10 bg-blue-100 w-52 animate-pulse" />
+                <div className="w-full h-3 mt-6 bg-blue-100 rounded animate-pulse" />
+                <div className="w-full h-3 mt-3 bg-blue-100 rounded animate-pulse" />
+                <div className="w-2/3 h-3 mt-3 bg-blue-100 rounded animate-pulse" />
               </div>
             </div>
-            <div className="md:hidden -mt-20 w-40 h-10 bg-blue-100 animate-pulse" />
+            <div className="w-40 h-10 -mt-20 bg-blue-100 md:hidden animate-pulse" />
           </LayoutWrapper>
         </div>
         <LayoutWrapper>
-          <div className="md:hidden p-5 mt-8 bg-white rounded">
-            <div className="w-full h-3 bg-blue-100 animate-pulse rounded" />
-            <div className="mt-3 w-full h-3 bg-blue-100 animate-pulse rounded" />
-            <div className="mt-3 w-2/3 h-3 bg-blue-100 animate-pulse rounded" />
+          <div className="p-5 mt-8 bg-white rounded md:hidden">
+            <div className="w-full h-3 bg-blue-100 rounded animate-pulse" />
+            <div className="w-full h-3 mt-3 bg-blue-100 rounded animate-pulse" />
+            <div className="w-2/3 h-3 mt-3 bg-blue-100 rounded animate-pulse" />
           </div>
         </LayoutWrapper>
       </main>
