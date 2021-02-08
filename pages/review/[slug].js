@@ -6,7 +6,7 @@ import marked from 'marked';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MobileNavbar from '@/components/MobileNavbar';
-import ReviewFallback from '@/components/ReviewFallback';
+import ReviewFallback from '@/components/PageLoader/ReviewFallback';
 import Footer from '@/components/Footer';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import axiosTMDb from '@/utils/axiosTMDb';

@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MobileNavbar from '@/components/MobileNavbar';
-import MovieImagesFallback from '@/components/MovieImagesFallback';
+import MovieImagesFallback from '@/components/PageLoader/MovieImagesFallback';
 import MovieImagesDetails from '@/components/MovieImagesDetails';
 import Footer from '@/components/Footer';
 import LayoutWrapper from '@/components/LayoutWrapper';
