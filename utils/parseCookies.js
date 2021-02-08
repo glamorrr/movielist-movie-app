@@ -7,7 +7,6 @@ import cookie from 'cookie';
  * @param {object} req - Request to server.
  * @return {object} - Cookies object.
  */
-
 const parseCookies = (req) => {
   return cookie.parse(req.headers.cookie || '');
 };

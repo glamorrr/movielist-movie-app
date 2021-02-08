@@ -1,3 +1,10 @@
+/**
+ * Example:
+ * 	- 120 to "2h 0m"
+ * 	- 150 to "2h 30m"
+ * @param {number} minutes
+ * @returns {string}
+ */
 const formatRuntime = (minutes) => {
   if (!minutes) return '';
   const hours = minutes / 60;
