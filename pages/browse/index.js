@@ -20,7 +20,7 @@ import {
   MOVIES_GENRE_LIST_ENDPOINT,
 } from '@/utils/TMDbEndpoint';
 
-export default function index({
+export default function Browse({
   popularMovies,
   trendingMovies,
   upcomingMovies,

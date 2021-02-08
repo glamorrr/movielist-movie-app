@@ -18,7 +18,7 @@ import {
 import DOMPurify from '@/utils/DOMPurify';
 import parseToDashedString from '@/utils/parseToDashedString';
 
-export default function Movie({ review, imagesTMDbAPIConfiguration, error }) {
+export default function Review({ review, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
 
   if (isFallback) return <ReviewFallback />;

@@ -13,7 +13,7 @@ import { MOVIE_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEnd
 import formatReleaseDate from '@/utils/formatReleaseDate';
 import parseToDashedString from '@/utils/parseToDashedString';
 
-export default function index({ movie, imagesTMDbAPIConfiguration, error }) {
+export default function Images({ movie, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
 
   if (isFallback) return <MovieImagesFallback />;
