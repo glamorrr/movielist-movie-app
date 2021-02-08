@@ -5,7 +5,7 @@ import commaNumber from 'comma-number';
 import marked from 'marked';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MovieDetails from '@/components/MovieDetails';
-import MovieFallback from '@/components/MovieFallback';
+import MovieFallback from '@/components/PageLoader/MovieFallback';
 import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
 import LayoutWrapper from '@/components/LayoutWrapper';
