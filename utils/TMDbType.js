@@ -1,6 +1,7 @@
-export const GET_MOVIES_SEARCH = 'search';
-export const GET_MOVIES_POPULAR = 'popular';
-export const GET_MOVIES_UPCOMING = 'upcoming';
-export const GET_MOVIES_TRENDING = 'trending';
-export const GET_MOVIES_TOP_RATED = 'top-100';
-export const GET_MOVIE_RECOMMENDATIONS = 'movie recommendations';
+export const GET_MOVIES_SEARCH = 'GET_MOVIES_SEARCH';
+export const GET_MOVIES_POPULAR = 'GET_MOVIES_POPULAR';
+export const GET_MOVIES_UPCOMING = 'GET_MOVIES_UPCOMING';
+export const GET_MOVIES_TRENDING = 'GET_MOVIES_TRENDING';
+export const GET_MOVIES_TOP_RATED = 'GET_MOVIES_TOP_RATED';
+export const GET_MOVIE_RECOMMENDATIONS = 'GET_MOVIE_RECOMMENDATIONS';
+export const GET_MOVIES_BY_KEYWORDS = 'GET_MOVIES_BY_KEYWORDS';

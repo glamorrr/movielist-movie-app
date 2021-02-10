@@ -8,6 +8,7 @@ import {
   GET_MOVIES_UPCOMING,
   GET_MOVIES_TOP_RATED,
   GET_MOVIE_RECOMMENDATIONS,
+  GET_MOVIES_BY_KEYWORDS,
 } from '@/utils/TMDbType';
 
 const MoviesInfiniteScroll = ({
@@ -23,7 +24,8 @@ const MoviesInfiniteScroll = ({
    * @property {number} pagination - Current pagination to use in request more data (infinite scroll).
    * @property {number} totalPagination - Total pagination for barrier to request more data.
    * @property {string} type - Request type to API.
-   * @property {string} [movieId] - movie id to get recommendation for movies based on movie.
+   * @property {number} [movieId] - movie id to get recommendation for movies based on movie.
+   * @property {number} [keywordId] - keyword id to get movies by keyword.
    * @property {string} [query] - Input value to search movies.
    * @property {string} [timeSpan] (day or week) - Time span for request on trending movies endpoint.
    */
@@ -33,6 +35,7 @@ const MoviesInfiniteScroll = ({
     totalPagination,
     type,
     movieId,
+    keywordId,
     query,
     timeSpan,
   } = infiniteScrollConfiguration;
@@ -75,13 +78,12 @@ const MoviesInfiniteScroll = ({
                 },
               };
               break;
-            case GET_MOVIES_POPULAR:
-            case GET_MOVIES_UPCOMING:
-            case GET_MOVIES_TOP_RATED:
+            case GET_MOVIES_BY_KEYWORDS:
               config = {
                 params: {
                   type,
                   page: nextPagination,
+                  keyword_id: keywordId,
                 },
               };
               break;
@@ -91,6 +93,16 @@ const MoviesInfiniteScroll = ({
                   type,
                   page: nextPagination,
                   movie_id: movieId,
+                },
+              };
+              break;
+            case GET_MOVIES_POPULAR:
+            case GET_MOVIES_UPCOMING:
+            case GET_MOVIES_TOP_RATED:
+              config = {
+                params: {
+                  type,
+                  page: nextPagination,
                 },
               };
               break;
