@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
 import { MdMenu, MdClose, MdExplore } from 'react-icons/md';
 import Icon from '@/components/Icon';
 
 const MobileNavbar = () => {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const animationDuration = 300;
 
@@ -26,15 +25,14 @@ const MobileNavbar = () => {
       {/* Menus */}
       <CSSTransition unmountOnExit classNames="menu" timeout={animationDuration} in={isOpen}>
         <nav className="fixed z-40 grid items-center grid-cols-2 gap-4 px-6 py-4 text-blue-400 transition-all bg-white rounded-lg shadow-lg bottom-7 right-4 justify-items-center">
-          <div
-            className="cursor-pointer"
-            onClick={() => router.push('/browse').then(() => window.scrollTo(0, 0))}
-          >
-            <Icon size="2rem" className="mx-auto">
-              <MdExplore />
-            </Icon>
-            <p className="mt-1 text-xs font-semibold tracking-wider font-poppins">browse</p>
-          </div>
+          <Link href="/browse">
+            <a className="cursor-pointer">
+              <Icon size="2rem" className="mx-auto">
+                <MdExplore />
+              </Icon>
+              <p className="mt-1 text-xs font-semibold tracking-wider font-poppins">browse</p>
+            </a>
+          </Link>
           <div onClick={() => setIsOpen(false)}>
             <Icon size="1.75rem" className="cursor-pointer">
               <MdClose />
