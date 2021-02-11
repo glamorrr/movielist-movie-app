@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { MdSentimentSatisfied } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
 import BadgeNumber from '@/components/BadgeNumber';
@@ -10,16 +10,9 @@ import convertUnitNumberToPercentage from '@/utils/convertUnitNumberToPercentage
 import parseToDashedString from '@/utils/parseToDashedString';
 
 const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfiguration }) => {
-  const router = useRouter();
   const { title, id, poster_path, release_date, vote_average, vote_count, genre_ids } = movie;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
   const animationDuration = 300;
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    const dashedMovieTitle = parseToDashedString(title);
-    router.push(`/movie/${id}-${dashedMovieTitle}`).then(() => window.scrollTo(0, 0));
-  };
 
   return (
     <>
@@ -51,12 +44,11 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
             </div>
             <div className="grid w-full grid-cols-4 py-2 ml-4">
               <div className="col-span-2 pr-4">
-                <h2
-                  className="font-semibold tracking-wide truncate transition-colors cursor-pointer font-poppins hover:text-blue-400"
-                  onClick={handleClick}
-                >
-                  {title}
-                </h2>
+                <Link href={`/movie/${id}-${parseToDashedString(title)}`}>
+                  <a className="block font-semibold tracking-wide truncate transition-colors cursor-pointer font-poppins hover:text-blue-400">
+                    {title}
+                  </a>
+                </Link>
                 <div className="flex mt-1">
                   {genre_ids.length !== 0 &&
                     genre_ids.map((id) => <BadgeGenre genre={genres[id]} key={id} />)}
