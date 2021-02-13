@@ -6,16 +6,17 @@ import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 import MobileNavbar from '@/components/MobileNavbar';
 import PersonDetails from '@/components/PersonDetails';
 import Footer from '@/components/Footer';
+import PersonFallback from '@/components/PageLoader/PersonFallback';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import axiosTMDb from '@/utils/axiosTMDb';
 import { PERSON_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
 import setGender from '@/utils/setGender';
 import getCreditsYear from '@/utils/getCreditsYear';
 
-export default function Movie({ person, imagesTMDbAPIConfiguration, error }) {
+export default function Person({ person, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
 
-  if (isFallback) return <p>fetching...</p>;
+  if (isFallback) return <PersonFallback />;
 
   if (error) {
     return (

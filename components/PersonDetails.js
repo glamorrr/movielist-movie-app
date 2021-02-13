@@ -57,6 +57,7 @@ const PersonDetails = ({ person, imagesTMDbAPIConfiguration }) => {
                 if (socialMedia === 'Facebook') url = 'https://www.facebook.com';
                 return (
                   <a
+                    key={socialMedia}
                     className="mr-3 text-blue-500 hover:underline font-poppins"
                     href={`${url}/${externalIds[socialMedia]}`}
                     target="_blank"
