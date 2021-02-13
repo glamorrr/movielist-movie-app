@@ -146,7 +146,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   <p>{overview}</p>
                 </div>
               </section>
-              <div className="flex-grow mt-6">
+              <div className="flex-grow mt-6 space-y-8">
                 {isCast && (
                   <section>
                     <h2 className="text-lg font-medium tracking-wide font-poppins">Cast</h2>
@@ -162,7 +162,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   </section>
                 )}
                 {isCrew && (
-                  <section className="mt-8">
+                  <section>
                     <h2 className="text-lg font-medium tracking-wide font-poppins">Crew</h2>
                     <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                       {crew.slice(0, 4).map((person) => (
@@ -176,7 +176,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   </section>
                 )}
                 {trailer && (
-                  <section className="mt-8">
+                  <section>
                     <h2 className="text-lg font-medium tracking-wide font-poppins">Trailer</h2>
                     <div className="max-w-2xl mt-3">
                       <div className="aspect-w-16 aspect-h-9">
@@ -191,7 +191,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   </section>
                 )}
                 {isRecommendations && (
-                  <section className="mt-8">
+                  <section>
                     <h2 className="text-lg font-medium tracking-wide font-poppins">
                       Recommendations
                     </h2>
@@ -210,7 +210,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   </section>
                 )}
                 {reviews.results.length > 0 && (
-                  <section className="mt-8">
+                  <section>
                     <h2 className="text-lg font-medium tracking-wide font-poppins">Reviews</h2>
                     <div className="mt-3 space-y-6">
                       {reviews.results.map((review) => (
