@@ -12,7 +12,6 @@ import parseToDashedString from '@/utils/parseToDashedString';
 const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfiguration }) => {
   const { title, id, poster_path, release_date, vote_average, vote_count, genre_ids } = movie;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
-  const animationDuration = 300;
 
   return (
     <>
@@ -23,7 +22,7 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
         </MovieCard>
       </div>
       {/* View on Desktop	*/}
-      <CSSTransition classNames="movieLongCard" timeout={animationDuration} appear={true} in={true}>
+      <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
         <article className="relative items-center justify-center hidden mt-6 text-gray-500 transition-colors lg:flex ">
           <div className="flex items-center justify-center w-20 text-2xl font-semibold text-blue-300 font-poppins">
             <span className="text-base font-light">#</span>
@@ -77,17 +76,6 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
           </div>
         </article>
       </CSSTransition>
-
-      <style jsx>{`
-        .movieLongCard-appear {
-          opacity: 0;
-        }
-
-        .movieLongCard-appear-active {
-          opacity: 1;
-          transition: opacity ${animationDuration}ms ease-in-out;
-        }
-      `}</style>
     </>
   );
 };

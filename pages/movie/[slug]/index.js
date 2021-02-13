@@ -92,7 +92,6 @@ export async function getStaticProps({ params }) {
          *
          */
         append_to_response: 'credits,videos,keywords,recommendations,reviews,images',
-        // TODO?: get movie reviews, recommedations movies, videos (trailers)
       },
     };
 

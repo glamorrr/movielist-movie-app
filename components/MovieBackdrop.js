@@ -6,11 +6,9 @@ const MovieBackdrop = ({
   backdropPath,
   imagesTMDbAPIConfiguration: { base_url, backdrop_sizes },
 }) => {
-  const animationDuration = 300;
-
   return (
     <>
-      <CSSTransition classNames="movieBackdrop" timeout={animationDuration} appear={true} in={true}>
+      <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
         <div
           className={
             (type === 'banner' ? 'absolute w-full' : 'relative') + ' h-52 md:h-96 bg-blue-100'
@@ -43,15 +41,6 @@ const MovieBackdrop = ({
           background-image: ${backdropPath
             ? 'linear-gradient(180deg, rgba(6, 13, 34, 0) 40%, rgba(6, 13, 34, .6))'
             : 'linear-gradient(180deg, rgba(6, 13, 34, 0) 0%, rgba(6, 13, 34, .25))'};
-        }
-
-        .movieBackdrop-appear {
-          opacity: 0;
-        }
-
-        .movieBackdrop-appear-active {
-          opacity: 1;
-          transition: opacity ${animationDuration}ms ease-in-out;
         }
       `}</style>
     </>

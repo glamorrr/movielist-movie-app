@@ -37,7 +37,6 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const isBackdrops = backdrops.length > 0;
   const isRecommendations = recommendations.results.length > 0;
   const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
-  const animationDuration = 300;
 
   const router = useRouter();
   const [recommendationMovies, setRecommendationMovies] = useState(recommendations.results);
@@ -49,12 +48,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
       <div className="text-gray-700 bg-white">
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
-            <CSSTransition
-              classNames="movieCard"
-              timeout={animationDuration}
-              appear={true}
-              in={true}
-            >
+            <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
               <div className="relative justify-center h-12 md:w-56 md:h-52">
                 <div className="absolute z-20 h-40 overflow-hidden bg-blue-100 rounded shadow-lg -top-28 w-28 md:w-56 md:h-80 md:shadow-xl">
                   <Image
@@ -283,17 +277,6 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
           )}
         </div>
       </LayoutWrapper>
-
-      <style jsx>{`
-        .movieCard-appear {
-          opacity: 0;
-        }
-
-        .movieCard-appear-active {
-          opacity: 1;
-          transition: opacity ${animationDuration}ms ease-in-out;
-        }
-      `}</style>
     </>
   );
 };
