@@ -106,9 +106,7 @@ export async function getStaticProps({ params }) {
         year,
         credits: year
           ? movieCredits.filter((credit) => new Date(credit.release_date).getFullYear() === year)
-          : movieCredits.filter((credit) =>
-              credit.release_date ? credit.release_date.length === 0 : credit.release_date === null
-            ),
+          : movieCredits.filter((credit) => !credit.release_date),
       }));
     }
 

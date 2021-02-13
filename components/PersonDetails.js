@@ -85,7 +85,7 @@ const PersonDetails = ({ person, imagesTMDbAPIConfiguration }) => {
                   <div className="grid grid-cols-3 mx-auto mt-5 sm:grid-cols-4 md:grid-cols-5 gap-x-4 gap-y-5 md:gap-6 lg:gap-8">
                     {credits.map(({ character, id, job, poster_path, title }) => (
                       <Link
-                        key={id + (character || job)}
+                        key={`${id}${character || job}`}
                         href={`/movie/${id}-${parseToDashedString(title)}`}
                       >
                         <a className="block cursor-pointer font-poppins group">
