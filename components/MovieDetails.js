@@ -159,10 +159,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                       {cast.slice(0, 6).map((person) => (
                         <PersonCard
-                          key={person.credit_id}
-                          name={person.name}
-                          role={person.character}
-                          profilePath={person.profile_path}
+                          key={person.id}
+                          person={person}
                           imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                         />
                       ))}
@@ -175,10 +173,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                       {crew.slice(0, 4).map((person) => (
                         <PersonCard
-                          key={person.credit_id}
-                          name={person.name}
-                          role={person.job}
-                          profilePath={person.profile_path}
+                          key={person.id}
+                          person={person}
                           imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                         />
                       ))}
@@ -243,10 +239,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
               {cast.map((person) => (
                 <PersonCard
-                  key={person.credit_id}
-                  name={person.name}
-                  role={person.character}
-                  profilePath={person.profile_path}
+                  key={person.id}
+                  person={person}
                   imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                 />
               ))}
@@ -256,10 +250,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
               {crew.map((person) => (
                 <PersonCard
-                  key={person.credit_id}
-                  name={person.name}
-                  role={person.job}
-                  profilePath={person.profile_path}
+                  key={person.id}
+                  person={person}
                   imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                 />
               ))}

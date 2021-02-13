@@ -5,6 +5,7 @@ export const MOVIES_UPCOMING_ENDPOINT = '/movie/upcoming';
 export const MOVIE_ENDPOINT = '/movie';
 export const REVIEW_ENDPOINT = '/review';
 export const KEYWORD_ENDPOINT = '/keyword';
+export const PERSON_ENDPOINT = '/person';
 export const MOVIES_GENRE_LIST_ENDPOINT = '/genre/movie/list';
 export const TMDb_API_CONFIGURATION_ENDPOINT = '/configuration';
 
