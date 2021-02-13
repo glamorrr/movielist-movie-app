@@ -31,10 +31,7 @@ const PersonDetails = ({ person, imagesTMDbAPIConfiguration }) => {
       </div>
       <LayoutWrapper>
         <div style={{ gridTemplateColumns: '14rem auto' }} className="relative md:grid gap-x-12">
-          <div
-            style={{ maxWidth: '230px' }}
-            className="w-full mx-auto md:top-11 md:relative -mt-28"
-          >
+          <div style={{ maxWidth: '230px' }} className="w-full mx-auto -mt-28 md:-mt-18">
             <div className="overflow-hidden bg-blue-100 rounded-md shadow-xl aspect-w-2 aspect-h-3 lg:rounded lg:shadow-xl">
               <Image
                 src={
@@ -69,13 +66,11 @@ const PersonDetails = ({ person, imagesTMDbAPIConfiguration }) => {
                 );
               })}
             </p>
-            <div className="mt-4">
-              <PersonBiography biography={biography} />
-            </div>
+            <div className="mt-4">{biography && <PersonBiography biography={biography} />}</div>
           </div>
         </div>
         {movie_credits.length && (
-          <div className="mt-12">
+          <div className="mt-11">
             {movie_credits.map(({ year, credits }) => {
               if (!credits.length) return;
               return (

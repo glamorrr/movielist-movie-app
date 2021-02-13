@@ -11,6 +11,9 @@ module.exports = {
       maxWidth: {
         '1080px': '1080px',
       },
+      spacing: {
+        '-18': '-4.5rem',
+      },
     },
   },
   variants: {
