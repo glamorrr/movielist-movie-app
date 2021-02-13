@@ -2,26 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .CSSTransitionOpacity-appear {
-    opacity: 0;
-  }
+.CSSTransitionOpacity-appear {
+  opacity: 0;
+}
 
-  .CSSTransitionOpacity-appear-active {
-    opacity: 1;
-    transition: opacity 300ms ease-in-out;
-  }
+.CSSTransitionOpacity-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
 
-  .CSSTransitionScale-appear {
-    opacity: 0;
-    transform: scale(0.9);
-  }
+.CSSTransitionScale-appear {
+  opacity: 0;
+  transform: scale(0.9);
+}
 
-  .CSSTransitionScale-appear-active {
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-  }
+.CSSTransitionScale-appear-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
 }
 
 @layer base {
