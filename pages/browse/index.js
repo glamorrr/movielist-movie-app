@@ -140,7 +140,7 @@ export default function Browse({
   );
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   const NUMBER_OF_MOVIES_TO_SHOW = 6;
   const TOP_RATED_MOVIES_TO_SHOW = 10;
 

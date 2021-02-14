@@ -65,7 +65,6 @@ const MovieInformation = ({ movie }) => {
             return (
               <div key={info.title} className={isFirstItem ? undefined : 'mt-4'}>
                 <h2 className="text-xs text-gray-400">{info.title}</h2>
-
                 {Array.isArray(info.data) ? (
                   <ul>
                     {info.data.map((item) => (

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import commaNumber from 'comma-number';
@@ -36,11 +35,6 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   }
 
   const { title, release_date, backdrop_path } = movie;
-
-  // for development purpose
-  useEffect(() => {
-    console.log({ movie, imagesTMDbAPIConfiguration });
-  }, []);
 
   return (
     <>
@@ -89,7 +83,6 @@ export async function getStaticProps({ params }) {
          * within the same namespace in a single HTTP request.
          * You can issue multiple requests,
          * just comma separate the values.
-         *
          */
         append_to_response: 'credits,videos,keywords,recommendations,reviews,images',
       },

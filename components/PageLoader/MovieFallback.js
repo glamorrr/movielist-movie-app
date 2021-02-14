@@ -13,7 +13,7 @@ const MovieFallback = () => {
         <div className="pb-12 bg-white md:pb-0">
           <LayoutWrapper>
             <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
-              <div className="relative justify-center h-40 -mb-12 bg-blue-100 rounded shadow-lg -top-28 w-28 md:w-56 md:h-80 md:shadow-xl animate-pulse" />
+              <div className="relative justify-center -mb-12 bg-blue-100 rounded shadow-lg h-42 -top-28 w-28 md:w-56 md:h-84 md:shadow-xl animate-pulse" />
               <div className="hidden ml-8 md:block mt-7">
                 <div className="h-10 bg-blue-100 w-52 animate-pulse" />
                 <div className="w-full h-3 mt-6 bg-blue-100 rounded animate-pulse" />

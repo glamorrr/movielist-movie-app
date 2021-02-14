@@ -39,11 +39,6 @@ export default function Review({ review, imagesTMDbAPIConfiguration, error }) {
 
   const { media_backdrop_path } = review;
 
-  // for development purpose
-  useEffect(() => {
-    console.log({ review, imagesTMDbAPIConfiguration });
-  }, []);
-
   return (
     <>
       <Head>

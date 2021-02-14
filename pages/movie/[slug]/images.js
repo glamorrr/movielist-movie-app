@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -34,11 +33,6 @@ export default function Images({ movie, imagesTMDbAPIConfiguration, error }) {
 
   const { title, release_date, backdrop_path } = movie;
   const releaseYear = release_date ? new Date(release_date).getFullYear() : '';
-
-  // for development purpose
-  useEffect(() => {
-    console.log({ movie, imagesTMDbAPIConfiguration });
-  }, []);
 
   return (
     <>

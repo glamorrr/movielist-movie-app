@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import format from 'date-fns/format';
@@ -33,11 +32,6 @@ export default function Person({ person, imagesTMDbAPIConfiguration, error }) {
   }
 
   const { name } = person;
-
-  // for development purpose
-  useEffect(() => {
-    console.log({ person, imagesTMDbAPIConfiguration });
-  }, []);
 
   return (
     <>

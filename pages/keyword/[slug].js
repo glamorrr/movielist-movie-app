@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import MobileNavbar from '@/components/MobileNavbar';
@@ -31,11 +31,6 @@ export default function Keyword({ moviesByKeyword, imagesTMDbAPIConfiguration, e
 
   const [movies, setMovies] = useState(moviesByKeyword.results);
   const [moviesCurrentPagination, setMoviesCurrentPagination] = useState(1);
-
-  // for development purpose
-  useEffect(() => {
-    console.log({ movies, imagesTMDbAPIConfiguration });
-  }, []);
 
   return (
     <>

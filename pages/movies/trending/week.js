@@ -72,7 +72,7 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, error
   );
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   try {
     const response = await Promise.all([
       axiosTMDb.get(`${MOVIES_TRENDING_ENDPOINT}/week`),
@@ -91,10 +91,6 @@ export async function getStaticProps(context) {
         },
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
-      /**
-       * Next.js will attempt to re-generate the page
-       * every 1 minutes (revalidate: 1 * 60).
-       */
       revalidate: 1 * 60,
     };
   } catch (err) {

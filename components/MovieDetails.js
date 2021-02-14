@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
 import MovieInformation from '@/components/MovieInformation';
 import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
+import PosterPrimary from '@/components/PosterPrimary';
 import MovieReviewCard from '@/components/MovieReviewCard';
 import MovieDetailsTab from '@/components/MovieDetailsTab';
 import MoviesInfiniteScroll from '@/components/MoviesInfiniteScroll';
@@ -49,19 +49,13 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
             <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
-              <div className="relative justify-center h-12 md:w-56 md:h-52">
-                <div className="absolute z-20 h-40 overflow-hidden bg-blue-100 rounded shadow-lg -top-28 w-28 md:w-56 md:h-80 md:shadow-xl">
-                  <Image
-                    src={
-                      poster_path
-                        ? `${base_url}${poster_sizes[3]}${poster_path}`
-                        : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2393C5FD' fill-opacity='0.31'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
-                    }
-                    alt={title}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
+              <div className="relative z-20 -mt-28 w-28 md:w-56">
+                <PosterPrimary
+                  maxWidth="224px"
+                  path={poster_path}
+                  src={`${base_url}${poster_sizes[3]}${poster_path}`}
+                  alt={title}
+                />
               </div>
             </CSSTransition>
             {/* Desktop view > 768px (md) */}
@@ -108,173 +102,177 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         </LayoutWrapper>
       </div>
       <LayoutWrapper>
-        <div className="items-start md:mt-4 md:flex">
+        <div className="items-start md:mt-10 md:flex">
           <div className="flex flex-col md:block">
-            {(isPosters || isBackdrops) && (
-              <Link href={`${router.asPath}/images`}>
-                <a className="order-2 block position">
+            <div className="flex flex-col order-2 mt-6 space-y-4 md:mt-0">
+              {(isPosters || isBackdrops) && (
+                <Link href={`${router.asPath}/images`}>
+                  <a className="order-2 block position">
+                    <button
+                      type="button"
+                      className="w-full py-1 font-medium text-center text-white transition-colors bg-purple-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-purple-600 hover:text-gray-100 font-poppins"
+                    >
+                      See Images
+                    </button>
+                  </a>
+                </Link>
+              )}
+              {imdb_id && (
+                <a
+                  href={`https://www.imdb.com/title/${imdb_id}`}
+                  target="_blank"
+                  className="order-3 block"
+                >
                   <button
                     type="button"
-                    className="w-full py-1 mt-6 font-medium text-center text-white transition-colors bg-purple-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-purple-600 hover:text-gray-100 font-poppins"
+                    className="w-full py-1 font-medium text-center text-white transition-colors bg-yellow-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-yellow-600 hover:text-gray-100 font-poppins"
                   >
-                    See Images
+                    IMDb
                   </button>
                 </a>
-              </Link>
-            )}
-            {imdb_id && (
-              <a
-                href={`https://www.imdb.com/title/${imdb_id}`}
-                target="_blank"
-                className="order-3 block"
-              >
-                <button
-                  type="button"
-                  className="w-full py-1 mt-4 font-medium text-center text-white transition-colors bg-yellow-500 shadow focus:ring-4 ring-blue-200 focus:outline-none md:w-56 hover:bg-yellow-600 hover:text-gray-100 font-poppins"
-                >
-                  IMDb
-                </button>
-              </a>
-            )}
+              )}
+            </div>
             <MovieInformation movie={{ ...movie, director }} />
           </div>
-          {selectedTab === 'Overview' && (
-            <>
-              <section className="mt-6 shadow-sm md:hidden">
-                <h2 className="text-lg font-medium tracking-wide font-poppins">Description</h2>
-                <div className="p-4 mt-3 bg-white rounded">
-                  <p>{overview}</p>
-                </div>
-              </section>
-              <div className="flex-grow mt-6 space-y-8">
-                {isCast && (
-                  <section>
-                    <h2 className="text-lg font-medium tracking-wide font-poppins">Cast</h2>
-                    <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
-                      {cast.slice(0, 6).map((person) => (
-                        <PersonCard
-                          key={person.id}
-                          person={person}
-                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {isCrew && (
-                  <section>
-                    <h2 className="text-lg font-medium tracking-wide font-poppins">Crew</h2>
-                    <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
-                      {crew.slice(0, 4).map((person) => (
-                        <PersonCard
-                          key={person.id}
-                          person={person}
-                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {trailer && (
-                  <section>
-                    <h2 className="text-lg font-medium tracking-wide font-poppins">Trailer</h2>
-                    <div className="max-w-2xl mt-3">
-                      <div className="aspect-w-16 aspect-h-9">
-                        <iframe
-                          title={`${title} trailer`}
-                          src={trailer}
-                          frameBorder="0"
-                          allowFullScreen
-                        />
+          <div className="flex-grow mt-6 md:mt-0">
+            {selectedTab === 'Overview' && (
+              <div>
+                <section className="mt-6 shadow-sm md:hidden">
+                  <h2 className="text-lg font-medium tracking-wide font-poppins">Description</h2>
+                  <div className="p-4 mt-3 bg-white rounded">
+                    <p>{overview}</p>
+                  </div>
+                </section>
+                <div className="mt-6 space-y-8 md:mt-0">
+                  {isCast && (
+                    <section>
+                      <h2 className="text-lg font-medium tracking-wide font-poppins">Cast</h2>
+                      <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
+                        {cast.slice(0, 6).map((person) => (
+                          <PersonCard
+                            key={person.id}
+                            person={person}
+                            imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                          />
+                        ))}
                       </div>
-                    </div>
-                  </section>
-                )}
-                {isRecommendations && (
-                  <section>
-                    <h2 className="text-lg font-medium tracking-wide font-poppins">
-                      Recommendations
-                    </h2>
-                    <div
-                      style={{ WebkitOverflowScrolling: 'touch' }}
-                      className="flex pb-2 mt-3 space-x-6 overflow-x-scroll md:max-w-md lg:max-w-2xl xl:max-w-3xl"
-                    >
-                      {recommendations.results.map((movie) => (
-                        <RecommendationMovieCard
-                          key={movie.id}
-                          movie={movie}
-                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
-                {reviews.results.length > 0 && (
-                  <section>
-                    <h2 className="text-lg font-medium tracking-wide font-poppins">Reviews</h2>
-                    <div className="mt-3 space-y-6">
-                      {reviews.results.map((review) => (
-                        <MovieReviewCard
-                          key={review.id}
-                          id={review.id}
-                          author={review.author}
-                          avatarPath={review.author_details.avatar_path}
-                          content={review.content}
-                          imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
+                    </section>
+                  )}
+                  {isCrew && (
+                    <section>
+                      <h2 className="text-lg font-medium tracking-wide font-poppins">Crew</h2>
+                      <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
+                        {crew.slice(0, 4).map((person) => (
+                          <PersonCard
+                            key={person.id}
+                            person={person}
+                            imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                  {trailer && (
+                    <section>
+                      <h2 className="text-lg font-medium tracking-wide font-poppins">Trailer</h2>
+                      <div className="max-w-2xl mt-3">
+                        <div className="aspect-w-16 aspect-h-9">
+                          <iframe
+                            title={`${title} trailer`}
+                            src={trailer}
+                            frameBorder="0"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    </section>
+                  )}
+                  {isRecommendations && (
+                    <section>
+                      <h2 className="text-lg font-medium tracking-wide font-poppins">
+                        Recommendations
+                      </h2>
+                      <div
+                        style={{ WebkitOverflowScrolling: 'touch' }}
+                        className="flex pb-2 mt-3 space-x-6 overflow-x-scroll md:max-w-md lg:max-w-2xl xl:max-w-3xl"
+                      >
+                        {recommendations.results.map((movie) => (
+                          <RecommendationMovieCard
+                            key={movie.id}
+                            movie={movie}
+                            imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                  {reviews.results.length > 0 && (
+                    <section>
+                      <h2 className="text-lg font-medium tracking-wide font-poppins">Reviews</h2>
+                      <div className="mt-3 space-y-6">
+                        {reviews.results.map((review) => (
+                          <MovieReviewCard
+                            key={review.id}
+                            id={review.id}
+                            author={review.author}
+                            avatarPath={review.author_details.avatar_path}
+                            content={review.content}
+                            imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                </div>
               </div>
-            </>
-          )}
-          {selectedTab === 'Cast' && (
-            <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
-              {cast.map((person) => (
-                <PersonCard
-                  key={person.id}
-                  person={person}
-                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                />
-              ))}
-            </div>
-          )}
-          {selectedTab === 'Crew' && (
-            <div className="grid flex-grow grid-cols-1 gap-6 mt-6 lg:gap-x-8 md:grid-cols-2">
-              {crew.map((person) => (
-                <PersonCard
-                  key={person.id}
-                  person={person}
-                  imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
-                />
-              ))}
-            </div>
-          )}
-          {selectedTab === 'Recommendations' && (
-            <MoviesInfiniteScroll
-              movies={recommendationMovies}
-              setMovies={setRecommendationMovies}
-              setCurrentPagination={setCurrentPagination}
-              infiniteScrollConfiguration={{
-                type: GET_MOVIE_RECOMMENDATIONS,
-                url: '/api/movies',
-                movieId: movie.id,
-                pagination: currentPagination,
-                totalPagination: recommendations.total_pages,
-              }}
-            >
-              <div className="grid flex-grow grid-cols-3 gap-4 mt-6 justify-items-center sm:gap-6 sm:grid-cols-4 lg:grid-cols-5">
-                {recommendationMovies.map((recommendationMovie) => (
-                  <RecommendationMovieCard
-                    key={recommendationMovie.id}
-                    movie={recommendationMovie}
+            )}
+            {selectedTab === 'Cast' && (
+              <div className="grid flex-grow grid-cols-1 gap-6 lg:gap-x-8 md:grid-cols-2">
+                {cast.map((person) => (
+                  <PersonCard
+                    key={person.id}
+                    person={person}
                     imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                   />
                 ))}
               </div>
-            </MoviesInfiniteScroll>
-          )}
+            )}
+            {selectedTab === 'Crew' && (
+              <div className="grid flex-grow grid-cols-1 gap-6 lg:gap-x-8 md:grid-cols-2">
+                {crew.map((person) => (
+                  <PersonCard
+                    key={person.id}
+                    person={person}
+                    imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                  />
+                ))}
+              </div>
+            )}
+            {selectedTab === 'Recommendations' && (
+              <MoviesInfiniteScroll
+                movies={recommendationMovies}
+                setMovies={setRecommendationMovies}
+                setCurrentPagination={setCurrentPagination}
+                infiniteScrollConfiguration={{
+                  type: GET_MOVIE_RECOMMENDATIONS,
+                  url: '/api/movies',
+                  movieId: movie.id,
+                  pagination: currentPagination,
+                  totalPagination: recommendations.total_pages,
+                }}
+              >
+                <div className="grid flex-grow grid-cols-3 gap-4 justify-items-center sm:gap-6 sm:grid-cols-4 lg:grid-cols-5">
+                  {recommendationMovies.map((recommendationMovie) => (
+                    <RecommendationMovieCard
+                      key={recommendationMovie.id}
+                      movie={recommendationMovie}
+                      imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
+                    />
+                  ))}
+                </div>
+              </MoviesInfiniteScroll>
+            )}
+          </div>
         </div>
       </LayoutWrapper>
     </>
