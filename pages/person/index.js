@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import MobileNavbar from '@/components/MobileNavbar';
 import SearchForm from '@/components/SearchForm';
@@ -48,10 +48,6 @@ export default function Person({ popularPeople, imagesTMDbAPIConfiguration, erro
   const isSearchNoResults = !isTyping && searchValue.length > 0 && searchResult.length === 0;
   const shouldShowSearchResults = !isTyping && searchResult.length > 0;
   const shouldShowExplore = !isTyping && searchValue.length === 0 && searchResult.length === 0;
-
-  useEffect(() => {
-    console.log({ searchResult, imagesTMDbAPIConfiguration });
-  }, [searchResult]);
 
   return (
     <>
