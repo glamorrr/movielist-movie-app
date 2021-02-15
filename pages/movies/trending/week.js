@@ -4,7 +4,7 @@ import MoviesGrid from '@/components/MoviesGrid';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
-import SelectDropdownTrendingMovies from '@/components/SelectDropdownTrendingMovies';
+import Dropdown from '@/components/Dropdown';
 import axiosTMDb from '@/utils/axiosTMDb';
 import { GET_MOVIES_TRENDING } from '@/utils/TMDbType';
 import { MOVIES_TRENDING_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
@@ -40,15 +40,11 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, error
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <div className="pt-6">
+          <div className="flex items-baseline pt-6 space-x-4">
             <h1 className="inline text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
               Trending
             </h1>
-            <SelectDropdownTrendingMovies
-              buttonText="Week"
-              dropdownText="Now"
-              linkToPage="/movies/trending/now"
-            />
+            <Dropdown buttonText="Week" dropdownText="Now" linkToPage="/movies/trending/now" />
           </div>
           <MoviesGrid
             mt="mt-6"

@@ -4,19 +4,17 @@ import { MdClose, MdSearch } from 'react-icons/md';
 import Icon from '@/components/Icon';
 import { GET_MOVIES_SEARCH } from '@/utils/TMDbType';
 
-const SearchMoviesForm = ({
+const SearchForm = ({
+  type,
   searchValue,
   setSearchValue,
   debouncedSearchValue,
   setCurrentPagination,
   setTotalPagination,
   setIsTyping,
-  setMoviesSearchResult,
+  setSearchResult,
 }) => {
-  /**
-   * Current value state of
-   * search input element.
-   */
+  // Current value state of search input element.
   const isSearchInputFilled = searchValue.length > 0;
 
   useEffect(() => {
@@ -26,11 +24,13 @@ const SearchMoviesForm = ({
     const source = CancelToken.source();
 
     (async () => {
+      const url = type === GET_MOVIES_SEARCH ? '/api/movies' : '/api/people';
+
       try {
-        const res = await axios.get('/api/movies', {
+        const res = await axios.get(url, {
           params: {
             query: debouncedSearchValue,
-            type: GET_MOVIES_SEARCH,
+            type,
           },
           cancelToken: source.token,
         });
@@ -45,12 +45,12 @@ const SearchMoviesForm = ({
         setCurrentPagination(1);
 
         /**
-         * Set a brand new movies to show
+         * Set a new search result to show
          * based on search value
-         * and discard all movies from previous search.
+         * and discard all search result from previous search.
          */
         setIsTyping(false);
-        setMoviesSearchResult(data.results);
+        setSearchResult(data.results);
       } catch (err) {
         console.error({ err });
       }
@@ -67,26 +67,26 @@ const SearchMoviesForm = ({
 
   /**
    * This useEffect will render
-   * explore movies (trending, popular, etc)
+   * explore (trending, popular, etc)
    * if there is no value in search input.
    */
   useEffect(() => {
     if (!isSearchInputFilled) {
       setIsTyping(false);
-      setMoviesSearchResult([]);
+      setSearchResult([]);
     }
   }, [searchValue]);
 
   /**
    * If input value changing,
    * it will remove all movies in array (react state),
-   * so it will not display explore movies
-   * (trending, top rated, etc).
+   * so it will not display explore
+   * (popular, trending, top rated, etc).
    */
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
     setIsTyping(true);
-    setMoviesSearchResult([]);
+    setSearchResult([]);
   };
 
   const handleButtonClick = (e) => {
@@ -151,4 +151,4 @@ const SearchMoviesForm = ({
   );
 };
 
-export default SearchMoviesForm;
+export default SearchForm;

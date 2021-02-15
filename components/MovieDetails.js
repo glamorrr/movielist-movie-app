@@ -9,7 +9,7 @@ import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
 import PosterPrimary from '@/components/PosterPrimary';
 import MovieReviewCard from '@/components/MovieReviewCard';
 import MovieDetailsTab from '@/components/MovieDetailsTab';
-import MoviesInfiniteScroll from '@/components/MoviesInfiniteScroll';
+import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import { GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
@@ -249,7 +249,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               </div>
             )}
             {selectedTab === 'Recommendations' && (
-              <MoviesInfiniteScroll
+              <TMDbInfiniteScroll
                 movies={recommendationMovies}
                 setMovies={setRecommendationMovies}
                 setCurrentPagination={setCurrentPagination}
@@ -270,7 +270,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     />
                   ))}
                 </div>
-              </MoviesInfiniteScroll>
+              </TMDbInfiniteScroll>
             )}
           </div>
         </div>

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { useDebounce } from 'use-debounce';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import Footer from '@/components/Footer';
 import MoviesGridSection from '@/components/MoviesGridSection';
 import MoviesDynamicSection from '@/components/MoviesDynamicSection';
 import MobileNavbar from '@/components/MobileNavbar';
-import SearchMoviesForm from '@/components/SearchMoviesForm';
+import Dropdown from '@/components/Dropdown';
+import SearchForm from '@/components/SearchForm';
 import MoviesGrid from '@/components/MoviesGrid';
 import SquareLoader from '@/components/SquareLoader';
 import axiosTMDb from '@/utils/axiosTMDb';
@@ -19,6 +19,7 @@ import {
   TMDb_API_CONFIGURATION_ENDPOINT,
   MOVIES_GENRE_LIST_ENDPOINT,
 } from '@/utils/TMDbEndpoint';
+import useSearchTMDb from '@/utils/useSearchTMDb';
 
 export default function Browse({
   popularMovies,
@@ -43,18 +44,24 @@ export default function Browse({
     );
   }
 
-  const [searchValue, setSearchValue] = useState('');
-  const [debouncedSearchValue] = useDebounce(searchValue, 1 * 1000);
-  const [searchResultCurrentPagination, setSearchResultCurrentPagination] = useState(1);
-  const [searchResultTotalPagination, setSearchResultTotalPagination] = useState(0);
+  const {
+    searchValue,
+    setSearchValue,
+    debouncedSearchValue,
+    searchResult,
+    setSearchResult,
+    searchResultCurrentPagination,
+    setSearchResultCurrentPagination,
+    searchResultTotalPagination,
+    setSearchResultTotalPagination,
+  } = useSearchTMDb();
   const [isTyping, setIsTyping] = useState(false);
-  const [moviesSearchResult, setMoviesSearchResult] = useState([]);
 
   const shouldShowLoader = isTyping;
-  const isSearchNoResults = !isTyping && searchValue.length > 0 && moviesSearchResult.length === 0;
-  const shouldShowSearchResults = !isTyping && moviesSearchResult.length > 0;
+  const isSearchNoResults = !isTyping && searchValue.length > 0 && searchResult.length === 0;
+  const shouldShowSearchResults = !isTyping && searchResult.length > 0;
   const shouldShowExploreMovies =
-    !isTyping && searchValue.length === 0 && moviesSearchResult.length === 0;
+    !isTyping && searchValue.length === 0 && searchResult.length === 0;
 
   return (
     <>
@@ -66,10 +73,19 @@ export default function Browse({
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <h1 className="pt-6 text-4xl font-semibold tracking-wide text-gray-600 font-poppins">
-            Browse Movies
-          </h1>
-          <SearchMoviesForm
+          <div className="flex items-baseline space-x-4">
+            <h1 className="pt-6 text-4xl font-semibold tracking-wide text-gray-600 font-poppins">
+              Browse
+            </h1>
+            <Dropdown
+              fontSize="text-3xl"
+              buttonText="Movies"
+              dropdownText="People"
+              linkToPage="/person"
+            />
+          </div>
+          <SearchForm
+            type={GET_MOVIES_SEARCH}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             debouncedSearchValue={debouncedSearchValue}
@@ -77,7 +93,7 @@ export default function Browse({
             setCurrentPagination={setSearchResultCurrentPagination}
             setTotalPagination={setSearchResultTotalPagination}
             setIsTyping={setIsTyping}
-            setMoviesSearchResult={setMoviesSearchResult}
+            setSearchResult={setSearchResult}
           />
           {shouldShowLoader && <SquareLoader additionalClassName="mt-28 mb-16 w-10 h-10" />}
           {isSearchNoResults && (
@@ -89,8 +105,8 @@ export default function Browse({
             <>
               <MoviesGrid
                 mt="mt-12"
-                movies={moviesSearchResult}
-                setMovies={setMoviesSearchResult}
+                movies={searchResult}
+                setMovies={setSearchResult}
                 shouldInfiniteScroll={true}
                 setCurrentPagination={setSearchResultCurrentPagination}
                 infiniteScrollConfiguration={{

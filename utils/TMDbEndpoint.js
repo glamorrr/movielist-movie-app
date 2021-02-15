@@ -1,5 +1,7 @@
 export const MOVIES_SEARCH_ENDPOINT = '/search/movie';
+export const PERSON_SEARCH_ENDPOINT = '/search/person';
 export const MOVIES_POPULAR_ENDPOINT = '/movie/popular';
+export const PERSON_POPULAR_ENDPOINT = '/person/popular';
 export const MOVIES_TOP_RATED_ENDPOINT = '/movie/top_rated';
 export const MOVIES_UPCOMING_ENDPOINT = '/movie/upcoming';
 export const MOVIE_ENDPOINT = '/movie';

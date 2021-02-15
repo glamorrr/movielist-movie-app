@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import MoviesGrid from '@/components/MoviesGrid';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import SelectDropdownTrendingMovies from '@/components/SelectDropdownTrendingMovies';
+import Dropdown from '@/components/Dropdown';
 import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
 import axiosTMDb from '@/utils/axiosTMDb';
@@ -40,15 +40,11 @@ export default function Now({ trendingMovies, imagesTMDbAPIConfiguration, error 
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <div className="pt-6">
+          <div className="flex items-baseline pt-6 space-x-4">
             <h1 className="inline text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
               Trending
             </h1>
-            <SelectDropdownTrendingMovies
-              buttonText="Now"
-              dropdownText="Week"
-              linkToPage="/movies/trending/week"
-            />
+            <Dropdown buttonText="Now" dropdownText="Week" linkToPage="/movies/trending/week" />
           </div>
           <MoviesGrid
             mt="mt-6"

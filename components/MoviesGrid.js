@@ -1,6 +1,6 @@
 import MovieCard from '@/components/MovieCard';
 import BadgeNumber from '@/components/BadgeNumber';
-import MoviesInfiniteScroll from '@/components/MoviesInfiniteScroll';
+import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import { GET_MOVIES_TOP_RATED } from '@/utils/TMDbType';
 
 /**
@@ -21,9 +21,9 @@ const MoviesGrid = ({
   if (shouldInfiniteScroll) {
     return (
       <div className={mt}>
-        <MoviesInfiniteScroll
-          movies={movies}
-          setMovies={setMovies}
+        <TMDbInfiniteScroll
+          result={movies}
+          setResult={setMovies}
           setCurrentPagination={setCurrentPagination}
           infiniteScrollConfiguration={infiniteScrollConfiguration}
         >
@@ -41,7 +41,7 @@ const MoviesGrid = ({
               </MovieCard>
             ))}
           </div>
-        </MoviesInfiniteScroll>
+        </TMDbInfiniteScroll>
       </div>
     );
   }

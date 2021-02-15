@@ -9,12 +9,14 @@ import {
   GET_MOVIES_TOP_RATED,
   GET_MOVIE_RECOMMENDATIONS,
   GET_MOVIES_BY_KEYWORDS,
+  GET_PERSON_SEARCH,
+  GET_PERSON_POPULAR,
 } from '@/utils/TMDbType';
 
-const MoviesInfiniteScroll = ({
+const TMDbInfiniteScroll = ({
   children,
-  movies,
-  setMovies,
+  result,
+  setResult,
   setCurrentPagination,
   infiniteScrollConfiguration,
 }) => {
@@ -44,7 +46,7 @@ const MoviesInfiniteScroll = ({
   return (
     <InfiniteScroll
       style={{ overflow: 'visible' }}
-      dataLength={movies.length}
+      dataLength={result.length}
       /**
        * Maximum page to request is 5 page.
        * First request from this component will
@@ -57,10 +59,11 @@ const MoviesInfiniteScroll = ({
 
           /**
            * Set request config based on
-           * request movies type.
+           * request type.
            */
           switch (type) {
             case GET_MOVIES_SEARCH:
+            case GET_PERSON_SEARCH:
               config = {
                 params: {
                   query,
@@ -99,6 +102,7 @@ const MoviesInfiniteScroll = ({
             case GET_MOVIES_POPULAR:
             case GET_MOVIES_UPCOMING:
             case GET_MOVIES_TOP_RATED:
+            case GET_PERSON_POPULAR:
               config = {
                 params: {
                   type,
@@ -112,11 +116,11 @@ const MoviesInfiniteScroll = ({
           const data = res.data;
 
           /**
-           * After adding new movies,
+           * After adding new results,
            * this will set pagination to the next pagination,
            * and will request (infinite scroll) with that new pagination.
            */
-          setMovies((prevMovies) => [...prevMovies, ...data.results]);
+          setResult((prevResult) => [...prevResult, ...data.results]);
           setCurrentPagination(nextPagination);
         } catch (err) {
           console.error({ err });
@@ -129,4 +133,4 @@ const MoviesInfiniteScroll = ({
   );
 };
 
-export default MoviesInfiniteScroll;
+export default TMDbInfiniteScroll;
