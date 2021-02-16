@@ -250,8 +250,8 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
             )}
             {selectedTab === 'Recommendations' && (
               <TMDbInfiniteScroll
-                movies={recommendationMovies}
-                setMovies={setRecommendationMovies}
+                result={recommendationMovies}
+                setResult={setRecommendationMovies}
                 setCurrentPagination={setCurrentPagination}
                 infiniteScrollConfiguration={{
                   type: GET_MOVIE_RECOMMENDATIONS,
@@ -261,7 +261,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                   totalPagination: recommendations.total_pages,
                 }}
               >
-                <div className="grid flex-grow grid-cols-3 gap-4 justify-items-center sm:gap-6 sm:grid-cols-4 lg:grid-cols-5">
+                <div className="grid flex-grow grid-cols-3 gap-4 sm:gap-6 sm:grid-cols-4 lg:grid-cols-5">
                   {recommendationMovies.map((recommendationMovie) => (
                     <RecommendationMovieCard
                       key={recommendationMovie.id}
