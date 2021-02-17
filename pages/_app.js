@@ -2,6 +2,7 @@ import Router from 'next/router';
 import NProgress from 'nprogress/nprogress';
 import 'nprogress/nprogress.css';
 import '@/styles/global.css';
+import { AuthProvider } from '@/utils/auth';
 
 // Page loading progress bar.
 Router.events.on('routeChangeStart', () => {
@@ -13,7 +14,9 @@ Router.events.on('routeChangeError', () => NProgress.done());
 export default function MyApp({ Component, pageProps }) {
   return (
     <div className="min-h-screen text-gray-900 bg-gray-100 font-raleway">
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </div>
   );
 }
