@@ -1,10 +1,15 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
 import { MdMenu, MdClose, MdExplore } from 'react-icons/md';
+import { BiLogIn, BiLogOut } from 'react-icons/bi';
 import Icon from '@/components/Icon';
+import { useAuth } from '@/utils/auth';
 
 const MobileNavbar = () => {
+  const { user, logout } = useAuth();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const animationDuration = 300;
 
@@ -24,20 +29,45 @@ const MobileNavbar = () => {
       </div>
       {/* Menus */}
       <CSSTransition unmountOnExit classNames="menu" timeout={animationDuration} in={isOpen}>
-        <nav className="fixed z-40 grid items-center grid-cols-2 gap-4 px-6 py-4 text-blue-400 transition-all bg-white rounded-lg shadow-lg bottom-7 right-4 justify-items-center">
+        <nav className="fixed z-40 grid items-center grid-cols-3 gap-4 px-6 py-4 text-xs text-blue-400 bg-white rounded-lg shadow-lg justify-items-center font-poppins bottom-7 right-4">
+          {user ? (
+            <button
+              type="button"
+              className="cursor-pointer focus:outline-none"
+              onClick={async () => {
+                setIsOpen(false);
+                await logout();
+                router.push('/browse');
+              }}
+            >
+              <Icon size="2rem" className="mx-auto">
+                <BiLogOut />
+              </Icon>
+              <p className="mt-1 font-semibold tracking-wider">log out</p>
+            </button>
+          ) : (
+            <Link href="/login">
+              <a className="cursor-pointer">
+                <Icon size="2rem" className="mx-auto">
+                  <BiLogIn />
+                </Icon>
+                <p className="mt-1 font-semibold tracking-wider">log in</p>
+              </a>
+            </Link>
+          )}
           <Link href="/browse">
             <a className="cursor-pointer">
               <Icon size="2rem" className="mx-auto">
                 <MdExplore />
               </Icon>
-              <p className="mt-1 text-xs font-semibold tracking-wider font-poppins">browse</p>
+              <p className="mt-1 font-semibold tracking-wider">browse</p>
             </a>
           </Link>
-          <div onClick={() => setIsOpen(false)}>
+          <button type="button" onClick={() => setIsOpen(false)} className="focus:outline-none">
             <Icon size="1.75rem" className="cursor-pointer">
               <MdClose />
             </Icon>
-          </div>
+          </button>
         </nav>
       </CSSTransition>
 

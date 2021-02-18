@@ -10,6 +10,10 @@ export const KEYWORD_ENDPOINT = '/keyword';
 export const PERSON_ENDPOINT = '/person';
 export const MOVIES_GENRE_LIST_ENDPOINT = '/genre/movie/list';
 export const TMDb_API_CONFIGURATION_ENDPOINT = '/configuration';
+export const AUTH_CREATE_SESSION_ENDPOINT = '/authentication/session/new';
+export const AUTH_DELETE_SESSION_ENDPOINT = '/authentication/session';
+export const CREATE_REQUEST_TOKEN_ENDPOINT = '/authentication/token/new';
+export const ACCOUNT_ENDPOINT = '/account';
 
 /**
  * '/trending/movie/week' or

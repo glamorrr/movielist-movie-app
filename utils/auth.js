@@ -14,6 +14,29 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
+  const [user, setUser] = useState(null);
+
+  const getAccountDetail = async () => {
+    try {
+      const res = await axios.get('/api/account');
+      const data = res.data;
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const account = await getAccountDetail();
+      setUser(account);
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log({ user });
+  }, [user]);
+
   const getApprovedRequestToken = async () => {
     const res = await axios.get('/api/authentication');
     const requestToken = res.data.request_token;
@@ -34,8 +57,10 @@ function useProvideAuth() {
 
       if (data.success) {
         cookie.set('session_id', data.session_id);
+        const account = await getAccountDetail();
+        setUser(account);
+        console.log('success!!!');
       }
-      console.log('success!!!');
     } catch (err) {
       console.error(err);
     }
@@ -47,7 +72,8 @@ function useProvideAuth() {
 
     if (data.success) {
       cookie.remove('session_id');
-      console.log('Delete session success!');
+      console.log('[Logout] Delete session success!');
+      setUser(null);
     }
   };
 
