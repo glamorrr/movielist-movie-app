@@ -6,12 +6,12 @@ import Icon from '@/components/Icon';
 import { useAuth } from '@/utils/auth';
 
 const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
-  if (isFavorite === null) {
-    return <div className="w-10 h-10 bg-blue-200 rounded animate-pulse" />;
-  }
-
   const { user } = useAuth();
   const router = useRouter();
+
+  if (isFavorite === null && user) {
+    return <div className="w-10 h-10 bg-blue-200 rounded animate-pulse" />;
+  }
 
   const handleClick = () => {
     if (!user) {
