@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import commaNumber from 'comma-number';
 import marked from 'marked';
+import { ToastContainer } from 'react-toastify';
 import MovieBackdrop from '@/components/MovieBackdrop';
 import MovieDetails from '@/components/MovieDetails';
 import MovieFallback from '@/components/PageLoader/MovieFallback';
@@ -14,6 +15,7 @@ import formatRuntime from '@/utils/formatRuntime';
 import formatReleaseDate from '@/utils/formatReleaseDate';
 import convertUnitNumberToPercentage from '@/utils/convertUnitNumberToPercentage';
 import DOMPurify from '@/utils/DOMPurify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
@@ -35,6 +37,9 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   }
 
   const { title, release_date, backdrop_path } = movie;
+  const contextClass = {
+    success: 'bg-green-400',
+  };
 
   return (
     <>
@@ -47,6 +52,13 @@ export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
         <meta name="description" content={movie.overview} />
       </Head>
       <main>
+        <ToastContainer
+          toastClassName={({ type }) =>
+            contextClass[type || 'default'] +
+            ' mt-5 flex p-3 rounded-md justify-between cursor-pointer'
+          }
+          bodyClassName={() => 'p-1 font-white font-semibold'}
+        />
         <MobileNavbar />
         <MovieBackdrop
           backdropPath={backdrop_path}

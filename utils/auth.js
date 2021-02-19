@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext, createContext } from 'react';
-import cookie from 'js-cookie';
 import axios from 'axios';
 
 const authContext = createContext();
@@ -23,6 +22,7 @@ function useProvideAuth() {
       return data;
     } catch (err) {
       console.error(err);
+      return null;
     }
   };
 
@@ -56,7 +56,6 @@ function useProvideAuth() {
       const data = res.data;
 
       if (data.success) {
-        cookie.set('session_id', data.session_id);
         const account = await getAccountDetail();
         setUser(account);
         console.log('success!!!');
@@ -71,7 +70,6 @@ function useProvideAuth() {
     const data = res.data;
 
     if (data.success) {
-      cookie.remove('session_id');
       console.log('[Logout] Delete session success!');
       setUser(null);
     }

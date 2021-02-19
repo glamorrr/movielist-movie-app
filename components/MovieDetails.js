@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
@@ -10,7 +12,8 @@ import PosterPrimary from '@/components/PosterPrimary';
 import MovieReviewCard from '@/components/MovieReviewCard';
 import MovieDetailsTab from '@/components/MovieDetailsTab';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
-import { GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
+import FavoriteButton from '@/components/FavoriteButton';
+import { GET_MOVIE_ACCOUNT_STATES, GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
@@ -42,6 +45,21 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const [recommendationMovies, setRecommendationMovies] = useState(recommendations.results);
   const [currentPagination, setCurrentPagination] = useState(1);
   const [selectedTab, setSelectedTab] = useState('Overview');
+  const [isFavorite, setIsFavorite] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('/api/movies', {
+          params: { type: GET_MOVIE_ACCOUNT_STATES, movie_id: movie.id },
+        });
+        console.log({ accountState: res.data });
+        setIsFavorite(res.data.favorite);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -49,13 +67,22 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         <LayoutWrapper>
           <div style={{ gridTemplateColumns: '14rem auto' }} className="md:grid">
             <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
-              <div className="relative z-20 -mt-28 w-28 md:w-56">
-                <PosterPrimary
-                  maxWidth="224px"
-                  path={poster_path}
-                  src={`${base_url}${poster_sizes[3]}${poster_path}`}
-                  alt={title}
-                />
+              <div className="flex items-end space-x-5 md:space-x-0">
+                <div className="relative z-20 -mt-28 w-28 md:w-56">
+                  <PosterPrimary
+                    maxWidth="224px"
+                    path={poster_path}
+                    src={`${base_url}${poster_sizes[3]}${poster_path}`}
+                    alt={title}
+                  />
+                </div>
+                <div className="md:hidden">
+                  <FavoriteButton
+                    movieId={movie.id}
+                    isFavorite={isFavorite}
+                    setIsFavorite={setIsFavorite}
+                  />
+                </div>
               </div>
             </CSSTransition>
             {/* Desktop view > 768px (md) */}
@@ -63,7 +90,14 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <h1 className="text-2xl font-medium font-poppins">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
-            <ul className="hidden mt-6 space-x-8 ml-7 md:col-start-2 md:flex font-poppins">
+            <div className="hidden mt-5 md:block justify-self-end">
+              <FavoriteButton
+                movieId={movie.id}
+                isFavorite={isFavorite}
+                setIsFavorite={setIsFavorite}
+              />
+            </div>
+            <ul className="hidden mt-10 space-x-8 ml-7 md:col-start-2 md:flex font-poppins">
               {Tabs.map((tab) => {
                 if (tab === 'Cast' && !isCast) return;
                 if (tab === 'Crew' && !isCrew) return;

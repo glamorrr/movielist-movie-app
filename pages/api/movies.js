@@ -16,6 +16,7 @@ import {
   GET_MOVIES_UPCOMING,
   GET_MOVIE_RECOMMENDATIONS,
   GET_MOVIES_BY_KEYWORDS,
+  GET_MOVIE_ACCOUNT_STATES,
 } from '@/utils/TMDbType';
 
 export default async (req, res) => {
@@ -63,6 +64,11 @@ export default async (req, res) => {
           params: { page },
         });
         break;
+      case GET_MOVIE_ACCOUNT_STATES:
+        const { session_id } = req.cookies;
+        response = await axiosTMDb.get(`${MOVIE_ENDPOINT}/${movie_id}/account_states`, {
+          params: { session_id },
+        });
     }
 
     const data = response.data;

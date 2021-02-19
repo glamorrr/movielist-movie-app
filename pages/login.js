@@ -11,6 +11,13 @@ export default function Login() {
   useEffect(() => {
     const { approved, request_token } = router.query;
     if (user) {
+      const urlBeforeLogin = sessionStorage.getItem('urlBeforeLogin');
+
+      if (urlBeforeLogin) {
+        router.replace(urlBeforeLogin);
+        return;
+      }
+
       router.replace('/browse');
       return;
     }
