@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
@@ -14,6 +13,7 @@ import MovieDetailsTab from '@/components/MovieDetailsTab';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import FavoriteButton from '@/components/FavoriteButton';
 import { GET_MOVIE_ACCOUNT_STATES, GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
+import { useAuth } from '@/utils/auth';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
@@ -46,14 +46,15 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const [currentPagination, setCurrentPagination] = useState(1);
   const [selectedTab, setSelectedTab] = useState('Overview');
   const [isFavorite, setIsFavorite] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
+    if (!user) return;
     (async () => {
       try {
         const res = await axios.get('/api/movies', {
           params: { type: GET_MOVIE_ACCOUNT_STATES, movie_id: movie.id },
         });
-        console.log({ accountState: res.data });
         setIsFavorite(res.data.favorite);
       } catch (err) {
         console.error(err);
@@ -184,7 +185,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                       <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                         {cast.slice(0, 6).map((person) => (
                           <PersonCard
-                            key={person.id}
+                            key={person.credit_id}
                             person={person}
                             imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                           />
@@ -198,7 +199,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                       <div className="grid grid-cols-1 gap-6 mt-3 lg:gap-x-8 md:grid-cols-2">
                         {crew.slice(0, 4).map((person) => (
                           <PersonCard
-                            key={person.id}
+                            key={person.credit_id}
                             person={person}
                             imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                           />
@@ -264,7 +265,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <div className="grid flex-grow grid-cols-1 gap-6 lg:gap-x-8 md:grid-cols-2">
                 {cast.map((person) => (
                   <PersonCard
-                    key={person.id}
+                    key={person.credit_id}
                     person={person}
                     imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                   />
@@ -275,7 +276,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <div className="grid flex-grow grid-cols-1 gap-6 lg:gap-x-8 md:grid-cols-2">
                 {crew.map((person) => (
                   <PersonCard
-                    key={person.id}
+                    key={person.credit_id}
                     person={person}
                     imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
                   />

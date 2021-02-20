@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
-import { MdMenu, MdClose, MdExplore } from 'react-icons/md';
+import { MdMenu, MdClose, MdExplore, MdPerson } from 'react-icons/md';
 import { BiLogIn, BiLogOut } from 'react-icons/bi';
 import Icon from '@/components/Icon';
 import { useAuth } from '@/utils/auth';
@@ -29,7 +29,12 @@ const MobileNavbar = () => {
       </div>
       {/* Menus */}
       <CSSTransition unmountOnExit classNames="menu" timeout={animationDuration} in={isOpen}>
-        <nav className="fixed z-40 grid items-center grid-cols-3 gap-4 px-6 py-4 text-xs text-blue-400 bg-white rounded-lg shadow-lg justify-items-center font-poppins bottom-7 right-4">
+        <nav
+          className={
+            (user ? 'grid-cols-2 gap-x-6 gap-y-4' : 'grid-cols-3 gap-4') +
+            ' fixed z-40 grid items-center px-6 py-4 text-xs text-blue-400 bg-white rounded-lg shadow-lg justify-items-center font-poppins bottom-7 right-4'
+          }
+        >
           {user ? (
             <button
               type="button"
@@ -47,11 +52,24 @@ const MobileNavbar = () => {
             </button>
           ) : (
             <Link href="/login">
-              <a className="cursor-pointer">
+              <a
+                onClick={() => sessionStorage.removeItem('urlBeforeLogin')}
+                className="cursor-pointer"
+              >
                 <Icon size="2rem" className="mx-auto">
                   <BiLogIn />
                 </Icon>
                 <p className="mt-1 font-semibold tracking-wider">log in</p>
+              </a>
+            </Link>
+          )}
+          {user && (
+            <Link href="/profile">
+              <a className="cursor-pointer">
+                <Icon size="2rem" className="mx-auto">
+                  <MdPerson />
+                </Icon>
+                <p className="mt-1 font-semibold tracking-wider">profile</p>
               </a>
             </Link>
           )}

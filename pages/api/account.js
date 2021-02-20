@@ -1,12 +1,25 @@
 import axiosTMDb from '@/utils/axiosTMDb';
 import { ACCOUNT_ENDPOINT } from '@/utils/TMDbEndpoint';
+import { GET_FAVORITE_MOVIES } from '@/utils/TMDbType';
 
 export default async (req, res) => {
+  const { accountId, page, type } = req.query;
   const { session_id } = req.cookies;
 
   if (req.method === 'GET') {
     try {
-      const response = await axiosTMDb.get(ACCOUNT_ENDPOINT, { params: { session_id } });
+      let response;
+
+      switch (type) {
+        case GET_FAVORITE_MOVIES:
+          response = await axiosTMDb.get(`${ACCOUNT_ENDPOINT}/${accountId}/favorite/movies`, {
+            params: { session_id, page, sort_by: 'created_at.desc' },
+          });
+          break;
+        default:
+          response = await axiosTMDb.get(ACCOUNT_ENDPOINT, { params: { session_id } });
+      }
+
       const data = response.data;
       res.status(200).json(data);
     } catch (err) {

@@ -4,13 +4,10 @@ import SquareLoader from '@/components/SquareLoader';
 import {
   GET_MOVIES_SEARCH,
   GET_MOVIES_TRENDING,
-  GET_MOVIES_POPULAR,
-  GET_MOVIES_UPCOMING,
-  GET_MOVIES_TOP_RATED,
   GET_MOVIE_RECOMMENDATIONS,
   GET_MOVIES_BY_KEYWORDS,
   GET_PERSON_SEARCH,
-  GET_PERSON_POPULAR,
+  GET_FAVORITE_MOVIES,
 } from '@/utils/TMDbType';
 
 const TMDbInfiniteScroll = ({
@@ -27,6 +24,7 @@ const TMDbInfiniteScroll = ({
    * @property {number} totalPagination - Total pagination for barrier to request more data.
    * @property {string} type - Request type to API.
    * @property {number} [movieId] - movie id to get recommendation for movies based on movie.
+   * @property {number} [accountId] - get data based on TMDb account id.
    * @property {number} [keywordId] - keyword id to get movies by keyword.
    * @property {string} [query] - Input value to search movies.
    * @property {string} [timeSpan] (day or week) - Time span for request on trending movies endpoint.
@@ -37,6 +35,7 @@ const TMDbInfiniteScroll = ({
     totalPagination,
     type,
     movieId,
+    accountId,
     keywordId,
     query,
     timeSpan,
@@ -55,7 +54,12 @@ const TMDbInfiniteScroll = ({
       hasMore={nextPagination <= totalPagination && nextPagination <= 5}
       next={async () => {
         try {
-          let config;
+          let config = {
+            params: {
+              type,
+              page: nextPagination,
+            },
+          };
 
           /**
            * Set request config based on
@@ -64,51 +68,19 @@ const TMDbInfiniteScroll = ({
           switch (type) {
             case GET_MOVIES_SEARCH:
             case GET_PERSON_SEARCH:
-              config = {
-                params: {
-                  query,
-                  type,
-                  page: nextPagination,
-                },
-              };
+              config.params.query = query;
               break;
             case GET_MOVIES_TRENDING:
-              config = {
-                params: {
-                  type,
-                  time_span: timeSpan,
-                  page: nextPagination,
-                },
-              };
+              config.params.time_span = timeSpan;
               break;
             case GET_MOVIES_BY_KEYWORDS:
-              config = {
-                params: {
-                  type,
-                  page: nextPagination,
-                  keyword_id: keywordId,
-                },
-              };
+              config.params.keyword_id = keywordId;
               break;
             case GET_MOVIE_RECOMMENDATIONS:
-              config = {
-                params: {
-                  type,
-                  page: nextPagination,
-                  movie_id: movieId,
-                },
-              };
+              config.params.movie_id = movieId;
               break;
-            case GET_MOVIES_POPULAR:
-            case GET_MOVIES_UPCOMING:
-            case GET_MOVIES_TOP_RATED:
-            case GET_PERSON_POPULAR:
-              config = {
-                params: {
-                  type,
-                  page: nextPagination,
-                },
-              };
+            case GET_FAVORITE_MOVIES:
+              config.params.accountId = accountId;
               break;
           }
 

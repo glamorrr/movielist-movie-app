@@ -33,10 +33,6 @@ function useProvideAuth() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log({ user });
-  }, [user]);
-
   const getApprovedRequestToken = async () => {
     const res = await axios.get('/api/authentication');
     const requestToken = res.data.request_token;
@@ -58,7 +54,6 @@ function useProvideAuth() {
       if (data.success) {
         const account = await getAccountDetail();
         setUser(account);
-        console.log('success!!!');
       }
     } catch (err) {
       console.error(err);
@@ -69,10 +64,7 @@ function useProvideAuth() {
     const res = await axios.delete('/api/authentication');
     const data = res.data;
 
-    if (data.success) {
-      console.log('[Logout] Delete session success!');
-      setUser(null);
-    }
+    if (data.success) setUser(null);
   };
 
   return {
