@@ -36,7 +36,7 @@ function useProvideAuth() {
   const getApprovedRequestToken = async () => {
     const res = await axios.get('/api/authentication');
     const requestToken = res.data.request_token;
-    location.href = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:3000/login`;
+    location.href = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=${process.env.BASE_URL}/login`;
   };
 
   const createSession = async (approvedStatus, requestToken) => {
