@@ -22,7 +22,7 @@ function useProvideAuth() {
       return data;
     } catch (err) {
       console.error(err);
-      return null;
+      return false;
     }
   };
 
@@ -64,7 +64,7 @@ function useProvideAuth() {
     const res = await axios.delete('/api/authentication');
     const data = res.data;
 
-    if (data.success) setUser(null);
+    if (data.success) setUser(false);
   };
 
   return {

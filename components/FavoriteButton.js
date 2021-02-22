@@ -3,6 +3,7 @@ import axios from 'axios';
 import { MdFavorite } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import Icon from '@/components/Icon';
+import Success from '@/components/ToastContent/Success';
 import { useAuth } from '@/utils/auth';
 
 const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
@@ -28,8 +29,8 @@ const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
 
     setIsFavorite((prev) => {
       const newState = !prev;
-      const message = newState ? '✓ Added to favorites' : '✓ Removed from favorites';
-      toast.success(message, {
+      const message = newState ? 'Added to favorites' : 'Removed from favorites';
+      toast.success(<Success message={message} />, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: true,

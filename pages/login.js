@@ -15,6 +15,7 @@ export default function Login() {
 
       if (urlBeforeLogin) {
         router.replace(urlBeforeLogin);
+        sessionStorage.removeItem('urlBeforeLogin');
         return;
       }
 

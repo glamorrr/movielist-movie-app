@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
 import MobileNavbar from '@/components/MobileNavbar';
@@ -18,12 +19,20 @@ import parseToDashedString from '@/utils/parseToDashedString';
 
 export default function Profile({ imagesTMDbAPIConfiguration }) {
   const { user } = useAuth();
+  const router = useRouter();
   const [favoriteMovies, setFavoriteMovies] = useState(null);
   const [favoriteMoviesCurrentPagination, setFavoriteMoviesCurrentPagination] = useState(1);
   const [favoriteMoviesTotalPagination, setFavoriteMoviesTotalPagination] = useState(0);
 
   useEffect(() => {
-    if (!user) return;
+    if (user === null) return;
+
+    if (!user) {
+      router.replace('/login');
+      sessionStorage.setItem('urlBeforeLogin', '/profile');
+      return;
+    }
+
     (async () => {
       try {
         const res = await axios.get('/api/account', {

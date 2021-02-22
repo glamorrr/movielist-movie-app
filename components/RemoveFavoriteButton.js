@@ -3,6 +3,7 @@ import axios from 'axios';
 import { MdClose } from 'react-icons/md';
 import Icon from '@/components/Icon';
 import { useAuth } from '@/utils/auth';
+import Success from '@/components/ToastContent/Success';
 
 const RemoveFavoriteButton = ({ movieId, setMovies }) => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const RemoveFavoriteButton = ({ movieId, setMovies }) => {
       favorite: false,
     });
 
-    toast.success('✓ Removed from favorites', {
+    toast.success(<Success message={'Removed from favorites'} />, {
       position: 'top-right',
       autoClose: 3000,
       hideProgressBar: true,
