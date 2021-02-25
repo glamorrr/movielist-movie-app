@@ -60,7 +60,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
         console.error(err);
       }
     })();
-  }, []);
+  }, [user]);
 
   return (
     <>
