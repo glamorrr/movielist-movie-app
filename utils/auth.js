@@ -67,7 +67,7 @@ function useProvideAuth() {
     const data = res.data;
 
     if (data.success) {
-      router.push('/browse');
+      await router.push('/browse');
       setUser(false);
     }
   };
