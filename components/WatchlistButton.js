@@ -1,18 +1,17 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { MdFavorite } from 'react-icons/md';
 import ReactTooltip from 'react-tooltip';
+import { MdPlaylistAdd, MdPlaylistAddCheck } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import Icon from '@/components/Icon';
 import Success from '@/components/ToastContent/Success';
 import { useAuth } from '@/utils/auth';
-import { POST_FAVORITE_MOVIE } from '@/utils/TMDbType';
 
-const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
+const WatchlistButton = ({ isWatchlist, setIsWatchlist, movieId }) => {
   const { user } = useAuth();
   const router = useRouter();
 
-  if (isFavorite === null && user) {
+  if (isWatchlist === null && user) {
     return <div className="w-10 h-10 bg-blue-200 rounded animate-pulse" />;
   }
 
@@ -23,20 +22,16 @@ const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
       return;
     }
 
-    axios.post(
-      '/api/account',
-      {
-        accountId: user.id,
-        movieId,
-        favorite: !isFavorite,
-      },
-      { params: { type: POST_FAVORITE_MOVIE } }
-    );
+    axios.post('/api/account', {
+      accountId: user.id,
+      movieId,
+      watchlist: !isWatchlist,
+    });
 
-    setIsFavorite((prev) => {
+    setIsWatchlist((prev) => {
       ReactTooltip.hide();
       const newState = !prev;
-      const message = newState ? 'Added to favorites' : 'Removed from favorites';
+      const message = newState ? 'Added to watchlist' : 'Removed from watchlist';
       toast.success(<Success message={message} />, {
         position: 'top-center',
         autoClose: 3000,
@@ -55,21 +50,16 @@ const FavoriteButton = ({ isFavorite, setIsFavorite, movieId }) => {
       <button
         onClick={handleClick}
         type="button"
-        className="focus:outline-none focus:ring-4 ring-blue-200 p-2.5 bg-pink-500 rounded"
-        data-tip={isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        className="focus:outline-none focus:ring-4 ring-blue-200 p-2.5 bg-blue-400 rounded"
+        data-tip={isWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
       >
-        <Icon size="1.25rem" className={isFavorite ? 'text-pink-200' : 'text-white'}>
-          <MdFavorite />
+        <Icon size="1.25rem" className="text-white">
+          {isWatchlist ? <MdPlaylistAddCheck /> : <MdPlaylistAdd />}
         </Icon>
       </button>
-      <ReactTooltip
-        place="top"
-        effect="solid"
-        className="text-base tracking-wide font-poppins"
-        type="dark"
-      />
+      <ReactTooltip place="top" effect="solid" className="text-base tracking-wide font-poppins" />
     </div>
   );
 };
 
-export default FavoriteButton;
+export default WatchlistButton;

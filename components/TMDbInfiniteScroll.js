@@ -8,6 +8,7 @@ import {
   GET_MOVIES_BY_KEYWORDS,
   GET_PERSON_SEARCH,
   GET_FAVORITE_MOVIES,
+  GET_WATCHLIST,
 } from '@/utils/TMDbType';
 
 const TMDbInfiniteScroll = ({
@@ -80,6 +81,7 @@ const TMDbInfiniteScroll = ({
               config.params.movie_id = movieId;
               break;
             case GET_FAVORITE_MOVIES:
+            case GET_WATCHLIST:
               config.params.accountId = accountId;
               break;
           }

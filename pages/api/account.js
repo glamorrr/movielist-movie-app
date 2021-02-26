@@ -1,6 +1,6 @@
 import axiosTMDb from '@/utils/axiosTMDb';
 import { ACCOUNT_ENDPOINT } from '@/utils/TMDbEndpoint';
-import { GET_FAVORITE_MOVIES } from '@/utils/TMDbType';
+import { GET_FAVORITE_MOVIES, GET_WATCHLIST, POST_FAVORITE_MOVIE } from '@/utils/TMDbType';
 
 export default async (req, res) => {
   const { accountId, page, type } = req.query;
@@ -8,18 +8,28 @@ export default async (req, res) => {
 
   if (req.method === 'GET') {
     try {
-      let response;
+      const axiosRequest = { url: '', config: {} };
 
       switch (type) {
         case GET_FAVORITE_MOVIES:
-          response = await axiosTMDb.get(`${ACCOUNT_ENDPOINT}/${accountId}/favorite/movies`, {
-            params: { session_id, page, sort_by: 'created_at.desc' },
-          });
+          axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/favorite/movies`;
+          axiosRequest.config.params = {
+            params: { page, sort_by: 'created_at.desc' },
+          };
+          break;
+        case GET_WATCHLIST:
+          axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/watchlist/movies`;
+          axiosRequest.config.params = {
+            params: { page, sort_by: 'created_at.desc' },
+          };
           break;
         default:
-          response = await axiosTMDb.get(ACCOUNT_ENDPOINT, { params: { session_id } });
+          axiosRequest.url = ACCOUNT_ENDPOINT;
       }
 
+      const response = await axiosTMDb.get(axiosRequest.url, {
+        params: { session_id, ...axiosRequest.config?.params },
+      });
       const data = response.data;
       res.status(200).json(data);
     } catch (err) {
@@ -31,19 +41,34 @@ export default async (req, res) => {
   }
 
   if (req.method === 'POST') {
-    const { accountId, movieId, favorite } = req.body;
+    const { type } = req.query;
+    const { accountId, movieId, favorite, watchlist } = req.body;
     const { session_id } = req.cookies;
 
     try {
-      const response = await axiosTMDb.post(
-        `${ACCOUNT_ENDPOINT}/${accountId}/favorite`,
-        {
-          media_type: 'movie',
-          media_id: movieId,
-          favorite,
-        },
-        { params: { session_id } }
-      );
+      const axiosRequest = {};
+
+      switch (type) {
+        case POST_FAVORITE_MOVIE:
+          axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/favorite`;
+          axiosRequest.data = {
+            media_type: 'movie',
+            media_id: movieId,
+            favorite,
+          };
+          break;
+        default:
+          axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/watchlist`;
+          axiosRequest.data = {
+            media_type: 'movie',
+            media_id: movieId,
+            watchlist,
+          };
+      }
+
+      const response = await axiosTMDb.post(axiosRequest.url, axiosRequest.data, {
+        params: { session_id },
+      });
       const data = response.data;
       res.status(200).json(data);
     } catch (err) {

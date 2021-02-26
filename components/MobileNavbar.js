@@ -64,7 +64,7 @@ const MobileNavbar = () => {
             </Link>
           )}
           {user && (
-            <Link href="/profile">
+            <Link href="/profile/favorites">
               <a className="cursor-pointer">
                 <Icon size="2rem" className="mx-auto">
                   <MdPerson />

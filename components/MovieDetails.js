@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import PersonCard from '@/components/PersonCard';
@@ -9,11 +8,12 @@ import MovieInformation from '@/components/MovieInformation';
 import RecommendationMovieCard from '@/components/RecommmendationMovieCard';
 import PosterPrimary from '@/components/PosterPrimary';
 import MovieReviewCard from '@/components/MovieReviewCard';
+import WatchlistButton from '@/components/WatchlistButton';
 import MovieDetailsTab from '@/components/MovieDetailsTab';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import FavoriteButton from '@/components/FavoriteButton';
-import { GET_MOVIE_ACCOUNT_STATES, GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
-import { useAuth } from '@/utils/auth';
+import { GET_MOVIE_RECOMMENDATIONS } from '@/utils/TMDbType';
+import useAccountMovieStates from '@/utils/useAccountMovieStates';
 
 const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const Tabs = ['Overview', 'Cast', 'Crew', 'Recommendations'];
@@ -45,22 +45,9 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
   const [recommendationMovies, setRecommendationMovies] = useState(recommendations.results);
   const [currentPagination, setCurrentPagination] = useState(1);
   const [selectedTab, setSelectedTab] = useState('Overview');
-  const [isFavorite, setIsFavorite] = useState(null);
-  const { user } = useAuth();
-
-  useEffect(() => {
-    if (!user) return;
-    (async () => {
-      try {
-        const res = await axios.get('/api/movies', {
-          params: { type: GET_MOVIE_ACCOUNT_STATES, movie_id: movie.id },
-        });
-        setIsFavorite(res.data.favorite);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-  }, [user]);
+  const { isFavorite, setIsFavorite, isWatchlist, setIsWatchlist } = useAccountMovieStates(
+    movie.id
+  );
 
   return (
     <>
@@ -77,11 +64,16 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
                     alt={title}
                   />
                 </div>
-                <div className="md:hidden">
+                <div className="flex flex-grow space-x-4 md:hidden">
                   <FavoriteButton
                     movieId={movie.id}
                     isFavorite={isFavorite}
                     setIsFavorite={setIsFavorite}
+                  />
+                  <WatchlistButton
+                    movieId={movie.id}
+                    isWatchlist={isWatchlist}
+                    setIsWatchlist={setIsWatchlist}
                   />
                 </div>
               </div>
@@ -91,11 +83,16 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
               <h1 className="text-2xl font-medium font-poppins">{title}</h1>
               <p className="mt-3">{overview}</p>
             </div>
-            <div className="hidden mt-5 md:block justify-self-end">
+            <div className="items-start justify-end hidden mt-5 space-x-3 md:flex">
               <FavoriteButton
                 movieId={movie.id}
                 isFavorite={isFavorite}
                 setIsFavorite={setIsFavorite}
+              />
+              <WatchlistButton
+                movieId={movie.id}
+                isWatchlist={isWatchlist}
+                setIsWatchlist={setIsWatchlist}
               />
             </div>
             <ul className="hidden mt-10 space-x-8 ml-7 md:col-start-2 md:flex font-poppins">

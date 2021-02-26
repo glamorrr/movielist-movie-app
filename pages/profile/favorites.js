@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
-import MobileNavbar from '@/components/MobileNavbar';
 import PosterPrimary from '@/components/PosterPrimary';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import RemoveFavoriteButton from '@/components/RemoveFavoriteButton';
-import Footer from '@/components/Footer';
+import ProfileFallback from '@/components/PageLoader/ProfileFallback';
+import ProfileLayout from '@/components/ProfileLayout';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import { useAuth } from '@/utils/auth';
 import axiosTMDb from '@/utils/axiosTMDb';
@@ -28,8 +26,8 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
     if (user === null) return;
 
     if (!user) {
+      sessionStorage.setItem('urlBeforeLogin', '/profile/favorites');
       router.replace('/login');
-      sessionStorage.setItem('urlBeforeLogin', '/profile');
       return;
     }
 
@@ -44,62 +42,17 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
         setFavoriteMovies(res.data.results);
         setFavoriteMoviesTotalPagination(res.data.total_pages);
       } catch (err) {
-        console.errror(err);
+        console.error(err);
       }
     })();
   }, [user]);
 
-  if (!user) {
-    return (
-      <>
-        <Head>
-          <title>My Profile &middot; MovieList</title>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="description" content="User profile." />
-        </Head>
-        <LayoutWrapper>
-          <div className="flex items-end pt-10 space-x-4 md:pt-20 md:space-x-6">
-            <div className="w-24 rounded shadow-lg md:w-40">
-              <div className="w-full bg-blue-100 aspect-w-1 aspect-h-1 animate-pulse" />
-            </div>
-            <div className="w-48 h-8 bg-blue-100 md:h-9 md:w-64 animate-pulse" />
-          </div>
-        </LayoutWrapper>
-        <div className="h-12 mt-6 bg-white" />
-      </>
-    );
-  }
+  if (!user) return <ProfileFallback />;
 
-  const { base_url, profile_sizes, poster_sizes } = imagesTMDbAPIConfiguration;
-  const imgSrc = user.avatar?.tmdb?.avatar_path
-    ? `${base_url}${profile_sizes[2]}${user.avatar.tmdb.avatar_path}`
-    : `https://secure.gravatar.com/avatar/${user.avatar.gravatar.hash}`;
+  const { base_url, poster_sizes } = imagesTMDbAPIConfiguration;
 
   return (
-    <>
-      <Head>
-        <title>My Profile &middot; MovieList</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="User profile." />
-      </Head>
-      <MobileNavbar />
-      <LayoutWrapper>
-        <div className="flex items-end pt-10 space-x-4 md:pt-20 md:space-x-6">
-          <div className="w-24 rounded shadow-lg md:w-40">
-            <div className="bg-blue-100 aspect-w-1 aspect-h-1">
-              <Image src={imgSrc} alt="profile" layout="fill" objectFit="cover" />
-            </div>
-          </div>
-          <h1 className="text-2xl font-semibold tracking-wide text-gray-800 md:text-3xl font-poppins">
-            {user.username}
-          </h1>
-        </div>
-      </LayoutWrapper>
-      <div className="py-3 mt-6 bg-white">
-        <ul className="flex justify-center font-poppins">
-          <li className="text-purple-500 cursor-pointer">Favorites</li>
-        </ul>
-      </div>
+    <ProfileLayout page="Favorites" imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}>
       <LayoutWrapper>
         <div className="p-4 mt-10 bg-white rounded sm:p-8">
           {!favoriteMovies && (
@@ -180,9 +133,8 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
             </TMDbInfiniteScroll>
           )}
         </div>
-        <Footer />
       </LayoutWrapper>
-    </>
+    </ProfileLayout>
   );
 }
 
