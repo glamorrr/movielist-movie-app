@@ -39,10 +39,9 @@ const MobileNavbar = () => {
             <button
               type="button"
               className="cursor-pointer focus:outline-none"
-              onClick={async () => {
+              onClick={() => {
                 setIsOpen(false);
-                await logout();
-                router.push('/browse');
+                logout();
               }}
             >
               <Icon size="2rem" className="mx-auto">

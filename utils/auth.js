@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const authContext = createContext();
 
@@ -13,6 +14,7 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
+  const router = useRouter();
   const [user, setUser] = useState(null);
 
   const getAccountDetail = async () => {
@@ -64,7 +66,10 @@ function useProvideAuth() {
     const res = await axios.delete('/api/authentication');
     const data = res.data;
 
-    if (data.success) setUser(false);
+    if (data.success) {
+      router.push('/browse');
+      setUser(false);
+    }
   };
 
   return {
