@@ -2,18 +2,23 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { MdClose } from 'react-icons/md';
 import Icon from '@/components/Icon';
-import { useAuth } from '@/utils/auth';
 import Success from '@/components/ToastContent/Success';
+import { useAuth } from '@/utils/auth';
+import { POST_FAVORITE_MOVIE } from '@/utils/TMDbType';
 
 const RemoveFavoriteButton = ({ movieId, setMovies }) => {
   const { user } = useAuth();
 
   const handleClick = () => {
-    axios.post('/api/account', {
-      accountId: user.id,
-      movieId,
-      favorite: false,
-    });
+    axios.post(
+      '/api/account',
+      {
+        accountId: user.id,
+        movieId,
+        favorite: false,
+      },
+      { params: { type: POST_FAVORITE_MOVIE } }
+    );
 
     toast.success(<Success message={'Removed from favorites'} />, {
       position: 'top-right',
