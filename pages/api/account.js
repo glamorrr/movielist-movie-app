@@ -14,13 +14,15 @@ export default async (req, res) => {
         case GET_FAVORITE_MOVIES:
           axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/favorite/movies`;
           axiosRequest.config.params = {
-            params: { page, sort_by: 'created_at.desc' },
+            page,
+            sort_by: 'created_at.desc',
           };
           break;
         case GET_WATCHLIST:
           axiosRequest.url = `${ACCOUNT_ENDPOINT}/${accountId}/watchlist/movies`;
           axiosRequest.config.params = {
-            params: { page, sort_by: 'created_at.desc' },
+            page,
+            sort_by: 'created_at.desc',
           };
           break;
         default:
@@ -65,7 +67,7 @@ export default async (req, res) => {
             watchlist,
           };
       }
-
+      console.log(session_id);
       const response = await axiosTMDb.post(axiosRequest.url, axiosRequest.data, {
         params: { session_id },
       });
