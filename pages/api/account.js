@@ -67,7 +67,7 @@ export default async (req, res) => {
             watchlist,
           };
       }
-      console.log(session_id);
+
       const response = await axiosTMDb.post(axiosRequest.url, axiosRequest.data, {
         params: { session_id },
       });

@@ -17,7 +17,6 @@ import DOMPurify from '@/utils/DOMPurify';
 
 export default function Movie({ movie, imagesTMDbAPIConfiguration, error }) {
   const { isFallback } = useRouter();
-
   if (isFallback) return <MovieFallback />;
 
   if (error) {
@@ -92,6 +91,15 @@ export async function getStaticProps({ params }) {
       axiosTMDb.get(`${MOVIE_ENDPOINT}/${movieId}`, movieRequestConfig),
       axiosTMDb.get(TMDb_API_CONFIGURATION_ENDPOINT),
     ]);
+
+    /**
+     * TMDb give 21 movies and it will duplicate one movie
+     * after requesting for the second page.
+     */
+    if (response[0].data.recommendations.results.length > 20) {
+      response[0].data.recommendations.results.length = 20;
+    }
+
     const data = {
       movie: {
         ...response[0].data,
