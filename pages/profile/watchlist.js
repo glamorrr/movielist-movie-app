@@ -7,6 +7,7 @@ import PosterPrimary from '@/components/PosterPrimary';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import RemoveWatchlistButton from '@/components/RemoveWatchlistButton';
 import ProfileFallback from '@/components/PageLoader/ProfileFallback';
+import MovieSimpleTooltipWrapper from '@/components/MovieSimpleTooltipWrapper';
 import ProfileLayout from '@/components/ProfileLayout';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
 import { useAuth } from '@/utils/auth';
@@ -104,30 +105,32 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
             >
               <div className="grid grid-cols-3 gap-5 sm:gap-7 md:gap-8 sm:grid-cols-4 lg:gap-10 md:grid-cols-5">
                 {watchlist.map((movie) => (
-                  <CSSTransition
-                    key={movie.id}
-                    classNames="CSSTransitionScale"
-                    timeout={300}
-                    appear={true}
-                    in={true}
-                  >
-                    <div className="relative block transition-colors cursor-pointer">
-                      <RemoveWatchlistButton movieId={movie.id} setMovies={setWatchlist} />
-                      <Link
-                        key={movie.id}
-                        href={`/movie/${movie.id}-${parseToDashedString(movie.title)}`}
-                      >
-                        <a>
-                          <PosterPrimary
-                            maxWidth="185px"
-                            path={movie.poster_path}
-                            src={`${base_url}${poster_sizes[2]}${movie.poster_path}`}
-                            alt={movie.title}
-                          />
-                        </a>
-                      </Link>
-                    </div>
-                  </CSSTransition>
+                  <MovieSimpleTooltipWrapper movie={movie} key={movie.id}>
+                    <CSSTransition
+                      key={movie.id}
+                      classNames="CSSTransitionScale"
+                      timeout={300}
+                      appear={true}
+                      in={true}
+                    >
+                      <div className="relative block transition-colors cursor-pointer">
+                        <RemoveWatchlistButton movieId={movie.id} setMovies={setWatchlist} />
+                        <Link
+                          key={movie.id}
+                          href={`/movie/${movie.id}-${parseToDashedString(movie.title)}`}
+                        >
+                          <a>
+                            <PosterPrimary
+                              maxWidth="185px"
+                              path={movie.poster_path}
+                              src={`${base_url}${poster_sizes[2]}${movie.poster_path}`}
+                              alt={movie.title}
+                            />
+                          </a>
+                        </Link>
+                      </div>
+                    </CSSTransition>
+                  </MovieSimpleTooltipWrapper>
                 ))}
               </div>
             </TMDbInfiniteScroll>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import ReactTooltip from 'react-tooltip';
 import { CSSTransition } from 'react-transition-group';
 import axios from 'axios';
 import PosterPrimary from '@/components/PosterPrimary';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import RemoveFavoriteButton from '@/components/RemoveFavoriteButton';
+import MovieSimpleTooltipWrapper from '@/components/MovieSimpleTooltipWrapper';
 import ProfileFallback from '@/components/PageLoader/ProfileFallback';
 import ProfileLayout from '@/components/ProfileLayout';
 import TMDbInfiniteScroll from '@/components/TMDbInfiniteScroll';
@@ -104,30 +106,31 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
             >
               <div className="grid grid-cols-3 gap-5 sm:gap-7 md:gap-8 sm:grid-cols-4 lg:gap-10 md:grid-cols-5">
                 {favoriteMovies.map((movie) => (
-                  <CSSTransition
-                    key={movie.id}
-                    classNames="CSSTransitionScale"
-                    timeout={300}
-                    appear={true}
-                    in={true}
-                  >
-                    <div className="relative block transition-colors cursor-pointer">
-                      <RemoveFavoriteButton movieId={movie.id} setMovies={setFavoriteMovies} />
-                      <Link
-                        key={movie.id}
-                        href={`/movie/${movie.id}-${parseToDashedString(movie.title)}`}
-                      >
-                        <a>
-                          <PosterPrimary
-                            maxWidth="185px"
-                            path={movie.poster_path}
-                            src={`${base_url}${poster_sizes[2]}${movie.poster_path}`}
-                            alt={movie.title}
-                          />
-                        </a>
-                      </Link>
-                    </div>
-                  </CSSTransition>
+                  <MovieSimpleTooltipWrapper movie={movie} key={movie.id}>
+                    <CSSTransition
+                      classNames="CSSTransitionScale"
+                      timeout={300}
+                      appear={true}
+                      in={true}
+                    >
+                      <div className="relative block transition-colors cursor-pointer">
+                        <RemoveFavoriteButton movieId={movie.id} setMovies={setFavoriteMovies} />
+                        <Link
+                          key={movie.id}
+                          href={`/movie/${movie.id}-${parseToDashedString(movie.title)}`}
+                        >
+                          <a>
+                            <PosterPrimary
+                              maxWidth="185px"
+                              path={movie.poster_path}
+                              src={`${base_url}${poster_sizes[2]}${movie.poster_path}`}
+                              alt={movie.title}
+                            />
+                          </a>
+                        </Link>
+                      </div>
+                    </CSSTransition>
+                  </MovieSimpleTooltipWrapper>
                 ))}
               </div>
             </TMDbInfiniteScroll>
