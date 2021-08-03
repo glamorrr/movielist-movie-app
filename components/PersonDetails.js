@@ -74,7 +74,7 @@ const PersonDetails = ({ person, imagesTMDbAPIConfiguration }) => {
             <div className="mt-4">{biography && <PersonBiography biography={biography} />}</div>
           </div>
         </div>
-        {movie_credits.length && (
+        {Boolean(movie_credits.length) && (
           <div className="mt-11">
             {movie_credits.map(({ year, credits }) => {
               if (!credits.length) return;
