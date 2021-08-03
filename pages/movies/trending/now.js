@@ -7,13 +7,18 @@ import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
 import axiosTMDb from '@/utils/axiosTMDb';
 import { GET_MOVIES_TRENDING } from '@/utils/TMDbType';
-import { MOVIES_TRENDING_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
+import {
+  MOVIES_GENRE_LIST_ENDPOINT,
+  MOVIES_TRENDING_ENDPOINT,
+  TMDb_API_CONFIGURATION_ENDPOINT,
+} from '@/utils/TMDbEndpoint';
+import formatGenres from '@/utils/formatGenres';
 
 /**
  * This file is not too diffrent with
  * another time span trending movies.
  */
-export default function Now({ trendingMovies, imagesTMDbAPIConfiguration, error }) {
+export default function Now({ trendingMovies, imagesTMDbAPIConfiguration, movieGenres, error }) {
   if (error) {
     return (
       <>
@@ -49,6 +54,7 @@ export default function Now({ trendingMovies, imagesTMDbAPIConfiguration, error 
           <MoviesGrid
             mt="mt-6"
             movies={movies}
+            genres={movieGenres}
             setMovies={setMovies}
             shouldInfiniteScroll={true}
             setCurrentPagination={setMoviesCurrentPagination}
@@ -73,10 +79,12 @@ export async function getStaticProps() {
     const response = await Promise.all([
       axiosTMDb.get(`${MOVIES_TRENDING_ENDPOINT}/day`),
       axiosTMDb.get(TMDb_API_CONFIGURATION_ENDPOINT),
+      axiosTMDb.get(MOVIES_GENRE_LIST_ENDPOINT),
     ]);
     const data = {
       trendingMovies: response[0].data,
       imagesTMDbAPIConfiguration: response[1].data.images,
+      movieGenres: formatGenres(response[2].data.genres),
     };
 
     return {
@@ -86,6 +94,7 @@ export async function getStaticProps() {
           totalPagination: data.trendingMovies.total_pages,
         },
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
+        movieGenres: data.movieGenres,
       },
       revalidate: 1 * 60,
     };

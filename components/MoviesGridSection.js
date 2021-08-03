@@ -1,7 +1,13 @@
 import Link from 'next/link';
 import MoviesGrid from '@/components/MoviesGrid';
 
-const MoviesGridSection = ({ headingTitle, linkToPage, movies, imagesTMDbAPIConfiguration }) => {
+const MoviesGridSection = ({
+  headingTitle,
+  linkToPage,
+  movies,
+  imagesTMDbAPIConfiguration,
+  genres,
+}) => {
   return (
     <section className="mt-10">
       <header className="flex items-baseline justify-between">
@@ -16,6 +22,7 @@ const MoviesGridSection = ({ headingTitle, linkToPage, movies, imagesTMDbAPIConf
       </header>
       <MoviesGrid
         movies={movies}
+        genres={genres}
         shouldCountOrder={true}
         imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
       />

@@ -2,7 +2,7 @@ import ReactTooltip from 'react-tooltip';
 
 const MovieSimpleTooltipWrapper = ({ movie, children }) => {
   return (
-    <div data-tip data-for={`${movie.id}`} key={movie.id}>
+    <div data-tip data-for={`${movie.id}`}>
       {children}
       <ReactTooltip
         place="top"

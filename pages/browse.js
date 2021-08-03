@@ -20,6 +20,7 @@ import {
   MOVIES_GENRE_LIST_ENDPOINT,
 } from '@/utils/TMDbEndpoint';
 import useSearchTMDb from '@/utils/useSearchTMDb';
+import formatGenres from '@/utils/formatGenres';
 
 export default function Browse({
   popularMovies,
@@ -106,6 +107,7 @@ export default function Browse({
               <MoviesGrid
                 mt="mt-12"
                 movies={searchResult}
+                genres={movieGenres}
                 setMovies={setSearchResult}
                 shouldInfiniteScroll={true}
                 setCurrentPagination={setSearchResultCurrentPagination}
@@ -126,18 +128,21 @@ export default function Browse({
                 headingTitle="Trending Now"
                 linkToPage="/movies/trending/now"
                 movies={trendingMovies}
+                genres={movieGenres}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
               <MoviesGridSection
                 headingTitle="What's Popular"
                 linkToPage="/movies/popular"
                 movies={popularMovies}
+                genres={movieGenres}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
               <MoviesGridSection
                 headingTitle="Upcoming"
                 linkToPage="/movies/upcoming"
                 movies={upcomingMovies}
+                genres={movieGenres}
                 imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
               />
               <MoviesDynamicSection
@@ -176,17 +181,7 @@ export async function getStaticProps() {
       upcomingMovies: response[2].data.results,
       topRatedMovies: response[3].data.results,
       imagesTMDbAPIConfiguration: response[4].data.images,
-      /**
-       * Convert movie genres array of objects
-       * to key (id) value (name) pair.
-       */
-      movieGenres: (() => {
-        let movieGenres = {};
-        response[5].data.genres.forEach((movieGenre) => {
-          movieGenres[movieGenre.id] = movieGenre.name;
-        });
-        return movieGenres;
-      })(),
+      movieGenres: formatGenres(response[5].data.genres),
     };
     data.trendingMovies.length = NUMBER_OF_MOVIES_TO_SHOW;
     data.popularMovies.length = NUMBER_OF_MOVIES_TO_SHOW;

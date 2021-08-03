@@ -6,9 +6,19 @@ import MobileNavbar from '@/components/MobileNavbar';
 import Footer from '@/components/Footer';
 import axiosTMDb from '@/utils/axiosTMDb';
 import { GET_MOVIES_UPCOMING } from '@/utils/TMDbType';
-import { MOVIES_UPCOMING_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
+import {
+  MOVIES_GENRE_LIST_ENDPOINT,
+  MOVIES_UPCOMING_ENDPOINT,
+  TMDb_API_CONFIGURATION_ENDPOINT,
+} from '@/utils/TMDbEndpoint';
+import formatGenres from '@/utils/formatGenres';
 
-export default function Upcoming({ upcomingMovies, imagesTMDbAPIConfiguration, error }) {
+export default function Upcoming({
+  upcomingMovies,
+  imagesTMDbAPIConfiguration,
+  movieGenres,
+  error,
+}) {
   if (error) {
     return (
       <>
@@ -43,6 +53,7 @@ export default function Upcoming({ upcomingMovies, imagesTMDbAPIConfiguration, e
           <MoviesGrid
             mt="mt-6"
             movies={movies}
+            genres={movieGenres}
             setMovies={setMovies}
             shouldInfiniteScroll={true}
             setCurrentPagination={setMoviesCurrentPagination}
@@ -66,10 +77,12 @@ export async function getStaticProps() {
     const response = await Promise.all([
       axiosTMDb.get(MOVIES_UPCOMING_ENDPOINT),
       axiosTMDb.get(TMDb_API_CONFIGURATION_ENDPOINT),
+      axiosTMDb.get(MOVIES_GENRE_LIST_ENDPOINT),
     ]);
     const data = {
       upcomingMovies: response[0].data,
       imagesTMDbAPIConfiguration: response[1].data.images,
+      movieGenres: formatGenres(response[2].data.genres),
     };
 
     return {
@@ -79,6 +92,7 @@ export async function getStaticProps() {
           totalPagination: data.upcomingMovies.total_pages,
         },
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
+        movieGenres: data.movieGenres,
       },
       revalidate: 1 * 60,
     };
