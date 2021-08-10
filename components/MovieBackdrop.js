@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { CSSTransition } from 'react-transition-group';
 
 const MovieBackdrop = ({
@@ -11,21 +10,19 @@ const MovieBackdrop = ({
       <CSSTransition classNames="CSSTransitionOpacity" timeout={300} appear={true} in={true}>
         <div
           className={
-            (type === 'banner' ? 'absolute w-full' : 'relative') + ' h-52 md:h-96 bg-blue-100'
+            (type === 'banner' ? 'absolute' : 'relative') +
+            ' overflow-hidden h-52 md:h-96 bg-blue-100'
           }
         >
           {backdropPath ? (
-            <Image
-              src={`${base_url}${backdrop_sizes[3]}${backdropPath}`}
+            <img
+              src={`${base_url}${backdrop_sizes[2]}${backdropPath}`}
               alt="movie backdrop"
-              layout="fill"
-              objectFit="cover"
-              className="relative object-top"
+              className="object-cover object-top w-full h-full"
             />
           ) : (
             <div className="w-full h-full backdrop--none" />
           )}
-
           <div className="absolute inset-0 z-10 backdrop--shadow" />
         </div>
       </CSSTransition>
