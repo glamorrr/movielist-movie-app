@@ -7,10 +7,20 @@ import Footer from '@/components/Footer';
 import KeywordFallback from '@/components/PageLoader/KeywordFallback';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import axiosTMDb from '@/utils/axiosTMDb';
-import { KEYWORD_ENDPOINT, TMDb_API_CONFIGURATION_ENDPOINT } from '@/utils/TMDbEndpoint';
+import {
+  KEYWORD_ENDPOINT,
+  MOVIES_GENRE_LIST_ENDPOINT,
+  TMDb_API_CONFIGURATION_ENDPOINT,
+} from '@/utils/TMDbEndpoint';
 import { GET_MOVIES_BY_KEYWORDS } from '@/utils/TMDbType';
+import formatGenres from '@/utils/formatGenres';
 
-export default function Keyword({ moviesByKeyword, imagesTMDbAPIConfiguration, error }) {
+export default function Keyword({
+  moviesByKeyword,
+  movieGenres,
+  imagesTMDbAPIConfiguration,
+  error,
+}) {
   const { isFallback } = useRouter();
 
   if (isFallback) return <KeywordFallback />;
@@ -51,6 +61,7 @@ export default function Keyword({ moviesByKeyword, imagesTMDbAPIConfiguration, e
           <MoviesGrid
             mt="mt-8"
             movies={movies}
+            genres={movieGenres}
             setMovies={setMovies}
             shouldInfiniteScroll={true}
             setCurrentPagination={setMoviesCurrentPagination}
@@ -91,10 +102,12 @@ export async function getStaticProps({ params }) {
       axiosTMDb.get(`${KEYWORD_ENDPOINT}/${keywordId}/movies`),
       axiosTMDb.get(`${KEYWORD_ENDPOINT}/${keywordId}`),
       axiosTMDb.get(TMDb_API_CONFIGURATION_ENDPOINT),
+      axiosTMDb.get(MOVIES_GENRE_LIST_ENDPOINT),
     ]);
     const data = {
       movies: response[0].data,
       imagesTMDbAPIConfiguration: response[2].data.images,
+      movieGenres: formatGenres(response[3].data.genres),
     };
 
     return {
@@ -103,6 +116,7 @@ export async function getStaticProps({ params }) {
           name: response[1].data.name,
           ...data.movies,
         },
+        movieGenres: data.movieGenres,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
       revalidate: 1 * 60,
