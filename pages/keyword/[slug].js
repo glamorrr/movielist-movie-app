@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import MobileNavbar from '@/components/MobileNavbar';
-import MoviesGrid from '@/components/MoviesGrid';
 import Footer from '@/components/Footer';
 import KeywordFallback from '@/components/PageLoader/KeywordFallback';
+import MoviesByKeyword from '@/components/MoviesByKeyword';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import axiosTMDb from '@/utils/axiosTMDb';
 import {
@@ -12,7 +11,6 @@ import {
   MOVIES_GENRE_LIST_ENDPOINT,
   TMDb_API_CONFIGURATION_ENDPOINT,
 } from '@/utils/TMDbEndpoint';
-import { GET_MOVIES_BY_KEYWORDS } from '@/utils/TMDbType';
 import formatGenres from '@/utils/formatGenres';
 
 export default function Keyword({
@@ -39,9 +37,6 @@ export default function Keyword({
     );
   }
 
-  const [movies, setMovies] = useState(moviesByKeyword.results);
-  const [moviesCurrentPagination, setMoviesCurrentPagination] = useState(1);
-
   return (
     <>
       <Head>
@@ -58,20 +53,9 @@ export default function Keyword({
           </LayoutWrapper>
         </div>
         <LayoutWrapper>
-          <MoviesGrid
-            mt="mt-8"
-            movies={movies}
+          <MoviesByKeyword
+            moviesByKeyword={moviesByKeyword}
             genres={movieGenres}
-            setMovies={setMovies}
-            shouldInfiniteScroll={true}
-            setCurrentPagination={setMoviesCurrentPagination}
-            infiniteScrollConfiguration={{
-              type: GET_MOVIES_BY_KEYWORDS,
-              url: '/api/movies',
-              keywordId: moviesByKeyword.id,
-              pagination: moviesCurrentPagination,
-              totalPagination: moviesByKeyword.total_pages,
-            }}
             imagesTMDbAPIConfiguration={imagesTMDbAPIConfiguration}
           />
         </LayoutWrapper>
