@@ -11,7 +11,7 @@ const MovieBackdrop = ({
         <div
           className={
             (type === 'banner' ? 'absolute' : 'relative') +
-            ' overflow-hidden h-52 md:h-96 bg-blue-100'
+            ' overflow-hidden h-52 md:h-96 bg-blue-100 w-full'
           }
         >
           {backdropPath ? (
