@@ -7,6 +7,8 @@ export default async (req, res) => {
   const { session_id } = req.cookies;
 
   if (req.method === 'GET') {
+    if (!session_id) throw new Error('Session should not be empty');
+
     try {
       const axiosRequest = { url: '', config: {} };
 
