@@ -59,8 +59,8 @@ export default function Person({ popularPeople, imagesTMDbAPIConfiguration, erro
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <div className="flex items-baseline space-x-4">
-            <h1 className="pt-6 text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
+          <div className="flex items-baseline space-x-2">
+            <h1 className="pt-6 text-2xl font-semibold tracking-wide text-gray-600 font-poppins">
               Browse
             </h1>
             <Dropdown buttonText="People" dropdownText="Movies" linkToPage="/browse" />

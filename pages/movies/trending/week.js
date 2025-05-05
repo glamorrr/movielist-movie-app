@@ -45,8 +45,8 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, movie
       <LayoutWrapper>
         <MobileNavbar />
         <main>
-          <div className="flex items-baseline pt-6 space-x-4">
-            <h1 className="inline text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
+          <div className="flex items-baseline pt-6 space-x-2">
+            <h1 className="inline text-2xl font-semibold tracking-wide text-gray-600 font-poppins">
               Trending
             </h1>
             <Dropdown buttonText="Week" dropdownText="Now" linkToPage="/movies/trending/now" />

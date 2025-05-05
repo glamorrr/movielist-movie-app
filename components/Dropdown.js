@@ -33,7 +33,7 @@ const Dropdown = ({ buttonText, dropdownText, linkToPage }) => {
   }, []);
 
   return (
-    <div className="text-2xl relative">
+    <div className="text-xl relative">
       <button
         ref={refButton}
         style={{ WebkitTapHighlightColor: 'transparent' }}
@@ -43,7 +43,7 @@ const Dropdown = ({ buttonText, dropdownText, linkToPage }) => {
         aria-label="toggle movies trending time selector"
       >
         <span>{buttonText}</span>
-        <Icon size="2rem" className="relative inline  text-gray-600">
+        <Icon className="relative inline text-2xl  text-gray-600">
           <MdExpandMore />
         </Icon>
       </button>
@@ -52,7 +52,7 @@ const Dropdown = ({ buttonText, dropdownText, linkToPage }) => {
         style={{ WebkitTapHighlightColor: 'transparent' }}
         className={
           (isDropdownOpen ? 'scale-y-100' : 'scale-y-0') +
-          ' absolute z-10 shadow-lg -bottom-14 left-0 px-4 py-2 font-poppins font-medium text-xl text-gray-600 bg-white rounded-md transform transition-transform origin-top'
+          ' absolute z-10 shadow-lg -bottom-12 left-0 px-4 py-2 font-poppins font-medium text-lg text-gray-600 bg-white rounded-md transform transition-transform origin-top'
         }
         id="dropdown"
       >
