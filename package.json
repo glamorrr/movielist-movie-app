@@ -20,7 +20,7 @@
     "js-cookie": "^2.2.1",
     "jsdom": "^16.4.0",
     "marked": "^1.2.8",
-    "next": "^12.x.x",
+    "next": "^13.5.0",
     "nprogress": "^0.2.0",
     "postcss": "^8.2.1",
     "react": "^17.0.0",
