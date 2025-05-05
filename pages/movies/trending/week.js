@@ -74,7 +74,7 @@ export default function Week({ trendingMovies, imagesTMDbAPIConfiguration, movie
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await Promise.all([
       axiosTMDb.get(`${MOVIES_TRENDING_ENDPOINT}/week`),
@@ -96,7 +96,6 @@ export async function getStaticProps() {
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
         movieGenres: data.movieGenres,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

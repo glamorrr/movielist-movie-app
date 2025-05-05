@@ -43,7 +43,7 @@ const MovieDynamicCard = ({ movie, orderOfMovie, genres, imagesTMDbAPIConfigurat
             </div>
             <div className="grid w-full grid-cols-4 py-2 ml-4">
               <div className="col-span-2 pr-4">
-                <Link href={`/movie/${id}-${parseToDashedString(title)}`}>
+                <Link legacyBehavior href={`/movie/${id}-${parseToDashedString(title)}`}>
                   <a className="block font-semibold tracking-wide truncate transition-colors cursor-pointer font-poppins hover:text-blue-400">
                     {title}
                   </a>

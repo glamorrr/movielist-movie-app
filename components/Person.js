@@ -9,7 +9,7 @@ const Person = ({ person, imagesTMDbAPIConfiguration }) => {
 
   return (
     <CSSTransition classNames="CSSTransitionScale" timeout={300} appear={true} in={true}>
-      <Link href={`/person/${id}-${parseToDashedString(name)}`}>
+      <Link legacyBehavior href={`/person/${id}-${parseToDashedString(name)}`}>
         <a className="block text-gray-500 transition-colors cursor-pointer hover:text-blue-400">
           <PosterPrimary
             maxWidth="185px"

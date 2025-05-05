@@ -84,7 +84,7 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
               <p className="text-lg font-medium tracking-wide text-center text-gray-500 font-poppins">
                 No Favorites
               </p>
-              <Link href="/browse">
+              <Link legacyBehavior href="/browse">
                 <a className="px-6 py-3 text-lg text-white transition-colors bg-purple-500 shadow-md focus:ring-4 ring-blue-200 hover:text-gray-100 font-poppins text-semibold hover:bg-purple-600">
                   Find Your Favorite Movies
                 </a>
@@ -116,6 +116,7 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
                       <div className="relative block transition-colors cursor-pointer">
                         <RemoveFavoriteButton movieId={movie.id} setMovies={setFavoriteMovies} />
                         <Link
+                          legacyBehavior
                           key={movie.id}
                           href={`/movie/${movie.id}-${parseToDashedString(movie.title)}`}
                         >
@@ -141,14 +142,13 @@ export default function Profile({ imagesTMDbAPIConfiguration }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await axiosTMDb.get(TMDb_API_CONFIGURATION_ENDPOINT);
     return {
       props: {
         imagesTMDbAPIConfiguration: response.data.images,
       },
-      revalidate: 1 * 60 * 60 * 24 * 30,
     };
   } catch (err) {
     console.error(err);

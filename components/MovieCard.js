@@ -13,7 +13,7 @@ const MovieCard = ({
 
   return (
     <CSSTransition classNames="CSSTransitionScale" timeout={300} appear={true} in={true}>
-      <Link href={`/movie/${id}-${parseToDashedString(title)}`}>
+      <Link legacyBehavior href={`/movie/${id}-${parseToDashedString(title)}`}>
         <a
           className={
             `${orderOfMovie && orderOfMovie >= 5 ? 'sm:hidden' : ''} ${

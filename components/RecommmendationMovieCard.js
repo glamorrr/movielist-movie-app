@@ -7,7 +7,7 @@ const RecommendationMovieCard = ({ movie, imagesTMDbAPIConfiguration }) => {
   const { title, id, poster_path } = movie;
 
   return (
-    <Link href={`/movie/${id}-${parseToDashedString(title)}`}>
+    <Link legacyBehavior href={`/movie/${id}-${parseToDashedString(title)}`}>
       <a
         style={{ maxWidth: '150px' }}
         className="flex-shrink-0 block w-full text-gray-500 transition-colors cursor-pointer hover:text-blue-400"

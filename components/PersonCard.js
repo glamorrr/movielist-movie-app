@@ -6,7 +6,7 @@ const PersonCard = ({ person, imagesTMDbAPIConfiguration }) => {
   const { base_url, profile_sizes } = imagesTMDbAPIConfiguration;
 
   return (
-    <Link href={`/person/${id}-${parseToDashedString(name)}`}>
+    <Link legacyBehavior href={`/person/${id}-${parseToDashedString(name)}`}>
       <a className="flex overflow-hidden bg-white rounded shadow-sm group">
         <div
           style={{ width: '60px', height: '90px', minWidth: '60px' }}

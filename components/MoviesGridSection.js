@@ -14,7 +14,7 @@ const MoviesGridSection = ({
         <h1 className="text-lg font-semibold tracking-wide text-gray-600 uppercase font-poppins md:tracking-wider">
           {headingTitle}
         </h1>
-        <Link href={linkToPage}>
+        <Link legacyBehavior href={linkToPage}>
           <a className="text-xs font-semibold tracking-wider text-gray-400 transition-colors font-poppins hover:text-gray-500 lg:tracking-widest">
             View All
           </a>

@@ -14,7 +14,7 @@ const ProfileNavbar = ({ selected }) => {
               : 'text-gray-700 hover:text-purple-400 transition-colors') + ' cursor-pointer'
           }
         >
-          <Link href={`/profile/${item.toLowerCase()}`}>
+          <Link legacyBehavior href={`/profile/${item.toLowerCase()}`}>
             <a>{item}</a>
           </Link>
         </li>

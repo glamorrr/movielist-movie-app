@@ -50,7 +50,7 @@ const MobileNavbar = () => {
               <p className="mt-1 font-semibold tracking-wider">log out</p>
             </button>
           ) : (
-            <Link href="/login">
+            <Link legacyBehavior href="/login">
               <a
                 onClick={() => sessionStorage.removeItem('urlBeforeLogin')}
                 className="cursor-pointer"
@@ -63,7 +63,7 @@ const MobileNavbar = () => {
             </Link>
           )}
           {user && (
-            <Link href="/profile/favorites">
+            <Link legacyBehavior href="/profile/favorites">
               <a className="cursor-pointer">
                 <Icon size="2rem" className="mx-auto">
                   <MdPerson />
@@ -72,7 +72,7 @@ const MobileNavbar = () => {
               </a>
             </Link>
           )}
-          <Link href="/browse">
+          <Link legacyBehavior href="/browse">
             <a className="cursor-pointer">
               <Icon size="2rem" className="mx-auto">
                 <MdExplore />

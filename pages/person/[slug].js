@@ -51,11 +51,7 @@ export default function Person({ person, imagesTMDbAPIConfiguration, error }) {
   );
 }
 
-export async function getStaticPaths() {
-  return { paths: [], fallback: true };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { slug } = params;
 
   /**
@@ -129,7 +125,6 @@ export async function getStaticProps({ params }) {
         person: data.person,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

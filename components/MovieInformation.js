@@ -90,7 +90,10 @@ const MovieInformation = ({ movie }) => {
                   key={keyword.id}
                   className={(isFirstItem ? 'mt-3' : 'mt-4') + ' bg-white rounded shadow-sm'}
                 >
-                  <Link href={`/keyword/${keyword.id}-${parseToDashedString(keyword.name)}`}>
+                  <Link
+                    legacyBehavior
+                    href={`/keyword/${keyword.id}-${parseToDashedString(keyword.name)}`}
+                  >
                     <a className="block p-2 text-sm text-gray-800 transition-colors hover:text-blue-500">
                       {keyword.name}
                     </a>

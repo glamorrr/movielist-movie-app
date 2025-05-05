@@ -32,7 +32,7 @@ const MovieReviewCard = ({ id, author, avatarPath, content, imagesTMDbAPIConfigu
           className="p-5 prose bg-white rounded shadow-sm"
           dangerouslySetInnerHTML={{ __html: content }}
         />
-        <Link href={`/review/${id}`}>
+        <Link legacyBehavior href={`/review/${id}`}>
           <a className="self-end block px-3 py-2 -mt-4 font-medium text-white transition-colors bg-blue-400 shadow-md hover:text-gray-100 hover:bg-blue-500 focus:ring-4 ring-blue-200 focus:outline-none">
             Read More
           </a>

@@ -65,7 +65,10 @@ export default function Review({ review, imagesTMDbAPIConfiguration, error }) {
             </p>
             <div className="mt-8 text-center md:mt-24 font-poppins text-gray-50">
               <h1 className="text-4xl font-medium tracking-wide">
-                <Link href={`/movie/${review.media_id}-${parseToDashedString(review.media_title)}`}>
+                <Link
+                  legacyBehavior
+                  href={`/movie/${review.media_id}-${parseToDashedString(review.media_title)}`}
+                >
                   <a className="transition-colors hover:text-blue-400">{review.media_title}</a>
                 </Link>
               </h1>
@@ -85,11 +88,7 @@ export default function Review({ review, imagesTMDbAPIConfiguration, error }) {
   );
 }
 
-export async function getStaticPaths() {
-  return { paths: [], fallback: true };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { slug } = params;
   const reviewId = slug;
 
@@ -118,7 +117,6 @@ export async function getStaticProps({ params }) {
         review: data.review,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

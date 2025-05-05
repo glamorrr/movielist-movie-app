@@ -75,15 +75,10 @@ export default function Browse({
         <MobileNavbar />
         <main>
           <div className="flex items-baseline space-x-4">
-            <h1 className="pt-6 text-4xl font-semibold tracking-wide text-gray-600 font-poppins">
+            <h1 className="pt-6 text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
               Browse
             </h1>
-            <Dropdown
-              fontSize="text-3xl"
-              buttonText="Movies"
-              dropdownText="People"
-              linkToPage="/person"
-            />
+            <Dropdown buttonText="Movies" dropdownText="People" linkToPage="/person" />
           </div>
           <SearchForm
             type={GET_MOVIES_SEARCH}
@@ -161,7 +156,7 @@ export default function Browse({
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const NUMBER_OF_MOVIES_TO_SHOW = 6;
   const TOP_RATED_MOVIES_TO_SHOW = 10;
 
@@ -197,14 +192,9 @@ export async function getStaticProps() {
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
         movieGenres: data.movieGenres,
       },
-      /**
-       * Next.js will attempt to re-generate the page
-       * every 1 minutes (revalidate: 1 * 60).
-       */
-      revalidate: 1 * 60,
     };
   } catch (err) {
-    console.error(err);
+    // console.error(err.response);
 
     return {
       props: {

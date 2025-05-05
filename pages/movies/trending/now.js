@@ -74,7 +74,7 @@ export default function Now({ trendingMovies, imagesTMDbAPIConfiguration, movieG
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await Promise.all([
       axiosTMDb.get(`${MOVIES_TRENDING_ENDPOINT}/day`),
@@ -96,7 +96,6 @@ export async function getStaticProps() {
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
         movieGenres: data.movieGenres,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

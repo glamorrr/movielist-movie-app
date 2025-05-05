@@ -53,7 +53,7 @@ export default function Images({ movie, imagesTMDbAPIConfiguration, error }) {
           <LayoutWrapper>
             <div className="max-w-3xl p-6 mx-auto -mt-8 text-center text-gray-800 bg-white shadow-md font-poppins">
               <h1 className="text-3xl font-medium tracking-wide md:text-4xl">
-                <Link href={`/movie/${movie.id}-${parseToDashedString(title)}`}>
+                <Link legacyBehavior href={`/movie/${movie.id}-${parseToDashedString(title)}`}>
                   <a className="transition-colors hover:text-blue-400">{title}</a>
                 </Link>
               </h1>
@@ -75,11 +75,7 @@ export default function Images({ movie, imagesTMDbAPIConfiguration, error }) {
   );
 }
 
-export async function getStaticPaths() {
-  return { paths: [], fallback: true };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { slug } = params;
 
   /**
@@ -120,7 +116,6 @@ export async function getStaticProps({ params }) {
         movie: data.movie,
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

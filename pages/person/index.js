@@ -60,15 +60,10 @@ export default function Person({ popularPeople, imagesTMDbAPIConfiguration, erro
         <MobileNavbar />
         <main>
           <div className="flex items-baseline space-x-4">
-            <h1 className="pt-6 text-4xl font-semibold tracking-wide text-gray-600 font-poppins">
+            <h1 className="pt-6 text-3xl font-semibold tracking-wide text-gray-600 font-poppins">
               Browse
             </h1>
-            <Dropdown
-              fontSize="text-3xl"
-              buttonText="People"
-              dropdownText="Movies"
-              linkToPage="/browse"
-            />
+            <Dropdown buttonText="People" dropdownText="Movies" linkToPage="/browse" />
           </div>
           <SearchForm
             type={GET_PERSON_SEARCH}
@@ -151,7 +146,7 @@ export default function Person({ popularPeople, imagesTMDbAPIConfiguration, erro
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const response = await Promise.all([
       axiosTMDb.get(PERSON_POPULAR_ENDPOINT),
@@ -170,7 +165,6 @@ export async function getStaticProps() {
         },
         imagesTMDbAPIConfiguration: data.imagesTMDbAPIConfiguration,
       },
-      revalidate: 1 * 60,
     };
   } catch (err) {
     console.error(err);

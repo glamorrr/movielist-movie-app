@@ -138,7 +138,7 @@ const MovieDetails = ({ movie, imagesTMDbAPIConfiguration }) => {
           <div className="flex flex-col md:block">
             <div className="flex flex-col order-2 mt-6 space-y-4 md:mt-0">
               {(isPosters || isBackdrops) && (
-                <Link href={`${router.asPath}/images`}>
+                <Link legacyBehavior href={`${router.asPath}/images`}>
                   <a className="order-2 block position">
                     <button
                       type="button"
