@@ -1,2 +1,2 @@
-User-agent: meta-externalagent
+User-agent: *
 Disallow: /
